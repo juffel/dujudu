@@ -1,4 +1,4 @@
-defmodule Dujudu.Ingredient do
+defmodule Dujudu.Models.Ingredient do
   use Ecto.Schema
   import Ecto.Changeset
 
