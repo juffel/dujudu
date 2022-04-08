@@ -15,7 +15,8 @@ defmodule Dujudu.Ingredient do
   @doc false
   def changeset(ingredient, attrs) do
     ingredient
-    |> cast(attrs, [:title, :unit])
+    |> cast(attrs, [:title, :unit, :wikidata_id])
+    |> unique_constraint(:wikidata_id)
     |> validate_required([:title, :unit])
   end
 end

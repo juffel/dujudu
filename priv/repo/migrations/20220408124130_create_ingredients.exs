@@ -11,6 +11,6 @@ defmodule Dujudu.Repo.Migrations.CreateIngredients do
       timestamps()
     end
 
-    create index("ingredients", [:wikidata_id], unique: true)
+    create unique_index(:ingredients, [:wikidata_id])
   end
 end
