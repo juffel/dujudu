@@ -2,6 +2,6 @@
 
 ## Executing things in the docker container
 
-E.g. initialize the database
+Running migrations:
 
-    $ docker-compose run web mix ecto.create 
+    $ docker-compose run web mix ecto.migrate
