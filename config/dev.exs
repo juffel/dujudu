@@ -4,7 +4,7 @@ import Config
 config :dujudu, Dujudu.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
+  hostname: "db",
   database: "dujudu_dev",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
