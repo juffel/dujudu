@@ -9,11 +9,6 @@ defmodule DujuduWeb.IngredientController do
     render(conn, "index.html", ingredients: ingredients)
   end
 
-  def new(conn, _params) do
-    changeset = Models.change_ingredient(%Ingredient{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
   def create(conn, %{"ingredient" => ingredient_params}) do
     case Models.create_ingredient(ingredient_params) do
       {:ok, ingredient} ->

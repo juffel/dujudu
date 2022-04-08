@@ -18,6 +18,8 @@ defmodule DujuduWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/ingredients", IngredientController, :index
+    get "/ingredients/:id", IngredientController, :show
   end
 
   # Other scopes may use custom stacks.
