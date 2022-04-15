@@ -49,9 +49,8 @@ defmodule Dujudu.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:sparql_client, "~> 0.4.0"},
-      {:decimal, "~> 1.5"}, # pinning decimal to 1.5, since sparql_client needs it, while ecto et.al would default to 2.0
-      {:hackney, "~> 1.6"} # sparql_client needs hackney to work properly
+      {:tesla, "~> 1.4"},
+      {:hackney, "~> 1.6"}
     ]
   end
 

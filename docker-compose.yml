@@ -16,6 +16,7 @@ services:
       - db
     environment:
       MIX_ENV: dev
+      ERL_AFLAGS: "-kernel shell_history enabled" # keep iex history
     env_file:
       - .env
     ports:
