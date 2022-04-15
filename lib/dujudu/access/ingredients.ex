@@ -2,9 +2,8 @@ defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Repo
   alias Dujudu.Schemas.Ingredient
 
-  def get_ingredients() do
-    Dujudu.Schemas.Ingredient
-    |> Repo.all()
+  def list_ingredients(flop) do
+    Flop.run(Ingredient, flop, for: Ingredient)
   end
 
   def update_ingredients(wikidata_ingredients) do

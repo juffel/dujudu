@@ -9,19 +9,6 @@ defmodule Dujudu.Models do
   alias Dujudu.Schemas.Ingredient
 
   @doc """
-  Returns the list of ingredients.
-
-  ## Examples
-
-      iex> list_ingredients()
-      [%Ingredient{}, ...]
-
-  """
-  def list_ingredients do
-    Repo.all(Ingredient)
-  end
-
-  @doc """
   Gets a single ingredient.
 
   Raises `Ecto.NoResultsError` if the Ingredient does not exist.

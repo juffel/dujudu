@@ -2,6 +2,12 @@ defmodule Dujudu.Schemas.Ingredient do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {
+    Flop.Schema,
+    filterable: [:title, :wikidata_id],
+    sortable: [:title]
+  }
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "ingredients" do

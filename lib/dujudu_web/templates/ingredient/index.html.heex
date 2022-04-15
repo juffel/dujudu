@@ -1,22 +1,14 @@
-<h1>Listing Ingredients</h1>
+<h1>Ingredients</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
+<Flop.Phoenix.table
+  items={@ingredients}
+  meta={@meta}
+  path_helper={{Routes, :ingredient_path, [@conn, :index]}}
+>
+  <:col let={ingredient} label="Title" field={:title}><%= ingredient.title %></:col>
+</Flop.Phoenix.table>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for ingredient <- @ingredients do %>
-    <tr>
-      <td><%= ingredient.title %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.ingredient_path(@conn, :show, ingredient) %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+<Flop.Phoenix.pagination
+  meta={@meta}
+  path_helper={{Routes, :ingredient_path, [@conn, :index]}}
+/>

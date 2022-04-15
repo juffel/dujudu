@@ -2,11 +2,14 @@ defmodule DujuduWeb.IngredientController do
   use DujuduWeb, :controller
 
   alias Dujudu.Models
+  alias Dujudu.Access.Ingredients
   alias Dujudu.Schemas.Ingredient
 
-  def index(conn, _params) do
-    ingredients = Models.list_ingredients()
-    render(conn, "index.html", ingredients: ingredients)
+  def index(conn, params) do
+    with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
+      {ingredients, meta} = Ingredients.list_ingredients(flop)
+      render(conn, "index.html", meta: meta, ingredients: ingredients)
+    end
   end
 
   def create(conn, %{"ingredient" => ingredient_params}) do
