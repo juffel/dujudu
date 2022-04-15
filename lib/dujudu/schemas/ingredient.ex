@@ -1,4 +1,4 @@
-defmodule Dujudu.Models.Ingredient do
+defmodule Dujudu.Schemas.Ingredient do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,7 +6,7 @@ defmodule Dujudu.Models.Ingredient do
   @foreign_key_type :binary_id
   schema "ingredients" do
     field :title, :string
-    field :unit, Ecto.Enum, values: [:liter, :kilo]
+    field :unit, Ecto.Enum, values: [:liter, :kilo, :unknown]
     field :wikidata_id, :string
 
     timestamps()

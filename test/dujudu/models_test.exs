@@ -4,7 +4,7 @@ defmodule Dujudu.ModelsTest do
   alias Dujudu.Models
 
   describe "ingredients" do
-    alias Dujudu.Models.Ingredient
+    alias Dujudu.Schemas.Ingredient
 
     import Dujudu.ModelsFixtures
 

@@ -6,7 +6,7 @@ defmodule Dujudu.Models do
   import Ecto.Query, warn: false
   alias Dujudu.Repo
 
-  alias Dujudu.Models.Ingredient
+  alias Dujudu.Schemas.Ingredient
 
   @doc """
   Returns the list of ingredients.

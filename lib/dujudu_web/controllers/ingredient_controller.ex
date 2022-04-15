@@ -2,7 +2,7 @@ defmodule DujuduWeb.IngredientController do
   use DujuduWeb, :controller
 
   alias Dujudu.Models
-  alias Dujudu.Models.Ingredient
+  alias Dujudu.Schemas.Ingredient
 
   def index(conn, _params) do
     ingredients = Models.list_ingredients()
