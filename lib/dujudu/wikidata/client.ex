@@ -7,12 +7,15 @@ defmodule Dujudu.Wikidata.Client do
   plug Tesla.Middleware.Headers, [{"accept", "application/sparql-results+json"}]
 
   def get_ingredients do
-    {:ok, response} = get("/sparql", query: [query: @ingredients_query])
+    with {:ok, response} <- get("/sparql", query: [query: @ingredients_query]) do
+      {:ok, unpack_response(response.body)}
+    end
+  end
 
-    response.body
+  defp unpack_response(body) do
+    body
     |> Jason.decode!(keys: :atoms)
     |> Map.get(:results)
     |> Map.get(:bindings)
-    |> Enum.map(fn element -> struct(Dujudu.Wikidata.Ingredient, element) end)
   end
 end
