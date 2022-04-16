@@ -11,6 +11,12 @@ Running migrations:
 $ docker-compose run web mix ecto.migrate
 ```
 
+Running tests:
+
+```sh
+$ docker-compose run -e MIX_ENV=test web mix test test/dujudu/wikidata/client_test.exs
+```
+
 ## Getting an interactive shell with phoenix context
 
 ```sh
