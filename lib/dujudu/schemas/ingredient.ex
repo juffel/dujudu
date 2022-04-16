@@ -5,7 +5,8 @@ defmodule Dujudu.Schemas.Ingredient do
   @derive {
     Flop.Schema,
     filterable: [:title, :wikidata_id],
-    sortable: [:title]
+    sortable: [:title],
+    default_limit: 23
   }
 
   @primary_key {:id, :binary_id, autogenerate: true}

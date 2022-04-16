@@ -1,0 +1,8 @@
+ul.pagination-list {
+  list-style-type: none;
+}
+
+ul.pagination-list li {
+  margin-right: 10px;
+  float: left;
+}

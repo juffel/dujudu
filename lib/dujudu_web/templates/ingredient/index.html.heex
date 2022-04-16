@@ -5,7 +5,9 @@
   meta={@meta}
   path_helper={{Routes, :ingredient_path, [@conn, :index]}}
 >
-  <:col let={ingredient} label="Title" field={:title}><%= ingredient.title %></:col>
+  <:col let={ingredient} label="Title" field={:title}>
+    <%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %>
+  </:col>
 </Flop.Phoenix.table>
 
 <Flop.Phoenix.pagination
