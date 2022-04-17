@@ -8,7 +8,6 @@ defmodule DujuduWeb.IngredientController do
   def index(conn, params) do
     with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
       {ingredients, meta} = Ingredients.list_ingredients(flop)
-      IO.inspect(meta, label: "FLOP META")
       render(conn, "index.html", meta: meta, ingredients: ingredients)
     end
   end

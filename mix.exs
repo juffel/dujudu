@@ -52,7 +52,8 @@ defmodule Dujudu.MixProject do
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.6"},
       {:flop, "~> 0.16.1"},
-      {:flop_phoenix, "~> 0.14.1"}
+      {:flop_phoenix, "~> 0.14.1"},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 

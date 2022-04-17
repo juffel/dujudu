@@ -23,6 +23,12 @@ $ docker-compose run -e MIX_ENV=test web mix test test/dujudu/wikidata/client_te
 $ docker-compose run web iex -S mix
 ```
 
+## Running credo
+
+```sh
+$ docker-compose run web mix credo
+```
+
 ## Querying Wikidata
 
 https://query.wikidata.org/
