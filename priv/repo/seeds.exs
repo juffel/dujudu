@@ -28,5 +28,4 @@
 #   wikidata_id: "Q13099103",
 # }, conflict_target: :wikidata_id, on_conflict: :replace_all)
 
-Dujudu.Wikidata.Client.get_ingredients()
-|> Dujudu.Access.Ingredients.update_ingredients()
+Dujudu.Access.Ingredients.update_ingredients()

@@ -10,8 +10,10 @@ defmodule Dujudu.Wikidata.Ingredients do
 
   defp extract_data(wikidata_ingredient) do
     %Ingredient{
-      title: wikidata_ingredient.itemLabel[:value],
-      wikidata_id: wikidata_ingredient.item[:value]
+      title: get_in(wikidata_ingredient, [:itemLabel, :value]),
+      wikidata_id: get_in(wikidata_ingredient, [:item, :value]),
+      description: get_in(wikidata_ingredient, [:itemDescription, :value]),
+      image_url: get_in(wikidata_ingredient, [:imageUrl, :value])
     }
   end
 end

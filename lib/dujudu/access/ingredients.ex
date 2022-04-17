@@ -7,7 +7,7 @@ defmodule Dujudu.Access.Ingredients do
     Flop.run(Ingredient, flop, for: Ingredient)
   end
 
-  def update_ingredients(wikidata_ingredients) do
+  def update_ingredients() do
     Ingredients.fetch_ingredients()
     |> Enum.each(fn ingredient ->
       Repo.insert!(ingredient, conflict_target: :wikidata_id, on_conflict: :replace_all)

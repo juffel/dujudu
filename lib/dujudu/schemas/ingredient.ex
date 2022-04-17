@@ -14,7 +14,9 @@ defmodule Dujudu.Schemas.Ingredient do
   schema "ingredients" do
     field :title, :string
     field :unit, Ecto.Enum, values: [:liter, :kilo, :unknown]
+    field :description, :string
     field :wikidata_id, :string
+    field :image_url, :string
 
     timestamps()
   end

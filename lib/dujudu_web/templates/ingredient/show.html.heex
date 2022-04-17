@@ -1,12 +1,14 @@
 <h1>Show Ingredient</h1>
 
 <ul>
-
   <li>
     <strong>Name:</strong>
     <%= @ingredient.title %>
   </li>
-
+  <li>
+    <strong>Image:</strong>
+    <%= img_tag(@ingredient.image_url) %>
+  </li>
 </ul>
 
 <span><%= link "Back", to: Routes.ingredient_path(@conn, :index) %></span>

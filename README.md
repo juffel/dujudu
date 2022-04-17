@@ -23,6 +23,14 @@ $ docker-compose run -e MIX_ENV=test web mix test test/dujudu/wikidata/client_te
 $ docker-compose run web iex -S mix
 ```
 
+## Accessing the database
+
+```sh
+$ docker-compose run db sh
+...
+$ psql -h db -U postgres -d dujudu_dev
+```
+
 ## Running credo
 
 ```sh
@@ -31,7 +39,7 @@ $ docker-compose run web mix credo
 
 ## Querying Wikidata
 
-https://query.wikidata.org/
+Extensive tutorial on wikidata SPARQL API https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial
 
 Slightly adjusted "cat" example, with filter for `wd:Q25403900` - "Food ingredient" https://www.wikidata.org/wiki/Q25403900
 
