@@ -1,3 +1,10 @@
+nav.page-navigation li {
+  font-family: serif;
+  text-transform: uppercase;
+  margin-right: 20px;
+  float: left;
+}
+
 ul.pagination-list {
   list-style-type: none;
 }
@@ -5,4 +12,9 @@ ul.pagination-list {
 ul.pagination-list li {
   margin-right: 10px;
   float: left;
+}
+
+h1.ingredient-header {
+  font-family: serif;
+  text-transform: uppercase;
 }

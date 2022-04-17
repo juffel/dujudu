@@ -1,14 +1,8 @@
-<h1>Show Ingredient</h1>
+<h1 class="ingredient-header"><%= @ingredient.title %></h1>
 
-<ul>
-  <li>
-    <strong>Name:</strong>
-    <%= @ingredient.title %>
-  </li>
-  <li>
-    <strong>Image:</strong>
-    <%= img_tag(@ingredient.image_url) %>
-  </li>
-</ul>
+<p><%= @ingredient.description %></p>
+<p><%= img_tag(@ingredient.image_url) %></p>
 
 <span><%= link "Back", to: Routes.ingredient_path(@conn, :index) %></span>
+|
+<span><%= link "Wikidata", to: @ingredient.wikidata_id %></span>

@@ -4,8 +4,8 @@ defmodule Dujudu.Schemas.Ingredient do
 
   @derive {
     Flop.Schema,
-    filterable: [:title, :wikidata_id],
-    sortable: [:title],
+    filterable: [:title, :image_url],
+    sortable: [:title, :image_url],
     default_limit: 23
   }
 
