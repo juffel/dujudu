@@ -20,7 +20,7 @@ defmodule Dujudu.MixProject do
   def application do
     [
       mod: {Dujudu.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :crypto]
     ]
   end
 
