@@ -1,0 +1,18 @@
+{
+  "head" : {
+    "vars" : [ "image" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "image" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Red%20capsicum%20and%20cross%20section.jpg"
+      }
+    }, {
+      "image" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/RedBellPepper.jpg"
+      }
+    } ]
+  }
+}

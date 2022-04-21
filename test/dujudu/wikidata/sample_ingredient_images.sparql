@@ -1,0 +1,5 @@
+SELECT ?image
+WHERE
+{
+  wd:Q1548030 wdt:P18 ?image.
+}
