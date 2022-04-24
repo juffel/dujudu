@@ -12,7 +12,7 @@ defmodule Dujudu.Wikidata.Images do
 
   defp build_image(wikidata_image, ingredient_id) do
     %Image{
-      commons_url: get_in(wikidata_image, [:item, :value]),
+      commons_url: get_in(wikidata_image, [:image, :value]),
       ingredient_id: ingredient_id
     }
   end
