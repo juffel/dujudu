@@ -23,6 +23,7 @@ defmodule DujuduWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import DujuduWeb.ConnCase
+      import Dujudu.Factory
 
       alias DujuduWeb.Router.Helpers, as: Routes
 

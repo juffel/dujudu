@@ -23,6 +23,7 @@ defmodule Dujudu.DataCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Dujudu.Factory
       import Dujudu.DataCase
     end
   end

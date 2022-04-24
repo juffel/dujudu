@@ -53,7 +53,8 @@ defmodule Dujudu.MixProject do
       {:hackney, "~> 1.6"},
       {:flop, "~> 0.16.1"},
       {:flop_phoenix, "~> 0.14.1"},
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:ex_machina, "~> 2.7.0"}
     ]
   end
 

@@ -4,14 +4,13 @@ defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Wikidata.Ingredients
 
   import Ecto.Query, only: [from: 2]
-  import Ecto.Query.API, only: [fragment: 1]
 
   def list_ingredients(flop) do
     Flop.run(Ingredient, flop, for: Ingredient)
   end
 
   def sample_ingredient() do
-    query = from i in Ingredient, where: not(is_nil(i.image_url)), order_by: fragment("RANDOM()"), limit: 1
+    query = from i in Ingredient, order_by: fragment("RANDOM()"), limit: 1
     Repo.one(query)
   end
 

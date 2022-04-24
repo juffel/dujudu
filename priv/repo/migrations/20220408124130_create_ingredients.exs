@@ -7,6 +7,7 @@ defmodule Dujudu.Repo.Migrations.CreateIngredients do
       add :title, :string
       add :unit, :string
       add :wikidata_id, :string
+      add :description, :text
 
       timestamps()
     end
