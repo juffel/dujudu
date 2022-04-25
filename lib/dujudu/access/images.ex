@@ -1,7 +1,10 @@
 defmodule Dujudu.Access.Images do
-  alias Dujudu.Schemas.Ingredient
+  alias Dujudu.Schemas.{Image, Ingredient}
   alias Dujudu.Wikidata.Images
   alias Dujudu.Repo
+
+  import Ecto.Query, only: [from: 2]
+  import Ecto.Query.API, only: [fragment: 1]
 
   def update_all_images() do
     Ingredient
@@ -17,5 +20,10 @@ defmodule Dujudu.Access.Images do
     |> Repo.preload(:images)
     |> Ingredient.change_images(updated_images)
     |> Repo.update()
+  end
+
+  def sample_image() do
+    query = from i in Image, order_by: fragment("RANDOM()"), limit: 1
+    Repo.one(query)
   end
 end

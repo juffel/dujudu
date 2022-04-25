@@ -1,10 +1,10 @@
 defmodule DujuduWeb.PageController do
   use DujuduWeb, :controller
 
-  alias Dujudu.Access.Ingredients
+  alias Dujudu.Access.Images
 
   def index(conn, _params) do
-    ingredient = Ingredients.sample_ingredient()
-    render(conn, "index.html", ingredient_of_the_day: ingredient)
+    image = Images.sample_image()
+    render(conn, "index.html", image_of_the_day: image)
   end
 end

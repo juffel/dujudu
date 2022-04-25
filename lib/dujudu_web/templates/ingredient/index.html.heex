@@ -8,9 +8,6 @@
   <:col let={ingredient} label="Title" field={:title}>
     <%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %>
   </:col>
-  <:col let={ingredient} label="Image" field={:image_url}>
-    <%= if ingredient.image_url, do: "Yepp", else: nil %>
-  </:col>
 </Flop.Phoenix.table>
 
 <Flop.Phoenix.pagination

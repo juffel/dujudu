@@ -4,6 +4,7 @@ defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Wikidata.Ingredients
 
   import Ecto.Query, only: [from: 2]
+  import Ecto.Query.API, only: [fragment: 1]
 
   def list_ingredients(flop) do
     Flop.run(Ingredient, flop, for: Ingredient)
