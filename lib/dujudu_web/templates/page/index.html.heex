@@ -5,7 +5,9 @@
 
 <section class="row">
   <article class="column">
-    <h2>Image of the day</h2>
-    <p><%= img_tag(@image_of_the_day.commons_url) %></p>
+    <% ingredient = @image_of_the_day.ingredient %>
+    <h2>Ingredient of the day: <%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %></h2>
+
+    <p><%= link img_tag(resize_wikidata_image(@image_of_the_day.commons_url, 240)), to: Routes.ingredient_path(@conn, :show, ingredient) %></p>
   </article>
 </section>

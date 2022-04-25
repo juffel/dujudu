@@ -6,8 +6,14 @@ defmodule Dujudu.Access.Ingredients do
   import Ecto.Query, only: [from: 2]
   import Ecto.Query.API, only: [fragment: 1]
 
+  def get_ingredient(id) do
+    query = from i in Ingredient, where: i.id == ^id, preload: [:images]
+    Repo.one(query)
+  end
+
   def list_ingredients(flop) do
-    Flop.run(Ingredient, flop, for: Ingredient)
+    query = from i in Ingredient, preload: [:images]
+    Flop.run(query, flop, for: Ingredient)
   end
 
   def sample_ingredient() do

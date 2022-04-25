@@ -7,7 +7,7 @@ defmodule Dujudu.Schemas.Ingredient do
     Flop.Schema,
     filterable: [:title],
     sortable: [:title],
-    default_limit: 23
+    default_limit: 50
   }
 
   @primary_key {:id, :binary_id, autogenerate: true}

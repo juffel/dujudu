@@ -25,7 +25,7 @@ defmodule DujuduWeb.IngredientController do
   end
 
   def show(conn, %{"id" => id}) do
-    ingredient = Models.get_ingredient!(id)
+    ingredient = Ingredients.get_ingredient(id)
     render(conn, "show.html", ingredient: ingredient)
   end
 

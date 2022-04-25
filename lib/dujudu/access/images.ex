@@ -23,7 +23,7 @@ defmodule Dujudu.Access.Images do
   end
 
   def sample_image() do
-    query = from i in Image, order_by: fragment("RANDOM()"), limit: 1
+    query = from i in Image, order_by: fragment("RANDOM()"), limit: 1, preload: :ingredient
     Repo.one(query)
   end
 end
