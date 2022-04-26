@@ -7,24 +7,40 @@ defmodule Dujudu.Access.Ingredients do
   import Ecto.Query.API, only: [fragment: 1]
 
   def get_ingredient(id) do
-    query = from i in Ingredient, where: i.id == ^id, preload: [:images]
+    query =
+      from i in Ingredient,
+      where: i.id == ^id,
+      preload: [:images]
     Repo.one(query)
   end
 
+  def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_id: wid}) do
+    query =
+      from i in Ingredient,
+      where: i.instance_of_wikidata_id == ^wid and i.id != ^id,
+      preload: [:images]
+    Repo.all(query)
+  end
+
   def list_ingredients(flop) do
-    query = from i in Ingredient, preload: [:images]
+    query =
+      from i in Ingredient,
+      preload: [:images]
     Flop.run(query, flop, for: Ingredient)
   end
 
   def sample_ingredient() do
-    query = from i in Ingredient, order_by: fragment("RANDOM()"), limit: 1
+    query =
+      from i in Ingredient,
+      order_by: fragment("RANDOM()"),
+      limit: 1
     Repo.one(query)
   end
 
   def update_ingredients() do
     Ingredients.fetch_ingredients()
     |> Enum.each(fn ingredient ->
-      Repo.insert!(ingredient, conflict_target: :wikidata_id, on_conflict: :replace_all)
+      Repo.insert!(ingredient, conflict_target: :wikidata_id, on_conflict: {:replace_all_except, [:id]})
     end)
   end
 end

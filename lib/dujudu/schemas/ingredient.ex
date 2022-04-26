@@ -17,7 +17,9 @@ defmodule Dujudu.Schemas.Ingredient do
     field :unit, Ecto.Enum, values: [:liter, :kilo, :unknown]
     field :description, :string
     field :wikidata_id, :string
+    field :instance_of_wikidata_id, :string
 
+    belongs_to :instance_of, __MODULE__, foreign_key: :instance_of_wikidata_id, references: :wikidata_id, type: :string, primary_key: :false, define_field: false
     has_many :images, Image, on_replace: :delete
 
     timestamps()
