@@ -26,9 +26,7 @@ $ docker-compose run web iex -S mix
 ## Accessing the database
 
 ```sh
-$ docker-compose run db sh
-...
-$ psql -h db -U postgres -d dujudu_dev
+$ docker-compose run db sh -c 'psql -h db -U postgres -d dujudu_dev'
 ```
 
 ## Running credo

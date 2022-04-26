@@ -19,6 +19,7 @@ defmodule Dujudu.Wikidata.Ingredients do
     }
   end
 
+  defp parse_wikidata_id(nil), do: nil
   defp parse_wikidata_id(id_url) do
     id_url
     |> String.replace(@wikidata_id_prefix, "")

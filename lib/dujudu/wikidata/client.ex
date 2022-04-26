@@ -17,9 +17,19 @@ defmodule Dujudu.Wikidata.Client do
     |> get_response()
   end
 
-  defp get_response(query) do
+  defp get_response(query, retry \\ true) do
     with {:ok, response} <- get("/sparql", query: [query: query]) do
+      File.write("./ingredients.json", response.body)
       {:ok, unpack_response(response.body)}
+    else
+      {:error, :timeout} ->
+        if (retry) do
+          get_response(query, false)
+        else
+          raise 'wikidata client timeout'
+        end
+      _ ->
+        raise 'wikidata client timeout'
     end
   end
 

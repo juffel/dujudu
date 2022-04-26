@@ -10,14 +10,15 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
       where: i.id == ^id,
-      preload: [:images]
+      preload: [:images, :instance_of]
     Repo.one(query)
   end
 
-  def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_id: wid}) do
+  def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_id: wid}, limit) do
     query =
       from i in Ingredient,
       where: i.instance_of_wikidata_id == ^wid and i.id != ^id,
+      limit: ^limit,
       preload: [:images]
     Repo.all(query)
   end
