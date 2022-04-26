@@ -22,8 +22,8 @@ defmodule Dujudu.Access.Images do
     |> Repo.update()
   end
 
-  def sample_image() do
-    query = from i in Image, order_by: fragment("RANDOM()"), limit: 1, preload: :ingredient
-    Repo.one(query)
+  def sample_images(length) do
+    query = from i in Image, order_by: fragment("RANDOM()"), limit: ^length, preload: :ingredient
+    Repo.all(query)
   end
 end

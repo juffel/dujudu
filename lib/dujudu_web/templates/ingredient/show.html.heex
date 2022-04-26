@@ -3,7 +3,7 @@
 <p><%= @ingredient.description %></p>
 
 <%= for image <- @ingredient.images do %>
-  <p><%= img_tag(resize_wikidata_image(image.commons_url, 240)) %></p>
+  <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
 <% end %>
 
 <span><%= link "Back", to: Routes.ingredient_path(@conn, :index) %></span>

@@ -5,9 +5,12 @@
 
 <section class="row">
   <article class="column">
-    <% ingredient = @image_of_the_day.ingredient %>
-    <h2>Ingredient of the day: <%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %></h2>
-
-    <p><%= link img_tag(resize_wikidata_image(@image_of_the_day.commons_url, 240)), to: Routes.ingredient_path(@conn, :show, ingredient) %></p>
+    <%= for image <- @sample_images do %>
+      <% ingredient = image.ingredient %>
+      <p>
+        <h3><%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %></h3>
+        <%= link img_tag(resize_wikidata_image(image.commons_url, 240)), to: Routes.ingredient_path(@conn, :show, ingredient) %>
+      </p>
+    <% end %>
   </article>
 </section>
