@@ -1,6 +1,6 @@
 defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Repo
-  alias Dujudu.Schemas.Ingredient
+  alias Dujudu.Schemas.{Image, Ingredient}
   alias Dujudu.Wikidata.Ingredients
 
   import Ecto.Query, only: [from: 2]
@@ -14,6 +14,7 @@ defmodule Dujudu.Access.Ingredients do
     Repo.one(query)
   end
 
+  def get_similar_ingredients(%Ingredient{instance_of_wikidata_id: nil}, _limit), do: []
   def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_id: wid}, limit) do
     query =
       from i in Ingredient,
@@ -40,8 +41,20 @@ defmodule Dujudu.Access.Ingredients do
 
   def update_ingredients() do
     Ingredients.fetch_ingredients()
-    |> Enum.each(fn ingredient ->
-      Repo.insert!(ingredient, conflict_target: :wikidata_id, on_conflict: {:replace_all_except, [:id]})
+    |> Enum.each(fn entity ->
+      {:ok, ingredient} = upsert_ingredient(entity)
+      upsert_image(ingredient, entity)
     end)
+  end
+
+  defp upsert_ingredient(entity) do
+    struct(Ingredient, Map.from_struct(entity))
+    |> Repo.insert(conflict_target: :wikidata_id, on_conflict: {:replace_all_except, [:id, :wikidata_id]})
+  end
+
+  defp upsert_image(%{id: ingredient_id}, %{commons_image_url: url}) do
+    %{commons_url: url, ingredient_id: ingredient_id}
+    |> Image.create_changeset()
+    |> Repo.insert(conflict_target: [:commons_url, :ingredient_id], on_conflict: :nothing)
   end
 end

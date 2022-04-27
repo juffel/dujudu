@@ -9,5 +9,7 @@ defmodule Dujudu.Repo.Migrations.CreateImages do
 
       timestamps()
     end
+
+    create unique_index(:images, [:commons_url, :ingredient_id])
   end
 end

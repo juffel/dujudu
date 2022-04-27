@@ -12,10 +12,9 @@ defmodule Dujudu.Schemas.Image do
     timestamps()
   end
 
-  @doc false
-  def changeset(image, attrs) do
-    image
+  def create_changeset(attrs) do
+    %__MODULE__{}
     |> cast(attrs, [:commons_url, :ingredient_id])
-    |> validate_required([:commons_url, :ingredient_id])
+    |> foreign_key_constraint(:ingredient_id)
   end
 end

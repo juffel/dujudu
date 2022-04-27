@@ -1,7 +1,9 @@
 defmodule Dujudu.Wikidata.IngredientsTest do
   use ExUnit.Case
 
-  @sample_response File.read!("test/dujudu/wikidata/sample_response.json")
+  alias Dujudu.Wikidata.Entity
+
+  @sample_response File.read!("test/dujudu/wikidata/sample_ingredients.json")
 
   setup do
     Tesla.Mock.mock(fn %{method: :get} ->
@@ -14,22 +16,26 @@ defmodule Dujudu.Wikidata.IngredientsTest do
   describe "fetch_ingredients/0" do
     import Dujudu.Wikidata.Ingredients, only: [fetch_ingredients: 0]
 
-    alias Dujudu.Schemas.Ingredient
-
-    @expected_ingredients [
-      %Ingredient{
-        title: "carrot", wikidata_id: "http://www.wikidata.org/entity/Q81",
+    @expected [
+      %Entity{
+        title: "honey",
+        wikidata_id: "Q10987",
       },
-      %Ingredient{
-        title: "honey", wikidata_id: "http://www.wikidata.org/entity/Q10987",
+      %Entity{
+        title: "zucchini",
+        wikidata_id: "Q7533",
       },
-      %Ingredient{
-        title: "zucchini", wikidata_id: "http://www.wikidata.org/entity/Q7533",
-      }
+      %Entity{
+        title: "carrot",
+        description: "rabbits like 'em",
+        wikidata_id: "Q81",
+        instance_of_wikidata_id: "Q12345",
+        image_url: "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg",
+      },
     ]
 
-    test "calls client and returns a list of ingredients" do
-      assert sort(@expected_ingredients) == sort(fetch_ingredients())
+    test "calls client and returns a list of maps" do
+      assert @expected == sort(fetch_ingredients())
     end
 
     defp sort(ingredients) do
