@@ -7,6 +7,8 @@ defmodule Dujudu.Wikidata.Ingredients do
   def fetch_ingredients do
     with {:ok, ingredients} <- Client.get_ingredients() do
       Enum.map(ingredients, &extract_data/1)
+    else
+      {:error, :wikidata_client_timeout} -> []
     end
   end
 

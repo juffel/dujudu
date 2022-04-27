@@ -1,6 +1,8 @@
 defmodule Dujudu.Wikidata.ClientTest do
   use ExUnit.Case
 
+  import Dujudu.Wikidata.Client, only: [get_ingredients: 0, get_ingredient_images: 1]
+
   @ingredients_query File.read!("lib/dujudu/wikidata/queries/ingredients.sparql")
   @sample_response File.read!("test/dujudu/wikidata/sample_ingredients.json")
 
@@ -11,8 +13,6 @@ defmodule Dujudu.Wikidata.ClientTest do
   ]
 
   describe "get_ingredients/0" do
-    import Dujudu.Wikidata.Client, only: [get_ingredients: 0]
-
     setup do
       Tesla.Mock.mock(fn %{
         method: :get,
@@ -31,6 +31,18 @@ defmodule Dujudu.Wikidata.ClientTest do
     end
   end
 
+  describe "get_ingredients/0 when timeout error occurs" do
+    test "returns timeout error on timeout" do
+      Tesla.Mock.mock(fn %{method: :get} -> {:error, :timeout} end)
+      assert {:error, :wikidata_client_timeout} == get_ingredients()
+    end
+
+    test "returns general error when other error occurs" do
+      Tesla.Mock.mock(fn %{method: :get} -> {:error, :something_else} end)
+      assert {:error, :wikidata_client_error, {:error, :something_else}} == get_ingredients()
+    end
+  end
+
   @ingredient_id "Q1548030"
   @ingredient_images_query File.read!("test/dujudu/wikidata/sample_ingredient_images.sparql")
   @ingredient_images_response File.read!("test/dujudu/wikidata/sample_ingredient_images.json")
@@ -40,8 +52,6 @@ defmodule Dujudu.Wikidata.ClientTest do
   ]
 
   describe "get_ingredient_images/1" do
-    import Dujudu.Wikidata.Client, only: [get_ingredient_images: 1]
-
     setup do
       Tesla.Mock.mock(fn %{
         method: :get,
