@@ -1,9 +1,10 @@
 # Dujudu
 
-Doodle
-https://www.figma.com/file/yVrIf79Tpo7CUEKwUgS85A/Dujudu%3F-%2F-Wasmachtmanmit%3F
+A wikidata-backed browser for food & ingredients.
 
 ## Executing things in the docker container
+
+For most of the following examples, the `script/` directory contains a shortcut, like `script/mix` or `script/test`.
 
 Running migrations:
 
@@ -17,19 +18,19 @@ Running tests:
 $ docker-compose run -e MIX_ENV=test web mix test test/dujudu/wikidata/client_test.exs
 ```
 
-## Getting an interactive shell with phoenix context
+### Getting an interactive shell with phoenix context
 
 ```sh
 $ docker-compose run web iex -S mix
 ```
 
-## Accessing the database
+### Accessing the database
 
 ```sh
 $ docker-compose run db sh -c 'psql -h db -U postgres -d dujudu_dev'
 ```
 
-## Running credo
+### Running credo
 
 ```sh
 $ docker-compose run web mix credo

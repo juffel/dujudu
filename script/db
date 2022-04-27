@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# script/db: Access database within docker-compose db container.
+
+set -e
+
+echo "==> access database..."
+
+docker-compose run db sh -c 'psql -h db -U postgres -d dujudu_dev'

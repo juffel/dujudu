@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# script/console: Access iex console with mix context within docker-compose web container.
+
+set -e
+
+echo "==> open iex..."
+
+docker-compose run web iex -S mix

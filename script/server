@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# script/server: Start application server using docker-compose.
+
+set -e
+
+echo "==> Start server..."
+
+docker-compose up
