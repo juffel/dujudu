@@ -7,7 +7,7 @@ set -e
 echo "==> run mix..."
 
 if [ -n "$1" ]; then
-  docker-compose run web mix "$1"
+  docker-compose run web mix "$@"
 else
   docker-compose run web mix
 fi
