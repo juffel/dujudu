@@ -1,15 +1,34 @@
 defmodule Dujudu.Wikidata.ClientTest do
-  use ExUnit.Case
+  use DujuduWeb.ConnCase
 
   import Dujudu.Wikidata.Client, only: [get_ingredients: 0, get_ingredient_images: 1]
+
+  alias Dujudu.Wikidata.ClientRequest
+  alias Dujudu.Repo
 
   @ingredients_query File.read!("lib/dujudu/wikidata/queries/ingredients.sparql")
   @sample_response File.read!("test/dujudu/wikidata/sample_ingredients.json")
 
   @expected_ingredients [
-    %{item: %{type: "uri", value: "http://www.wikidata.org/entity/Q81"}, itemLabel: %{type: "literal", value: "carrot", "xml:lang": "en"}},
-    %{item: %{type: "uri", value: "http://www.wikidata.org/entity/Q7533"}, itemLabel: %{type: "literal", value: "zucchini", "xml:lang": "en"}},
-    %{item: %{type: "uri", value: "http://www.wikidata.org/entity/Q10987"}, itemLabel: %{type: "literal", value: "honey", "xml:lang": "en"}}
+    %{
+      item: %{type: "uri", value: "http://www.wikidata.org/entity/Q81"},
+      itemLabel: %{type: "literal", value: "carrot", "xml:lang": "en"},
+      imageUrl: %{type: "uri", value: "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg"},
+      instanceOf: %{type: "uri", value: "http://www.wikidata.org/entity/Q12345"},
+      itemDescription: %{type: "literal", value: "rabbits like 'em", "xml:lang": "en"}
+    }, %{
+      item: %{type: "uri", value: "http://www.wikidata.org/entity/Q7533"},
+      itemLabel: %{type: "literal", value: "zucchini", "xml:lang": "en"}
+    }, %{
+      item: %{type: "uri", value: "http://www.wikidata.org/entity/Q10987"},
+      itemLabel: %{type: "literal", value: "honey", "xml:lang": "en"}
+    }, %{
+      imageUrl: %{type: "uri", value: "http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg"},
+      instanceOf: %{type: "uri", value: "http://www.wikidata.org/entity/Q654321"},
+      item: %{type: "uri", value: "http://www.wikidata.org/entity/Q81"},
+      itemDescription: %{type: "literal", value: "rabbits like 'em", "xml:lang": "en"},
+      itemLabel: %{type: "literal", value: "carrot", "xml:lang": "en"}
+    }
   ]
 
   describe "get_ingredients/0" do
@@ -20,20 +39,47 @@ defmodule Dujudu.Wikidata.ClientTest do
         headers: [{"accept", "application/sparql-results+json"}],
         query: [query: @ingredients_query]
       } ->
-        %Tesla.Env{status: 200, body: @sample_response}
+        %Tesla.Env{
+          status: 200,
+          query: [query: @ingredients_query],
+          body: @sample_response
+        }
       end)
 
       :ok
     end
 
     test "retrieves the current list of ingredients and unpacks response" do
-      assert {:ok, @expected_ingredients} == get_ingredients()
+      assert {:ok, @expected_ingredients} = get_ingredients()
+    end
+
+    test "stores a record of the latest request" do
+      assert Repo.all(ClientRequest) == []
+      get_ingredients()
+      [request] = Repo.all(ClientRequest)
+      assert request.query == @ingredients_query
+      assert request.response_body == @sample_response
+    end
+
+    @hours_ago_25 DateTime.utc_now() |> DateTime.add(-60 * 60 * 25, :second)
+    @hours_ago_23 DateTime.utc_now() |> DateTime.add(-60 * 60 * 23, :second)
+
+    test "removes outdated records and keeps newer ones" do
+      outdated_record = insert(:wikidata_client_request, inserted_at: @hours_ago_25)
+      recent_record = insert(:wikidata_client_request, inserted_at: @hours_ago_23)
+
+      get_ingredients()
+
+      logged_requests = Repo.all(ClientRequest)
+      refute outdated_record in logged_requests
+      assert recent_record in logged_requests
     end
   end
 
   describe "get_ingredients/0 when timeout error occurs" do
     test "returns timeout error on timeout" do
       Tesla.Mock.mock(fn %{method: :get} -> {:error, :timeout} end)
+
       assert {:error, :wikidata_client_timeout} == get_ingredients()
     end
 

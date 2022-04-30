@@ -15,4 +15,11 @@ defmodule Dujudu.Factory do
       commons_url: "foo"
     }
   end
+
+  def wikidata_client_request_factory do
+    %Dujudu.Wikidata.ClientRequest{
+      query: "",
+      response_body: "{}"
+    }
+  end
 end

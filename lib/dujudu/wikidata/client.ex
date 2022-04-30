@@ -6,6 +6,7 @@ defmodule Dujudu.Wikidata.Client do
 
   plug Tesla.Middleware.BaseUrl, "https://query.wikidata.org"
   plug Tesla.Middleware.Headers, [{"accept", "application/sparql-results+json"}]
+  plug Dujudu.Wikidata.SaveClientResponse
 
   def get_ingredients do
     get_response(@ingredients)
@@ -21,8 +22,11 @@ defmodule Dujudu.Wikidata.Client do
     with {:ok, response} <- get("/sparql", query: [query: query]) do
       {:ok, unpack_response(response.body)}
     else
-      {:error, :timeout} -> {:error, :wikidata_client_timeout}
-      error -> {:error, :wikidata_client_error, error}
+      {:error, :timeout} ->
+        {:error, :wikidata_client_timeout}
+      error ->
+        {:error, :wikidata_client_error, error}
+      _ -> IO.inspect("error no3 path")
     end
   end
 
