@@ -6,8 +6,6 @@ defmodule DujuduWeb.IngredientController do
 
   def index(conn, params) do
     with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
-      # sample filter url that hands through params properly to FLOP
-      # localhost:4000/ingredients?filters[0][field]=title&filters[0][op]==~&filters[0][value]=Mag
       {ingredients, meta} = Ingredients.list_ingredients(flop)
       render(conn, "index.html", meta: meta, ingredients: ingredients)
     end

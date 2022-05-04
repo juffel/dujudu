@@ -1,8 +1,6 @@
 <h1 class="ingredient-header">Ingredients</h1>
 
-<.form let={f} for={@meta}>
-  <%= csrf_input_tag("#") %>
-
+<.form let={f} for={@meta} method="get">
   <.filter_fields let={e} form={f} fields={[title: [label: "Search", op: :=~, type: :text_input]]}>
     <%= e.label %>
     <%= e.input %>
@@ -20,7 +18,9 @@
   <:col let={ingredient} label="Image" field={:image}>
     <% image = image_for(ingredient) %>
     <%= if not is_nil(image) do %>
-      <%= img_tag(resize_wikidata_image(image.commons_url, 120)) %>
+      <%= link to: Routes.ingredient_path(@conn, :show, ingredient) do %>
+        <%= img_tag(resize_wikidata_image(image.commons_url, 120)) %>
+      <% end %>
     <% end %>
   </:col>
 </Flop.Phoenix.table>
