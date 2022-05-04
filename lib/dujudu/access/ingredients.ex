@@ -40,7 +40,7 @@ defmodule Dujudu.Access.Ingredients do
   end
 
   def update_ingredients() do
-    Ingredients.fetch_ingredients()
+    Ingredients.fetch_cached_ingredients()
     |> Enum.each(fn entity ->
       {:ok, ingredient} = upsert_ingredient(entity)
       upsert_image(ingredient, entity)

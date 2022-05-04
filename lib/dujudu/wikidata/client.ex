@@ -26,7 +26,6 @@ defmodule Dujudu.Wikidata.Client do
         {:error, :wikidata_client_timeout}
       error ->
         {:error, :wikidata_client_error, error}
-      _ -> IO.inspect("error no3 path")
     end
   end
 

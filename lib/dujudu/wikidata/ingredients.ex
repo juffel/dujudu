@@ -1,7 +1,11 @@
 defmodule Dujudu.Wikidata.Ingredients do
   alias Dujudu.Wikidata.{Client, Entity}
+  alias Dujudu.Wikidata.Access.ClientRequests
 
   @wikidata_id_prefix "http://www.wikidata.org/entity/"
+  def fetch_cached_ingredients() do
+    ClientRequests.get_cached() || fetch_ingredients()
+  end
 
   def fetch_ingredients(retry \\ true) do
     with {:ok, ingredients} <- Client.get_ingredients() do
