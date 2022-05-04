@@ -30,8 +30,15 @@ defmodule Dujudu.Wikidata.IngredientsTest do
         description: "rabbits like 'em",
         wikidata_id: "Q81",
         instance_of_wikidata_id: "Q12345",
-        image_url: "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg",
+        commons_image_url: "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg",
       },
+      %Dujudu.Wikidata.Entity{
+        title: "carrot",
+        description: "rabbits like 'em",
+        wikidata_id: "Q81",
+        instance_of_wikidata_id: "Q654321",
+        commons_image_url: "http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg"
+      }
     ]
 
     test "calls client and returns a list of maps" do

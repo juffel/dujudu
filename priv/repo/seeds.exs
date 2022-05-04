@@ -29,4 +29,3 @@
 # }, conflict_target: :wikidata_id, on_conflict: :replace_all)
 
 Dujudu.Access.Ingredients.update_ingredients()
-# Dujudu.Access.Images.update_all_images() # loading images takes a long while
