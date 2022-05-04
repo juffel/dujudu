@@ -17,8 +17,10 @@ defmodule DujuduWeb.IngredientController do
     ingredient = Ingredients.get_ingredient(id)
     instance_of_ingredient = ingredient.instance_of
     similar_ingredients = Ingredients.get_similar_ingredients(ingredient, 5)
+    ingredients_of_this_kind = Ingredients.get_ingredients_of_this_kind(ingredient, 5)
     render(conn, "show.html", ingredient: ingredient,
                               instance_of_ingredient: instance_of_ingredient,
-                              similar_ingredients: similar_ingredients)
+                              similar_ingredients: similar_ingredients,
+                              ingredients_of_this_kind: ingredients_of_this_kind)
   end
 end

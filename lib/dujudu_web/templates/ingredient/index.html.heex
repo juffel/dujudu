@@ -9,11 +9,6 @@
   </.filter_fields>
 </.form>
 
-<Flop.Phoenix.pagination
-  meta={@meta}
-  path_helper={{Routes, :ingredient_path, [@conn, :index]}}
-/>
-
 <Flop.Phoenix.table
   items={@ingredients}
   meta={@meta}

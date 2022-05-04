@@ -24,6 +24,15 @@ defmodule Dujudu.Access.Ingredients do
     Repo.all(query)
   end
 
+  def get_ingredients_of_this_kind(%Ingredient{wikidata_id: wid}, limit) do
+    query =
+      from i in Ingredient,
+      where: i.instance_of_wikidata_id == ^wid,
+      limit: ^limit,
+      preload: [:images]
+    Repo.all(query)
+  end
+
   def list_ingredients(flop) do
     query =
       from i in Ingredient,

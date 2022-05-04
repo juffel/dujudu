@@ -15,13 +15,28 @@
 <span><%= link "Wikidata", to: wikidata_url(@ingredient) %></span>
 
 <hr>
-<h3>Other ingredients:</h3>
-<%= for ingredient <- @similar_ingredients do %>
-  <% image = ingredient.images |> List.first %>
-  <p>
-    <h4><%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %></h4>
-    <%= if not is_nil(image) do %>
-      <%= link img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.ingredient_path(@conn, :show, ingredient) %>
-    <% end %>
-  </p>
+<%= if length(@ingredients_of_this_kind) > 0 do %>
+  <h3>Ingredients of this kind:</h3>
+  <%= for ingredient <- @ingredients_of_this_kind do %>
+    <% image = ingredient.images |> List.first %>
+    <p>
+      <h4><%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %></h4>
+      <%= if not is_nil(image) do %>
+        <%= link img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.ingredient_path(@conn, :show, ingredient) %>
+      <% end %>
+    </p>
+  <% end %>
+<% end %>
+
+<%= if length(@similar_ingredients) > 0 do %>
+  <h3>Other ingredients:</h3>
+  <%= for ingredient <- @similar_ingredients do %>
+    <% image = ingredient.images |> List.first %>
+    <p>
+      <h4><%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %></h4>
+      <%= if not is_nil(image) do %>
+        <%= link img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.ingredient_path(@conn, :show, ingredient) %>
+      <% end %>
+    </p>
+  <% end %>
 <% end %>
