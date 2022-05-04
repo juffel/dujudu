@@ -19,6 +19,7 @@ defmodule DujuduWeb.Router do
 
     get "/", PageController, :index
     get "/ingredients", IngredientController, :index
+    post "/ingredients", IngredientController, :index
     get "/ingredients/:id", IngredientController, :show
   end
 

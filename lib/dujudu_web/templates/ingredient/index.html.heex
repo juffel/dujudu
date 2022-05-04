@@ -1,5 +1,14 @@
 <h1 class="ingredient-header">Ingredients</h1>
 
+<.form let={f} for={@meta}>
+  <%= csrf_input_tag("#") %>
+
+  <.filter_fields let={e} form={f} fields={[title: [label: "Search", op: :=~, type: :text_input]]}>
+    <%= e.label %>
+    <%= e.input %>
+  </.filter_fields>
+</.form>
+
 <Flop.Phoenix.pagination
   meta={@meta}
   path_helper={{Routes, :ingredient_path, [@conn, :index]}}
