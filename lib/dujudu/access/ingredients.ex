@@ -20,6 +20,7 @@ defmodule Dujudu.Access.Ingredients do
       from i in Ingredient,
       where: i.instance_of_wikidata_id == ^wid and i.id != ^id,
       limit: ^limit,
+      order_by: fragment("RANDOM()"),
       preload: [:images]
     Repo.all(query)
   end
@@ -29,6 +30,7 @@ defmodule Dujudu.Access.Ingredients do
       from i in Ingredient,
       where: i.instance_of_wikidata_id == ^wid,
       limit: ^limit,
+      order_by: fragment("RANDOM()"),
       preload: [:images]
     Repo.all(query)
   end
