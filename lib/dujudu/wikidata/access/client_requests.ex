@@ -16,6 +16,7 @@ defmodule Dujudu.Wikidata.Access.ClientRequests do
       order_by: [desc: cr.inserted_at],
       where: cr.inserted_at > ^timestamp_threshold,
       limit: 1
+
     Repo.one(query)
   end
 end

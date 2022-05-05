@@ -20,19 +20,12 @@ defmodule Dujudu.Wikidata.Client do
 
   defp get_response(query) do
     with {:ok, response} <- get("/sparql", query: [query: query]) do
-      {:ok, unpack_response(response.body)}
+      {:ok, response.body}
     else
       {:error, :timeout} ->
         {:error, :wikidata_client_timeout}
       error ->
         {:error, :wikidata_client_error, error}
     end
-  end
-
-  defp unpack_response(body) do
-    body
-    |> Jason.decode!(keys: :atoms)
-    |> Map.get(:results)
-    |> Map.get(:bindings)
   end
 end

@@ -51,14 +51,17 @@ defmodule Dujudu.Access.Ingredients do
   def update_ingredients() do
     Ingredients.fetch_cached_ingredients()
     |> Enum.each(fn entity ->
-      {:ok, ingredient} = upsert_ingredient(entity)
-      upsert_image(ingredient, entity)
+      upsert_ingredient(entity)
+      |> upsert_image(entity)
     end)
   end
 
   defp upsert_ingredient(entity) do
     struct(Ingredient, Map.from_struct(entity))
     |> Repo.insert(conflict_target: :wikidata_id, on_conflict: {:replace_all_except, [:id, :wikidata_id]})
+
+    # do a fresh load from db, since insert + on_conflict returns a fake/unpersisted id in case the record already exists
+    Repo.get_by(Ingredient, wikidata_id: entity.wikidata_id)
   end
 
   defp upsert_image(%{id: ingredient_id}, %{commons_image_url: url}) do

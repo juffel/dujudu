@@ -3,13 +3,24 @@ defmodule Dujudu.Wikidata.Ingredients do
   alias Dujudu.Wikidata.Access.ClientRequests
 
   @wikidata_id_prefix "http://www.wikidata.org/entity/"
+
   def fetch_cached_ingredients() do
-    ClientRequests.get_cached() || fetch_ingredients()
+    fetch_cached_json()
+    |> unpack_response()
+    |> Enum.map(&extract_data/1)
   end
 
-  def fetch_ingredients(retry \\ true) do
+  defp fetch_cached_json() do
+    with %{response_body: response_body} <- ClientRequests.get_cached() do
+      response_body
+    else
+      _ -> fetch_ingredients()
+    end
+  end
+
+  defp fetch_ingredients(retry \\ true) do
     with {:ok, ingredients} <- Client.get_ingredients() do
-      Enum.map(ingredients, &extract_data/1)
+      ingredients
     else
       {:error, :wikidata_client_timeout} ->
         if retry do
@@ -18,6 +29,14 @@ defmodule Dujudu.Wikidata.Ingredients do
           []
         end
     end
+  end
+
+  defp unpack_response(body) do
+    body
+    |> IO.inspect(label: "raw body")
+    |> Jason.decode!(keys: :atoms)
+    |> Map.get(:results)
+    |> Map.get(:bindings)
   end
 
   defp extract_data(wikidata_ingredient) do
