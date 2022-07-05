@@ -18,7 +18,7 @@ defmodule Dujudu.Wikidata.Ingredients do
     end
   end
 
-  defp fetch_ingredients(retry \\ true) do
+  def fetch_ingredients(retry \\ true) do
     with {:ok, ingredients} <- Client.get_ingredients() do
       ingredients
     else
@@ -33,7 +33,6 @@ defmodule Dujudu.Wikidata.Ingredients do
 
   defp unpack_response(body) do
     body
-    |> IO.inspect(label: "raw body")
     |> Jason.decode!(keys: :atoms)
     |> Map.get(:results)
     |> Map.get(:bindings)
