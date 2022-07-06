@@ -18,7 +18,7 @@ defmodule Dujudu.Wikidata.Ingredients do
     end
   end
 
-  def fetch_ingredients(retry \\ true) do
+  defp fetch_ingredients(retry \\ true) do
     with {:ok, ingredients} <- Client.get_ingredients() do
       ingredients
     else
