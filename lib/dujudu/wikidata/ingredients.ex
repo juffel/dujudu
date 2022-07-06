@@ -33,7 +33,6 @@ defmodule Dujudu.Wikidata.Ingredients do
 
   defp unpack_response(body) do
     body
-    |> IO.inspect(label: "raw body")
     |> Jason.decode!(keys: :atoms)
     |> Map.get(:results)
     |> Map.get(:bindings)
