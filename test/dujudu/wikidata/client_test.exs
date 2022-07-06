@@ -9,28 +9,6 @@ defmodule Dujudu.Wikidata.ClientTest do
   @ingredients_query File.read!("lib/dujudu/wikidata/queries/ingredients.sparql")
   @sample_response File.read!("test/dujudu/wikidata/sample_ingredients.json")
 
-  @expected_ingredients [
-    %{
-      item: %{type: "uri", value: "http://www.wikidata.org/entity/Q81"},
-      itemLabel: %{type: "literal", value: "carrot", "xml:lang": "en"},
-      imageUrl: %{type: "uri", value: "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg"},
-      instanceOf: %{type: "uri", value: "http://www.wikidata.org/entity/Q12345"},
-      itemDescription: %{type: "literal", value: "rabbits like 'em", "xml:lang": "en"}
-    }, %{
-      item: %{type: "uri", value: "http://www.wikidata.org/entity/Q7533"},
-      itemLabel: %{type: "literal", value: "zucchini", "xml:lang": "en"}
-    }, %{
-      item: %{type: "uri", value: "http://www.wikidata.org/entity/Q10987"},
-      itemLabel: %{type: "literal", value: "honey", "xml:lang": "en"}
-    }, %{
-      imageUrl: %{type: "uri", value: "http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg"},
-      instanceOf: %{type: "uri", value: "http://www.wikidata.org/entity/Q654321"},
-      item: %{type: "uri", value: "http://www.wikidata.org/entity/Q81"},
-      itemDescription: %{type: "literal", value: "rabbits like 'em", "xml:lang": "en"},
-      itemLabel: %{type: "literal", value: "carrot", "xml:lang": "en"}
-    }
-  ]
-
   describe "get_ingredients/0" do
     setup do
       Tesla.Mock.mock(fn %{
@@ -49,8 +27,8 @@ defmodule Dujudu.Wikidata.ClientTest do
       :ok
     end
 
-    test "retrieves the current list of ingredients and unpacks response" do
-      assert {:ok, @expected_ingredients} = get_ingredients()
+    test "retrieves the current list of ingredients" do
+      assert {:ok, @sample_response} = get_ingredients()
     end
 
     test "stores a record of the latest request" do
@@ -92,10 +70,6 @@ defmodule Dujudu.Wikidata.ClientTest do
   @ingredient_id "Q1548030"
   @ingredient_images_query File.read!("test/dujudu/wikidata/sample_ingredient_images.sparql")
   @ingredient_images_response File.read!("test/dujudu/wikidata/sample_ingredient_images.json")
-  @expected_images [
-    %{image: %{type: "uri", value: "http://commons.wikimedia.org/wiki/Special:FilePath/Red%20capsicum%20and%20cross%20section.jpg"}},
-    %{image: %{type: "uri", value: "http://commons.wikimedia.org/wiki/Special:FilePath/RedBellPepper.jpg"}}
-  ]
 
   describe "get_ingredient_images/1" do
     setup do
@@ -112,7 +86,7 @@ defmodule Dujudu.Wikidata.ClientTest do
     end
 
     test "retrieves images for the given ingredient and unpacks response" do
-      assert {:ok, @expected_images} == get_ingredient_images(@ingredient_id)
+      assert {:ok, @ingredient_images_response} == get_ingredient_images(@ingredient_id)
     end
   end
 end

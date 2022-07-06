@@ -1,5 +1,5 @@
 defmodule Dujudu.Wikidata.IngredientsTest do
-  use ExUnit.Case
+  use DujuduWeb.ConnCase
 
   alias Dujudu.Wikidata.Entity
 
@@ -13,8 +13,8 @@ defmodule Dujudu.Wikidata.IngredientsTest do
       :ok
     end
 
-  describe "fetch_ingredients/0" do
-    import Dujudu.Wikidata.Ingredients, only: [fetch_ingredients: 0]
+  describe "fetch_cached_ingredients/0" do
+    import Dujudu.Wikidata.Ingredients, only: [fetch_cached_ingredients: 0]
 
     @expected [
       %Entity{
@@ -42,7 +42,7 @@ defmodule Dujudu.Wikidata.IngredientsTest do
     ]
 
     test "calls client and returns a list of maps" do
-      assert @expected == sort(fetch_ingredients())
+      assert @expected == sort(fetch_cached_ingredients())
     end
 
     defp sort(ingredients) do
