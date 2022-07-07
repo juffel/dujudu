@@ -18,9 +18,10 @@ defmodule Dujudu.Schemas.Account do
   def create_changeset(attrs) do
     %__MODULE__{}
     |> cast(attrs, [:email, :name, :password])
+    |> validate_length(:password, min: 12, max: 128)
     |> put_pass_hash()
+    |> validate_required([:email, :password])
     |> delete_change(:password)
-    |> validate_required([:email, :name, :password_hash])
   end
 
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:

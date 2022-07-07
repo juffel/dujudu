@@ -5,7 +5,7 @@ defmodule Dujudu.Factory do
     %Dujudu.Schemas.Account{
       name: "Chang Doe",
       email: "chang@doe.org",
-      password: "password123"
+      password: "passwordpassword123"
     }
   end
 

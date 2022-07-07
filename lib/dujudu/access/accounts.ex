@@ -6,7 +6,11 @@ defmodule Dujudu.Access.Accounts do
     Repo.get(Account, id)
   end
 
-  def create_account(params) do
+  def get_by_email(email) do
+    Repo.get_by(Account, email: email)
+  end
+
+  def create(params) do
     params
     |> Account.create_changeset()
     |> Repo.insert()
