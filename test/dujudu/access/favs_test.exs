@@ -26,20 +26,6 @@ defmodule Dujudu.Access.FavsTest do
     end
   end
 
-  describe "list/1" do
-    setup :insert_fav
-
-    test "returns only favs belonging to this account", %{account: %{id: account_id}, fav: fav} do
-      other_account = insert(:account)
-      insert(:fav, account: other_account, ingredient: fav.ingredient)
-      insert(:fav, account: other_account, ingredient: insert(:ingredient, wikidata_id: "ABCDE"))
-
-      [result] = Favs.list(account_id)
-
-      assert result.id == fav.id
-    end
-  end
-
   describe "create/2" do
     test "inserts new fav" do
       account = insert(:account)

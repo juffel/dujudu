@@ -97,6 +97,7 @@ defmodule DujuduWeb do
 
       import DujuduWeb.ErrorHelpers
       import DujuduWeb.Gettext
+      import DujuduWeb.ImageHelpers
       alias DujuduWeb.Router.Helpers, as: Routes
     end
   end

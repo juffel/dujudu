@@ -1,13 +1,16 @@
 defmodule DujuduWeb.FavController do
   use DujuduWeb, :controller
 
-  alias Dujudu.Access.Favs
+  alias Dujudu.Access.{Favs, Ingredients}
+  alias Dujudu.Schemas.Ingredient
 
   def index(conn, params) do
     account = conn.assigns[:current_account]
 
-    ingredients = Favs.list(account.id)
-    render(conn, "index.html", ingredients: ingredients)
+    with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
+      {ingredients, meta} = Ingredients.list_fav_ingredients(flop, account.id)
+      render(conn, "index.html", meta: meta, ingredients: ingredients)
+    end
   end
 
   def create(conn, %{"id" => ingredient_id}) do
@@ -18,7 +21,7 @@ defmodule DujuduWeb.FavController do
         conn
         |> put_flash(:info, "Fav'd <3")
         |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "Something went wrong.")
         |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
@@ -33,7 +36,7 @@ defmodule DujuduWeb.FavController do
         conn
         |> put_flash(:info, "Unfav'd 😢")
         |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "Something went wrong.")
         |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
