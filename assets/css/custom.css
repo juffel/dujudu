@@ -18,3 +18,9 @@ h1.ingredient-header {
   font-family: serif;
   text-transform: uppercase;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}

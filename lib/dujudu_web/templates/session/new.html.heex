@@ -1,0 +1,16 @@
+<h1>Login to your account</h1>
+
+<%= form_for @conn, Routes.session_path(@conn, :create), fn f -> %>
+  <div class="form-group">
+    <%= text_input f, :email, placeholder: "Email",
+                              class: "form-control" %>
+    <%= error_tag f, :email %>
+  </div>
+  <div class="form-group">
+    <%= password_input f, :password, placeholder: "Password",
+                                     class: "form-control" %>
+    <%= error_tag f, :password %>
+  </div>  <%= submit "Login", class: "btn btn-primary" %>
+<% end %>
+
+<%= link "Sign up here", to: Routes.account_path(@conn, :new) %>, if you don't have an account yet.

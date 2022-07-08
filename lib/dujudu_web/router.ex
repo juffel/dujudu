@@ -15,9 +15,11 @@ defmodule DujuduWeb.Router do
   end
 
   scope "/", DujuduWeb do
-    pipe_through :browser
+    pipe_through [:browser, Dujudu.Auth.Pipeline]
 
     get "/", PageController, :index
+    resources "/accounts", AccountController, only: [:new, :create]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/ingredients", IngredientController, :index
     get "/ingredients/:id", IngredientController, :show
   end

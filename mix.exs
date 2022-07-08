@@ -51,6 +51,8 @@ defmodule Dujudu.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.6"},
+      {:guardian, "~> 2.0"},
+      {:argon2_elixir, "~> 3.0"},
       {:flop, "~> 0.16.1"},
       {:flop_phoenix, "~> 0.14.1"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},

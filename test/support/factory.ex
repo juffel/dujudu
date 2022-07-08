@@ -1,6 +1,14 @@
 defmodule Dujudu.Factory do
   use ExMachina.Ecto, repo: Dujudu.Repo
 
+  def account_factory do
+    %Dujudu.Schemas.Account{
+      name: "Chang Doe",
+      email: "chang@doe.org",
+      password: "passwordpassword123"
+    }
+  end
+
   def ingredient_factory do
     %Dujudu.Schemas.Ingredient{
       title: "bell pepper",
