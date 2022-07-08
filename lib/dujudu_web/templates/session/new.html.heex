@@ -12,3 +12,5 @@
     <%= error_tag f, :password %>
   </div>  <%= submit "Login", class: "btn btn-primary" %>
 <% end %>
+
+<%= link "Sign up here", to: Routes.account_path(@conn, :new) %>, if you don't have an account yet.
