@@ -11,6 +11,8 @@ defmodule Dujudu.Schemas.Account do
     field :password_hash, :string
     field(:password, :string, virtual: true)
 
+    has_many :favs, Dujudu.Schemas.Fav
+
     timestamps()
   end
 

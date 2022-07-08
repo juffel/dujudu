@@ -10,7 +10,7 @@ defmodule Dujudu.Auth.Guardian do
     {:error, :reason_for_error}
   end
 
-  def resource_from_claims(%{"sub" => id} = rams) do
+  def resource_from_claims(%{"sub" => id}) do
     resource = Accounts.get(id)
     {:ok,  resource}
   end

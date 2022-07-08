@@ -29,6 +29,8 @@ defmodule Dujudu.Schemas.Ingredient do
              foreign_key: :instance_of_wikidata_id,
              references: :wikidata_id
 
+    has_many :favs, Dujudu.Schemas.Fav
+
     timestamps()
   end
 

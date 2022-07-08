@@ -1,10 +1,11 @@
 defmodule DujuduWeb.IngredientController do
   use DujuduWeb, :controller
 
-  alias Dujudu.Access.Ingredients
+  alias Dujudu.Access.{Favs, Ingredients}
   alias Dujudu.Schemas.Ingredient
 
   plug :load_ingredient when action in [:show]
+  plug :load_fav when action in [:show]
 
   def index(conn, params) do
     with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
@@ -34,6 +35,16 @@ defmodule DujuduWeb.IngredientController do
 
       ingredient ->
         assign(conn, :ingredient, ingredient)
+    end
+  end
+
+  # fetch fav status if a current account is present
+  defp load_fav(conn, _opts) do
+    case conn.assigns[:current_account] do
+      nil -> conn
+      account ->
+        fav = Favs.get(account.id, conn.assigns[:ingredient].id)
+        assign(conn, :fav, fav)
     end
   end
 end

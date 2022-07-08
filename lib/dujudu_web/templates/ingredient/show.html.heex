@@ -1,4 +1,11 @@
-<h1 class="ingredient-header"><%= @ingredient.title %></h1>
+<h1 class="ingredient-header">
+  <%= @ingredient.title %>
+  <%= if is_nil(assigns[:fav]) do %>
+    <%= link "Save fav", to: Routes.fav_path(@conn, :create, id: @ingredient.id), method: :post %>
+  <% else %>
+    💜 <%= link "Unfav", to: Routes.fav_path(@conn, :delete, @ingredient.id), method: :delete %>
+  <% end %>
+</h1>
 
 <%= if not is_nil(@instance_of_ingredient) do %>
   A kind of <%= link @instance_of_ingredient.title, to: Routes.ingredient_path(@conn, :show, @instance_of_ingredient) %>.
