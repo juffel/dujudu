@@ -9,54 +9,61 @@ defmodule Dujudu.Access.Ingredients do
   def get_ingredient(id) do
     query =
       from i in Ingredient,
-      where: i.id == ^id,
-      preload: [:images, :instance_of]
+        where: i.id == ^id,
+        preload: [:images, :instance_of]
+
     Repo.one(query)
   end
 
   def get_similar_ingredients(%Ingredient{instance_of_wikidata_id: nil}, _limit), do: []
+
   def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_id: wid}, limit) do
     query =
       from i in Ingredient,
-      where: i.instance_of_wikidata_id == ^wid and i.id != ^id,
-      limit: ^limit,
-      order_by: fragment("RANDOM()"),
-      preload: [:images]
+        where: i.instance_of_wikidata_id == ^wid and i.id != ^id,
+        limit: ^limit,
+        order_by: fragment("RANDOM()"),
+        preload: [:images]
+
     Repo.all(query)
   end
 
   def get_ingredients_of_this_kind(%Ingredient{wikidata_id: wid}, limit) do
     query =
       from i in Ingredient,
-      where: i.instance_of_wikidata_id == ^wid,
-      limit: ^limit,
-      order_by: fragment("RANDOM()"),
-      preload: [:images]
+        where: i.instance_of_wikidata_id == ^wid,
+        limit: ^limit,
+        order_by: fragment("RANDOM()"),
+        preload: [:images]
+
     Repo.all(query)
   end
 
   def list_ingredients(flop) do
     query =
       from i in Ingredient,
-      preload: [:images]
+        preload: [:images]
+
     Flop.run(query, flop, for: Ingredient)
   end
 
   def list_fav_ingredients(flop, account_id) do
     query =
       from i in Ingredient,
-      right_join: f in Fav,
-      on: [ingredient_id: i.id],
-      where: f.account_id == ^account_id,
-      preload: [:images]
+        right_join: f in Fav,
+        on: [ingredient_id: i.id],
+        where: f.account_id == ^account_id,
+        preload: [:images]
+
     Flop.run(query, flop, for: Ingredient)
   end
 
   def sample_ingredient() do
     query =
       from i in Ingredient,
-      order_by: fragment("RANDOM()"),
-      limit: 1
+        order_by: fragment("RANDOM()"),
+        limit: 1
+
     Repo.one(query)
   end
 
@@ -70,13 +77,17 @@ defmodule Dujudu.Access.Ingredients do
 
   defp upsert_ingredient(entity) do
     struct(Ingredient, Map.from_struct(entity))
-    |> Repo.insert(conflict_target: :wikidata_id, on_conflict: {:replace_all_except, [:id, :wikidata_id]})
+    |> Repo.insert(
+      conflict_target: :wikidata_id,
+      on_conflict: {:replace_all_except, [:id, :wikidata_id]}
+    )
 
     # do a fresh load from db, since insert + on_conflict returns a fake/unpersisted id in case the record already exists
     Repo.get_by(Ingredient, wikidata_id: entity.wikidata_id)
   end
 
   defp upsert_image(_, %{commons_image_url: nil}), do: nil
+
   defp upsert_image(%{id: ingredient_id}, %{commons_image_url: url}) do
     %{commons_url: url, ingredient_id: ingredient_id}
     |> Image.create_changeset()

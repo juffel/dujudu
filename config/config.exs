@@ -52,8 +52,7 @@ config :tesla, :adapter, Tesla.Adapter.Hackney
 
 config :flop, repo: Dujudu.Repo
 
-config :dujudu, Dujudu.Auth.Guardian,
-  secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+config :dujudu, Dujudu.Auth.Guardian, secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
 config :dujudu, Dujudu.Auth.Pipeline,
   module: Dujudu.Auth.Guardian,

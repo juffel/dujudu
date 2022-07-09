@@ -1,7 +1,8 @@
 defmodule Dujudu.Wikidata.ImageUrls do
   @thumbnail_base_url "https://upload.wikimedia.org/wikipedia/commons/thumb"
 
-  @spec resize_wikidata_image(url :: String.t(), height_in_pixels :: Integer.t()) :: String.t() | nil
+  @spec resize_wikidata_image(url :: String.t(), height_in_pixels :: Integer.t()) ::
+          String.t() | nil
   def resize_wikidata_image(nil, _height), do: nil
 
   # constructing/guessing a thumbnail url from a wikidata image url feels brittle,
@@ -12,6 +13,7 @@ defmodule Dujudu.Wikidata.ImageUrls do
     file_name = extract_file_name(url)
     [hash1, hash2] = file_name_hashes(file_name)
     path_suffix = "#{height}px-#{file_name}"
+
     [@thumbnail_base_url, hash1, hash2, file_name, path_suffix]
     |> Path.join()
     |> URI.encode()
@@ -29,6 +31,7 @@ defmodule Dujudu.Wikidata.ImageUrls do
 
   defp file_name_hashes(name) do
     hash = :crypto.hash(:md5, name) |> Base.encode16(case: :lower)
+
     [
       String.first(hash),
       String.slice(hash, 0..1)

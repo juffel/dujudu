@@ -7,11 +7,11 @@ defmodule Dujudu.Wikidata.IngredientsTest do
 
   setup do
     Tesla.Mock.mock(fn %{method: :get} ->
-        %Tesla.Env{status: 200, body: @sample_response}
-      end)
+      %Tesla.Env{status: 200, body: @sample_response}
+    end)
 
-      :ok
-    end
+    :ok
+  end
 
   describe "fetch_cached_ingredients/0" do
     import Dujudu.Wikidata.Ingredients, only: [fetch_cached_ingredients: 0]
@@ -19,25 +19,26 @@ defmodule Dujudu.Wikidata.IngredientsTest do
     @expected [
       %Entity{
         title: "honey",
-        wikidata_id: "Q10987",
+        wikidata_id: "Q10987"
       },
       %Entity{
         title: "zucchini",
-        wikidata_id: "Q7533",
+        wikidata_id: "Q7533"
       },
       %Entity{
         title: "carrot",
         description: "rabbits like 'em",
         wikidata_id: "Q81",
         instance_of_wikidata_id: "Q12345",
-        commons_image_url: "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg",
+        commons_image_url: "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg"
       },
       %Dujudu.Wikidata.Entity{
         title: "carrot",
         description: "rabbits like 'em",
         wikidata_id: "Q81",
         instance_of_wikidata_id: "Q654321",
-        commons_image_url: "http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg"
+        commons_image_url:
+          "http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg"
       }
     ]
 
@@ -46,7 +47,7 @@ defmodule Dujudu.Wikidata.IngredientsTest do
     end
 
     defp sort(ingredients) do
-      Enum.sort_by(ingredients, &(&1.wikidata_id))
+      Enum.sort_by(ingredients, & &1.wikidata_id)
     end
   end
 end

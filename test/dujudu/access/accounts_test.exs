@@ -43,6 +43,7 @@ defmodule Dujudu.Access.AccountsTest do
         email: "chang@doe.org",
         password: "passwordpassword123"
       }
+
       assert {:ok, account} = Accounts.create(params)
       assert account.name == "Chang Doe"
       assert account.email == "chang@doe.org"
@@ -59,10 +60,12 @@ defmodule Dujudu.Access.AccountsTest do
       }
 
       assert {:error, cs} = Accounts.create(params)
+
       assert cs.errors == [
-        password: {"should be at least %{count} character(s)",
-        [count: 12, validation: :length, kind: :min, type: :string]}
-      ]
+               password:
+                 {"should be at least %{count} character(s)",
+                  [count: 12, validation: :length, kind: :min, type: :string]}
+             ]
     end
 
     test "does not create account when email is already taken" do
@@ -71,11 +74,15 @@ defmodule Dujudu.Access.AccountsTest do
         email: "chang@doe.org",
         password: "passwordpassword123"
       }
+
       {:ok, account} = Accounts.create(params)
       {:error, cs} = Accounts.create(params)
 
       assert {:error, cs} = Accounts.create(params)
-      assert cs.errors == [email: {"has already been taken", [validation: :unsafe_unique, fields: [:email]]}]
+
+      assert cs.errors == [
+               email: {"has already been taken", [validation: :unsafe_unique, fields: [:email]]}
+             ]
     end
   end
 end

@@ -21,14 +21,14 @@ defmodule Dujudu.Schemas.Account do
     %__MODULE__{}
     |> cast(attrs, [:email, :name, :password])
     |> validate_length(:password, min: 12, max: 128)
-    |> unsafe_validate_unique(:email, Dujudu.Repo) # up-front uniqueness check, there's also a db unique constraint
+    # up-front uniqueness check, there's also a db unique constraint
+    |> unsafe_validate_unique(:email, Dujudu.Repo)
     |> put_pass_hash()
     |> validate_required([:email, :password])
     |> delete_change(:password)
   end
 
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
-    %{password: password}} = cs) do
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = cs) do
     change(cs, Argon2.add_hash(password))
   end
 

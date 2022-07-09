@@ -12,11 +12,11 @@ defmodule Dujudu.Wikidata.ClientTest do
   describe "get_ingredients/0" do
     setup do
       Tesla.Mock.mock(fn %{
-        method: :get,
-        url: "https://query.wikidata.org/sparql",
-        headers: [{"accept", "application/sparql-results+json"}],
-        query: [query: @ingredients_query]
-      } ->
+                           method: :get,
+                           url: "https://query.wikidata.org/sparql",
+                           headers: [{"accept", "application/sparql-results+json"}],
+                           query: [query: @ingredients_query]
+                         } ->
         %Tesla.Env{
           status: 200,
           query: [query: @ingredients_query],
@@ -74,11 +74,11 @@ defmodule Dujudu.Wikidata.ClientTest do
   describe "get_ingredient_images/1" do
     setup do
       Tesla.Mock.mock(fn %{
-        method: :get,
-        url: "https://query.wikidata.org/sparql",
-        headers: [{"accept", "application/sparql-results+json"}],
-        query: [query: @ingredient_images_query]
-      } ->
+                           method: :get,
+                           url: "https://query.wikidata.org/sparql",
+                           headers: [{"accept", "application/sparql-results+json"}],
+                           query: [query: @ingredient_images_query]
+                         } ->
         %Tesla.Env{status: 200, body: @ingredient_images_response}
       end)
 

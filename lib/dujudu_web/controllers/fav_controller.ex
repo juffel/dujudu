@@ -9,9 +9,12 @@ defmodule DujuduWeb.FavController do
 
     with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
       {ingredients, meta} = Ingredients.list_fav_ingredients(flop, account.id)
-      render(conn, "index.html", meta: meta,
-                                 ingredients: ingredients,
-                                 page_title: "Favourites")
+
+      render(conn, "index.html",
+        meta: meta,
+        ingredients: ingredients,
+        page_title: "Favourites"
+      )
     end
   end
 
@@ -22,6 +25,7 @@ defmodule DujuduWeb.FavController do
       {:ok, _} ->
         conn
         |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
+
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Something went wrong.")
@@ -36,6 +40,7 @@ defmodule DujuduWeb.FavController do
       {:ok, _fav} ->
         conn
         |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
+
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Something went wrong.")

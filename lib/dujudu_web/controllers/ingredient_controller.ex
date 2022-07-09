@@ -19,11 +19,14 @@ defmodule DujuduWeb.IngredientController do
     instance_of_ingredient = ingredient.instance_of
     similar_ingredients = Ingredients.get_similar_ingredients(ingredient, 5)
     ingredients_of_this_kind = Ingredients.get_ingredients_of_this_kind(ingredient, 5)
-    render(conn, "show.html", ingredient: ingredient,
-                              page_title: ingredient.title,
-                              instance_of_ingredient: instance_of_ingredient,
-                              similar_ingredients: similar_ingredients,
-                              ingredients_of_this_kind: ingredients_of_this_kind)
+
+    render(conn, "show.html",
+      ingredient: ingredient,
+      page_title: ingredient.title,
+      instance_of_ingredient: instance_of_ingredient,
+      similar_ingredients: similar_ingredients,
+      ingredients_of_this_kind: ingredients_of_this_kind
+    )
   end
 
   defp load_ingredient(conn, _opts) do
@@ -42,7 +45,9 @@ defmodule DujuduWeb.IngredientController do
   # fetch fav status if a current account is present
   defp load_fav(conn, _opts) do
     case conn.assigns[:current_account] do
-      nil -> conn
+      nil ->
+        conn
+
       account ->
         fav = Favs.get(account.id, conn.assigns[:ingredient].id)
         assign(conn, :fav, fav)

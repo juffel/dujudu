@@ -13,9 +13,9 @@ defmodule Dujudu.Wikidata.Access.ClientRequests do
 
     query =
       from cr in ClientRequest,
-      order_by: [desc: cr.inserted_at],
-      where: cr.inserted_at > ^timestamp_threshold,
-      limit: 1
+        order_by: [desc: cr.inserted_at],
+        where: cr.inserted_at > ^timestamp_threshold,
+        limit: 1
 
     Repo.one(query)
   end

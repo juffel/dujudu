@@ -31,6 +31,7 @@ defmodule Dujudu.Wikidata.SaveClientResponse do
 
   defp cleanup_old_requests() do
     hours_ago = hours_ago(@keep_log_hours)
+
     from(wcr in ClientRequest, where: wcr.inserted_at < ^hours_ago)
     |> Repo.delete_all()
   end
