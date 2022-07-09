@@ -5,9 +5,7 @@ defmodule Dujudu.Schemas.Ingredient do
 
   @derive {
     Flop.Schema,
-    filterable: [:title],
-    sortable: [:title],
-    default_limit: 50
+    filterable: [:title], sortable: [:title], default_limit: 50
   }
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -21,13 +19,14 @@ defmodule Dujudu.Schemas.Ingredient do
     has_many :images, Image, on_replace: :delete
 
     belongs_to :instance_of, __MODULE__,
-               foreign_key: :instance_of_wikidata_id,
-               references: :wikidata_id,
-               type: :binary,
-               primary_key: false
+      foreign_key: :instance_of_wikidata_id,
+      references: :wikidata_id,
+      type: :binary,
+      primary_key: false
+
     has_many :instances, __MODULE__,
-             foreign_key: :instance_of_wikidata_id,
-             references: :wikidata_id
+      foreign_key: :instance_of_wikidata_id,
+      references: :wikidata_id
 
     has_many :favs, Dujudu.Schemas.Fav
 

@@ -42,13 +42,15 @@ defmodule Dujudu.Wikidata.Ingredients do
     %Entity{
       title: get_in(wikidata_ingredient, [:itemLabel, :value]),
       wikidata_id: get_in(wikidata_ingredient, [:item, :value]) |> parse_wikidata_id(),
-      instance_of_wikidata_id: get_in(wikidata_ingredient, [:instanceOf, :value]) |> parse_wikidata_id(),
+      instance_of_wikidata_id:
+        get_in(wikidata_ingredient, [:instanceOf, :value]) |> parse_wikidata_id(),
       description: get_in(wikidata_ingredient, [:itemDescription, :value]),
       commons_image_url: get_in(wikidata_ingredient, [:imageUrl, :value])
     }
   end
 
   defp parse_wikidata_id(nil), do: nil
+
   defp parse_wikidata_id(id_url) do
     id_url
     |> String.replace(@wikidata_id_prefix, "")

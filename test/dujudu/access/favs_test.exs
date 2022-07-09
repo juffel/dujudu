@@ -7,6 +7,7 @@ defmodule Dujudu.Access.FavsTest do
   defp insert_fav(_) do
     account = insert(:account)
     ingredient = insert(:ingredient)
+
     %{
       account: account,
       fav: insert(:fav, account: account, ingredient: ingredient)

@@ -7,7 +7,7 @@ defmodule Dujudu.Access.Favs do
   end
 
   def get(account_id, ingredient_id) do
-    Repo.get_by(Fav, [account_id: account_id, ingredient_id: ingredient_id])
+    Repo.get_by(Fav, account_id: account_id, ingredient_id: ingredient_id)
   end
 
   def create(account_id, ingredient_id) do
@@ -19,7 +19,7 @@ defmodule Dujudu.Access.Favs do
   end
 
   def delete(account_id, ingredient_id) do
-    case Repo.get_by(Fav, [account_id: account_id, ingredient_id: ingredient_id]) do
+    case Repo.get_by(Fav, account_id: account_id, ingredient_id: ingredient_id) do
       nil -> {:error, :not_found}
       fav -> Repo.delete(fav)
     end

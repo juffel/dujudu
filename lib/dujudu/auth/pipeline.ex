@@ -1,9 +1,10 @@
 defmodule Dujudu.Auth.Pipeline do
   @claims %{typ: "access"}
 
-  use Guardian.Plug.Pipeline, otp_app: :dujudu,
-                              module: Dujudu.Auth.Guardian,
-                              error_handler: Dujudu.Auth.ErrorHandler
+  use Guardian.Plug.Pipeline,
+    otp_app: :dujudu,
+    module: Dujudu.Auth.Guardian,
+    error_handler: Dujudu.Auth.ErrorHandler
 
   plug Guardian.Plug.VerifySession, claims: @claims
   plug Guardian.Plug.VerifyHeader, claims: @claims, realm: "Bearer"

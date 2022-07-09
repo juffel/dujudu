@@ -10,7 +10,7 @@ defmodule Dujudu.Wikidata.Access.IngredientsTest do
 
       assert request == get_cached()
     end
-    
+
     test "returns nil if there is no request" do
       refute get_cached()
     end
@@ -19,7 +19,7 @@ defmodule Dujudu.Wikidata.Access.IngredientsTest do
       insert(:wikidata_client_request, inserted_at: hours_ago(25))
       refute get_cached()
     end
-    
+
     defp hours_ago(hours) do
       DateTime.utc_now()
       |> DateTime.add(-hours * 3600, :second)

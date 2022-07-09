@@ -24,6 +24,7 @@ defmodule Dujudu.Wikidata.Client do
     else
       {:error, :timeout} ->
         {:error, :wikidata_client_timeout}
+
       error ->
         {:error, :wikidata_client_error, error}
     end
