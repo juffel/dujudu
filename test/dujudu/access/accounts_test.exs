@@ -64,5 +64,18 @@ defmodule Dujudu.Access.AccountsTest do
         [count: 12, validation: :length, kind: :min, type: :string]}
       ]
     end
+
+    test "does not create account when email is already taken" do
+      params = %{
+        name: "Chang Doe",
+        email: "chang@doe.org",
+        password: "passwordpassword123"
+      }
+      {:ok, account} = Accounts.create(params)
+      {:error, cs} = Accounts.create(params)
+
+      assert {:error, cs} = Accounts.create(params)
+      assert cs.errors == [email: {"has already been taken", [validation: :unsafe_unique, fields: [:email]]}]
+    end
   end
 end

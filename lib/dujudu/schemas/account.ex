@@ -21,6 +21,7 @@ defmodule Dujudu.Schemas.Account do
     %__MODULE__{}
     |> cast(attrs, [:email, :name, :password])
     |> validate_length(:password, min: 12, max: 128)
+    |> unsafe_validate_unique(:email, Dujudu.Repo) # up-front uniqueness check, there's also a db unique constraint
     |> put_pass_hash()
     |> validate_required([:email, :password])
     |> delete_change(:password)
