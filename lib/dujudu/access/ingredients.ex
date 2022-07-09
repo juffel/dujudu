@@ -76,7 +76,7 @@ defmodule Dujudu.Access.Ingredients do
     Repo.get_by(Ingredient, wikidata_id: entity.wikidata_id)
   end
 
-  defp upsert_image(%{commons_image_url: nil}), do: nil
+  defp upsert_image(_, %{commons_image_url: nil}), do: nil
   defp upsert_image(%{id: ingredient_id}, %{commons_image_url: url}) do
     %{commons_url: url, ingredient_id: ingredient_id}
     |> Image.create_changeset()

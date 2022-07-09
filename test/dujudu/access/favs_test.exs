@@ -54,7 +54,7 @@ defmodule Dujudu.Access.FavsTest do
     end
 
     test "errors when providing a different account", %{fav: fav} do
-      other_account = insert(:account)
+      other_account = insert(:account, email: "some@other.mail")
       assert {:error, _fav} = Favs.delete(other_account.id, fav.ingredient_id)
     end
   end
