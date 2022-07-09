@@ -46,7 +46,8 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
       right_join: f in Fav,
-      on: [ingredient_id: i.id, account_id: ^account_id],
+      on: [ingredient_id: i.id],
+      where: f.account_id == ^account_id,
       preload: [:images]
     Flop.run(query, flop, for: Ingredient)
   end
