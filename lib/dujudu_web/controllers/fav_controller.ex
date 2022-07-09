@@ -9,7 +9,9 @@ defmodule DujuduWeb.FavController do
 
     with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
       {ingredients, meta} = Ingredients.list_fav_ingredients(flop, account.id)
-      render(conn, "index.html", meta: meta, ingredients: ingredients)
+      render(conn, "index.html", meta: meta,
+                                 ingredients: ingredients,
+                                 page_title: "Favourites")
     end
   end
 

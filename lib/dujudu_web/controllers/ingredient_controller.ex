@@ -20,6 +20,7 @@ defmodule DujuduWeb.IngredientController do
     similar_ingredients = Ingredients.get_similar_ingredients(ingredient, 5)
     ingredients_of_this_kind = Ingredients.get_ingredients_of_this_kind(ingredient, 5)
     render(conn, "show.html", ingredient: ingredient,
+                              page_title: ingredient.title,
                               instance_of_ingredient: instance_of_ingredient,
                               similar_ingredients: similar_ingredients,
                               ingredients_of_this_kind: ingredients_of_this_kind)
