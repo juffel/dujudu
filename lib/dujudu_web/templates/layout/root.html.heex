@@ -16,11 +16,11 @@
           <ul>
             <li><%= link "Home", to: Routes.page_path(@conn, :index) %></li>
             <li><%= link "Ingredients", to: Routes.ingredient_path(@conn, :index) %></li>
-            <li><%= link "Favourites", to: Routes.fav_path(@conn, :index) %></li>
             <li>|</li>
             <%= if is_nil(assigns[:current_account]) do %>
               <li><%= link "Login", to: Routes.session_path(@conn, :new) %></li>
             <% else %>
+              <li><%= link "Favourites", to: Routes.fav_path(@conn, :index) %></li>
               <li><%= link "Logout", to: Routes.session_path(@conn, :delete, @current_account), method: "delete" %></li>
             <% end %>
           </ul>
