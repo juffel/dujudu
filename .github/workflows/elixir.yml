@@ -15,9 +15,8 @@ jobs:
         with:
           otp-version: 24.1
           elixir-version: 1.13.4
-      - run: |
-        mix deps.get
-        mix deps.compile
+      - run: mix deps.get
+      - run: mix deps.compile
 
   format-check:
     runs-on: ubuntu-latest
