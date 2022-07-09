@@ -7,8 +7,65 @@ on:
     branches: [ main ]
 
 jobs:
+  cache-deps:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elixir: [1.13.4]
+        otp: [24.1]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+
+      - uses: actions/cache@v3
+        id: mix-cache
+        with:
+          path: |
+            deps
+            _build
+            priv/plts
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+
+      - name: Install Dependencies
+        if: steps.mix-cache.outputs.cache-hit != 'true'
+        run: |
+          mix deps.get
+          mix deps.compile
+
+  format-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elixir: [1.13.4]
+        otp: [24.1]
+    needs: cache-deps
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            deps
+            _build
+            priv/plts
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+
+      - run: mix format --check-formatted
+
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elixir: [1.13.4]
+        otp: [24.1]
+    needs: cache-deps
 
     services:
       postgres:
@@ -28,9 +85,17 @@ jobs:
       - uses: actions/checkout@v2
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: 24.1
-          elixir-version: 1.13.4
-      - run: mix deps.get
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            deps
+            _build
+            priv/plts
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+
       - run: mix test
         env:
           POSTGRES_HOST: localhost
