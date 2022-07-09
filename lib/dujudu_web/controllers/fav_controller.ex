@@ -21,7 +21,6 @@ defmodule DujuduWeb.FavController do
     case Favs.create(account.id, ingredient_id) do
       {:ok, _} ->
         conn
-        |> put_flash(:info, "Fav'd <3")
         |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
       {:error, _changeset} ->
         conn
@@ -36,7 +35,6 @@ defmodule DujuduWeb.FavController do
     case Favs.delete(account.id, ingredient_id) do
       {:ok, _fav} ->
         conn
-        |> put_flash(:info, "Unfav'd 😢")
         |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
       {:error, _changeset} ->
         conn
