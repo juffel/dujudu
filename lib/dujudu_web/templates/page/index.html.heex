@@ -5,12 +5,14 @@
 
 <section class="row">
   <article class="column">
-    <%= for image <- @sample_images do %>
-      <% ingredient = image.ingredient %>
-      <p>
-        <h3><%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %></h3>
-        <%= link img_tag(resize_wikidata_image(image.commons_url, 240)), to: Routes.ingredient_path(@conn, :show, ingredient) %>
-      </p>
-    <% end %>
+    <div class="grid">
+      <%= for image <- @sample_images do %>
+        <div>
+          <% ingredient = image.ingredient %>
+          <h4><%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %></h4>
+          <%= link img_tag(resize_wikidata_image(image.commons_url, 240)), to: Routes.ingredient_path(@conn, :show, ingredient) %>
+        </div>
+      <% end %>
+    </div>
   </article>
 </section>
