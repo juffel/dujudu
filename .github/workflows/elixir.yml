@@ -7,8 +7,27 @@ on:
     branches: [ main ]
 
 jobs:
+  deps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: 24.1
+          elixir-version: 1.13.4
+      - run: |
+        mix deps.get
+        mix deps.compile
+
+  format-check:
+    runs-on: ubuntu-latest
+    needs: deps
+    steps:
+      - run: mix format --check-formatted
+
   test:
     runs-on: ubuntu-latest
+    needs: deps
 
     services:
       postgres:
@@ -25,11 +44,6 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: erlef/setup-beam@v1
-        with:
-          otp-version: 24.1
-          elixir-version: 1.13.4
       - run: mix deps.get
       - run: mix test
         env:
