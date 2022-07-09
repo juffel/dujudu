@@ -1,0 +1,24 @@
+<h1 class="ingredient-header">Favourites</h1>
+
+<Flop.Phoenix.table
+  items={@ingredients}
+  meta={@meta}
+  path_helper={{Routes, :ingredient_path, [@conn, :index]}}
+>
+  <:col let={ingredient} label="Title" field={:title}>
+    <%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %>
+  </:col>
+  <:col let={ingredient} label="Image" field={:image}>
+    <% image = image_for(ingredient) %>
+    <%= if not is_nil(image) do %>
+      <%= link to: Routes.ingredient_path(@conn, :show, ingredient) do %>
+        <%= img_tag(resize_wikidata_image(image.commons_url, 120)) %>
+      <% end %>
+    <% end %>
+  </:col>
+</Flop.Phoenix.table>
+
+<Flop.Phoenix.pagination
+  meta={@meta}
+  path_helper={{Routes, :ingredient_path, [@conn, :index]}}
+/>

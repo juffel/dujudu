@@ -1,6 +1,6 @@
 defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Repo
-  alias Dujudu.Schemas.{Image, Ingredient}
+  alias Dujudu.Schemas.{Fav, Image, Ingredient}
   alias Dujudu.Wikidata.Ingredients
 
   import Ecto.Query, only: [from: 2]
@@ -42,6 +42,16 @@ defmodule Dujudu.Access.Ingredients do
     Flop.run(query, flop, for: Ingredient)
   end
 
+  def list_fav_ingredients(flop, account_id) do
+    query =
+      from i in Ingredient,
+      right_join: f in Fav,
+      on: [ingredient_id: i.id],
+      where: f.account_id == ^account_id,
+      preload: [:images]
+    Flop.run(query, flop, for: Ingredient)
+  end
+
   def sample_ingredient() do
     query =
       from i in Ingredient,
@@ -66,6 +76,7 @@ defmodule Dujudu.Access.Ingredients do
     Repo.get_by(Ingredient, wikidata_id: entity.wikidata_id)
   end
 
+  defp upsert_image(_, %{commons_image_url: nil}), do: nil
   defp upsert_image(%{id: ingredient_id}, %{commons_image_url: url}) do
     %{commons_url: url, ingredient_id: ingredient_id}
     |> Image.create_changeset()

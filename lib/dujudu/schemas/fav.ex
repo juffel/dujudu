@@ -1,21 +1,20 @@
-defmodule Dujudu.Schemas.Image do
+defmodule Dujudu.Schemas.Fav do
   use Ecto.Schema
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-
-  schema "images" do
-    field :commons_url, :string
+  schema "favs" do
+    belongs_to :account, Dujudu.Schemas.Account
     belongs_to :ingredient, Dujudu.Schemas.Ingredient
 
     timestamps()
   end
 
+  @doc false
   def create_changeset(attrs) do
     %__MODULE__{}
-    |> cast(attrs, [:commons_url, :ingredient_id])
-    |> validate_required([:commons_url, :ingredient_id])
-    |> foreign_key_constraint(:ingredient_id)
+    |> cast(attrs, [:account_id, :ingredient_id])
+    |> validate_required([:account_id, :ingredient_id])
   end
 end

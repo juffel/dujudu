@@ -11,8 +11,9 @@ defmodule DujuduWeb.AccountController do
 
   def create(conn, %{"account" => params}) do
     case Accounts.create(params) do
-      {:ok, _account} ->
+      {:ok, account} ->
         conn
+        |> Dujudu.Auth.Guardian.Plug.sign_in(account)
         |> put_flash(:info, "Account created!")
         |> redirect(to: Routes.ingredient_path(conn, :index))
       {:error, changeset} ->

@@ -22,6 +22,12 @@ defmodule DujuduWeb.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/ingredients", IngredientController, :index
     get "/ingredients/:id", IngredientController, :show
+
+    scope "/account" do
+      pipe_through Guardian.Plug.EnsureAuthenticated
+
+      resources "/favs", FavController, only: [:index, :create, :delete]
+    end
   end
 
   # Other scopes may use custom stacks.

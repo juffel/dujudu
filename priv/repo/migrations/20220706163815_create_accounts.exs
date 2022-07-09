@@ -10,6 +10,9 @@ defmodule Dujudu.Repo.Migrations.CreateAccounts do
       add :is_admin, :boolean
 
       timestamps()
+
     end
+
+    create unique_index(:accounts, [:email])
   end
 end

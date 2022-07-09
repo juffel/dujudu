@@ -1,4 +1,4 @@
-defmodule DujuduWeb.IngredientView do
+defmodule DujuduWeb.FavView do
   use DujuduWeb, :view
 
   import Flop.Phoenix

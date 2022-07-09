@@ -24,6 +24,10 @@ defmodule Dujudu.Factory do
     }
   end
 
+  def fav_factory do
+     %Dujudu.Schemas.Fav{}
+  end
+
   def wikidata_client_request_factory do
     %Dujudu.Wikidata.ClientRequest{
       query: "",
