@@ -1,6 +1,5 @@
 defmodule DujuduWeb.E2E.HomeTest do
-  use ExUnit.Case, async: true
-  use Wallaby.Feature
+  use DujuduWeb.E2ECase
 
   feature "dummy", %{session: session} do
     session

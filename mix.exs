@@ -56,7 +56,7 @@ defmodule Dujudu.MixProject do
       {:flop, "~> 0.16.1"},
       {:flop_phoenix, "~> 0.14.1"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:wallaby, "~> 0.29.0", runtime: false, only: :e2e},
+      {:wallaby, "~> 0.29.0", runtime: false, only: :test},
       {:ex_machina, "~> 2.7.0"}
     ]
   end
