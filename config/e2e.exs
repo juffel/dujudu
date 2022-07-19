@@ -28,7 +28,7 @@ config :tesla, adapter: Tesla.Mock
 
 config :wallaby,
   otp_app: :dujudu,
-  driver: :chrome,
+  driver: Wallaby.Chrome,
   screenshot_on_failure: true
 
 config :dujudu, :sandbox, Ecto.Adapters.SQL.Sandbox
