@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# script/e2e: Run end-to-end tests within docker-compose.
+#             Optionally pass in a path to an individual test file to run
+#             a single test.
+
+set -e
+
+echo "==> run end-to-end tests..."
+
+if [ -n "$1" ]; then
+  # pass arguments to test call. This is useful for calling a single test.
+  docker-compose run -e MIX_ENV=e2e web mix test.drivers "$@"
+else
+  docker-compose run -e MIX_ENV=e2e web mix test test/dujudu_web/e2e/
+fi

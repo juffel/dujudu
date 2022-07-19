@@ -1,4 +1,5 @@
 version: '3.6'
+
 services:
   db:
     environment:
@@ -14,6 +15,7 @@ services:
     build: .
     depends_on:
       - db
+      - chrome
     environment:
       MIX_ENV: dev
       # keep iex history; thanks https://stackoverflow.com/a/70419094/1870317
@@ -27,6 +29,11 @@ services:
       - type: volume
         source: shell_history
         target: /shell/history
+  chrome:
+    image: selenium/standalone-chrome:latest
+    hostname: chrome
+    shm_size: 2gb
+
 volumes:
   shell_history:
   pgdata:
