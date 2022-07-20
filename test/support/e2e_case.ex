@@ -9,6 +9,7 @@ defmodule DujuduWeb.E2ECase do
   using do
     quote do
       use Wallaby.Feature
+      import Dujudu.Factory
       import DujuduWeb.E2ECase
     end
   end

@@ -1,12 +1,16 @@
 defmodule Dujudu.Factory do
   use ExMachina.Ecto, repo: Dujudu.Repo
 
-  def account_factory do
+  def account_factory(attrs) do
+    password = Map.get(attrs, :password, "passwordpassword123")
+
     %Dujudu.Schemas.Account{
       name: "Chang Doe",
-      email: "chang@doe.org",
-      password: "passwordpassword123"
+      email: "chang@doe.org"
     }
+    |> Map.merge(Argon2.add_hash(password)) # explicitly populate password_hash field
+    |> merge_attributes(attrs)
+    |> evaluate_lazy_attributes()
   end
 
   def ingredient_factory do

@@ -9,26 +9,23 @@ defmodule DujuduWeb.SessionController do
 
   def create(conn, %{"email" => email, "password" => password}) do
     case authenticate(email, password) do
-      false ->
-        conn
-        |> put_flash(:error, "Invalid email or password")
-        |> render(conn, "new.html")
-
-      account ->
+      {:ok, account} ->
         conn
         |> Dujudu.Auth.Guardian.Plug.sign_in(account)
         |> put_flash(:info, "Logged in successfully")
         |> redirect(to: Routes.page_path(conn, :index))
+
+      {:error, _reason} ->
+        conn
+        |> put_flash(:error, "Invalid email or password")
+        |> render("new.html")
     end
   end
 
   defp authenticate(email, password) do
-    account = Accounts.get_by_email(email)
-
-    case Argon2.check_pass(account, password) do
-      {:ok, _resource} -> account
-      _ -> false
-    end
+    email
+    |> Accounts.get_by_email()
+    |> Argon2.check_pass(password)
   end
 
   def delete(conn, _params) do
