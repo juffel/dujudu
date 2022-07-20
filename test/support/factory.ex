@@ -8,7 +8,8 @@ defmodule Dujudu.Factory do
       name: "Chang Doe",
       email: "chang@doe.org"
     }
-    |> Map.merge(Argon2.add_hash(password)) # explicitly populate password_hash field
+    # explicitly populate password_hash field
+    |> Map.merge(Argon2.add_hash(password))
     |> merge_attributes(attrs)
     |> evaluate_lazy_attributes()
   end
