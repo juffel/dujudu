@@ -99,3 +99,13 @@ jobs:
       - run: mix test
         env:
           POSTGRES_HOST: localhost
+          GUARDIAN_SECRET_KEY: XsXcf+2Ar+i1Zj4zCcwQ5jKeSn6ORnzne2iVBz3WKegiPTYjmtEY6frUat2UsAUS
+
+      # upload screenshots after failed tests, they can be downloaded at the
+      # bottom of the action run's summary page
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: screenshots
+          path: /home/runner/work/dujudu/dujudu/screenshots/
+

@@ -7,6 +7,7 @@ defmodule Dujudu.Auth.ErrorHandler do
   def auth_error(conn, _error, _opts) do
     conn
     |> Dujudu.Auth.Guardian.Plug.sign_out()
+    |> Phoenix.Controller.put_flash(:error, "Sign in error")
     |> Phoenix.Controller.redirect(to: Routes.page_path(conn, :index))
   end
 end
