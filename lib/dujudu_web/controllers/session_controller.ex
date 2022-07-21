@@ -4,10 +4,12 @@ defmodule DujuduWeb.SessionController do
   alias Dujudu.Access.Accounts
 
   def new(conn, _params) do
+    IO.inspect(conn, label: "SessionController#new")
     render(conn, "new.html")
   end
 
   def create(conn, %{"email" => email, "password" => password}) do
+    IO.inspect(conn, label: "SessionController#create")
     case authenticate(email, password) do
       {:ok, account} ->
         conn
@@ -29,8 +31,10 @@ defmodule DujuduWeb.SessionController do
   end
 
   def delete(conn, _params) do
+    IO.inspect(conn, label: "SessionController#delete")
     conn
     |> Dujudu.Auth.Guardian.Plug.sign_out()
+    |> IO.inspect(label: "after sign_out")
     |> put_flash(:info, "Logged out successfully")
     |> redirect(to: Routes.page_path(conn, :index))
   end

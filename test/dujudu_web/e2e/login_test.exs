@@ -12,7 +12,8 @@ defmodule DujuduWeb.E2E.LoginTest do
     |> fill_in(Query.text_field("Password"), with: "whatsyourfavouritecolorblue")
     |> click(Query.button("Create Account"))
     |> assert_has(Query.text("Account created"))
-    |> click(Query.link("Logout"))
+    |> print_page_source()
+    |> click(Query.button("Logout"))
     |> assert_has(Query.text("Logged out successfully"))
     |> click(Query.link("Login"))
     |> fill_in(Query.text_field("Email"), with: "chanandler@bong.com")
@@ -20,7 +21,7 @@ defmodule DujuduWeb.E2E.LoginTest do
     |> click(Query.button("Login"))
     |> assert_has(Query.text("Logged in successfully"))
     |> refute_has(Query.link("Login"))
-    |> click(Query.link("Logout"))
+    |> click(Query.button("Logout"))
 
     # check that logging in with invalid credentials errors correctly
     session
@@ -40,5 +41,13 @@ defmodule DujuduWeb.E2E.LoginTest do
     |> fill_in(Query.text_field("Password"), with: "whatsyourfavouritecolorblue")
     |> click(Query.button("Create Account"))
     |> assert_has(Query.text("has already been taken"))
+  end
+
+  # kudos to https://stackoverflow.com/a/56700661/1870317
+  def print_page_source(session) do
+    session
+    |> Wallaby.Browser.page_source()
+    |> IO.inspect()
+    session
   end
 end

@@ -96,7 +96,7 @@ jobs:
             priv/plts
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
 
-      - run: mix test
+      - run: mix test test/dujudu_web/e2e/login_test.exs
         env:
           POSTGRES_HOST: localhost
           GUARDIAN_SECRET_KEY: XsXcf+2Ar+i1Zj4zCcwQ5jKeSn6ORnzne2iVBz3WKegiPTYjmtEY6frUat2UsAUS
