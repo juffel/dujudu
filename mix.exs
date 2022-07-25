@@ -72,8 +72,12 @@ defmodule Dujudu.MixProject do
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "test-e2e": ["esbuild default", "ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: [
+        "esbuild default",
+        "ecto.create --quiet",
+        "ecto.migrate --quiet",
+        "test"
+      ],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end

@@ -4,12 +4,6 @@ defmodule DujuduWeb.E2E.LoginTest do
   alias Wallaby.Query
 
   feature "create account and login afterwards", %{session: session} do
-    File.ls("./assets")
-    |> IO.inspect(label: "File check")
-
-    File.ls("./assets/js")
-    |> IO.inspect(label: "File check")
-
     session
     |> visit("/")
     |> click(Query.link("Login"))
