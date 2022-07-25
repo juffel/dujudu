@@ -24,7 +24,7 @@ config :dujudu, DujuduWeb.Endpoint,
 config :dujudu, Dujudu.Mailer, adapter: Swoosh.Adapters.Test
 
 # Print only warnings and errors during test
-config :logger, level: :debug# :warn
+config :logger, level: :warn
 
 config :tesla, adapter: Tesla.Mock
 

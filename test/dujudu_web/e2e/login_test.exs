@@ -42,12 +42,4 @@ defmodule DujuduWeb.E2E.LoginTest do
     |> click(Query.button("Create Account"))
     |> assert_has(Query.text("has already been taken"))
   end
-
-  # kudos to https://stackoverflow.com/a/56700661/1870317
-  def print_page_source(session) do
-    session
-    |> Wallaby.Browser.page_source()
-    |> IO.inspect()
-    session
-  end
 end

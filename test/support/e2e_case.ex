@@ -13,4 +13,16 @@ defmodule DujuduWeb.E2ECase do
       import DujuduWeb.E2ECase
     end
   end
+
+  @doc """
+  Print the current page's html source to the console.
+  kudos to https://stackoverflow.com/a/56700661/1870317
+  """
+  def print_page_source(session) do
+    session
+    |> Wallaby.Browser.page_source()
+    |> IO.inspect()
+
+    session
+  end
 end
