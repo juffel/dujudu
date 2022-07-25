@@ -19,7 +19,9 @@ defmodule DujuduWeb.Router do
 
     get "/", PageController, :index
     resources "/accounts", AccountController, only: [:new, :create]
-    resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/sessions", SessionController, only: [:new, :create]
+    delete "/sessions", SessionController, :delete
+
     get "/ingredients", IngredientController, :index
     get "/ingredients/:id", IngredientController, :show
 

@@ -1,4 +1,5 @@
 version: '3.6'
+
 services:
   db:
     environment:
@@ -27,6 +28,7 @@ services:
       - type: volume
         source: shell_history
         target: /shell/history
+
 volumes:
   shell_history:
   pgdata:

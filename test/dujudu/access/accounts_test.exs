@@ -75,8 +75,7 @@ defmodule Dujudu.Access.AccountsTest do
         password: "passwordpassword123"
       }
 
-      {:ok, account} = Accounts.create(params)
-      {:error, cs} = Accounts.create(params)
+      {:ok, _account} = Accounts.create(params)
 
       assert {:error, cs} = Accounts.create(params)
 

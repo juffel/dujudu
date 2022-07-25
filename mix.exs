@@ -56,6 +56,7 @@ defmodule Dujudu.MixProject do
       {:flop, "~> 0.16.1"},
       {:flop_phoenix, "~> 0.14.1"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:wallaby, "~> 0.29.0", runtime: false, only: :test},
       {:ex_machina, "~> 2.7.0"}
     ]
   end
@@ -71,7 +72,12 @@ defmodule Dujudu.MixProject do
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: [
+        "esbuild default",
+        "ecto.create --quiet",
+        "ecto.migrate --quiet",
+        "test"
+      ],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end

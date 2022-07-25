@@ -18,7 +18,7 @@ config :dujudu, Dujudu.Repo,
 config :dujudu, DujuduWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "VRmL26i+eUx4mazuGP0WKSAJRPFj51z+TYlBbLTNna2oR/ii+csWf++4+gAM+r7+",
-  server: false
+  server: true
 
 # In test we don't send emails.
 config :dujudu, Dujudu.Mailer, adapter: Swoosh.Adapters.Test
@@ -27,6 +27,13 @@ config :dujudu, Dujudu.Mailer, adapter: Swoosh.Adapters.Test
 config :logger, level: :warn
 
 config :tesla, adapter: Tesla.Mock
+
+config :wallaby,
+  otp_app: :dujudu,
+  driver: Wallaby.Chrome,
+  screenshot_on_failure: true
+
+config :dujudu, :sandbox, Ecto.Adapters.SQL.Sandbox
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
