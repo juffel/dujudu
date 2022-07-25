@@ -43,6 +43,3 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
-
-let txt = document.createTextNode("Yepp, JS is working");
-document.querySelector(".page-navigation").appendChild(txt);

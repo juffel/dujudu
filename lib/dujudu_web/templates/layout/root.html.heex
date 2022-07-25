@@ -21,7 +21,7 @@
               <li><%= link "Login", to: Routes.session_path(@conn, :new) %></li>
             <% else %>
               <li><%= link "Favourites", to: Routes.fav_path(@conn, :index) %></li>
-              <li><%= button "Logout", to: Routes.session_path(@conn, :delete), method: "delete" %></li>
+              <li><%= link "Logout", to: Routes.session_path(@conn, :delete), method: "delete" %></li>
             <% end %>
           </ul>
         </nav>

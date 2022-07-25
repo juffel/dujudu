@@ -12,8 +12,7 @@ defmodule DujuduWeb.E2E.LoginTest do
     |> fill_in(Query.text_field("Password"), with: "whatsyourfavouritecolorblue")
     |> click(Query.button("Create Account"))
     |> assert_has(Query.text("Account created"))
-    |> print_page_source()
-    |> click(Query.button("Logout"))
+    |> click(Query.link("Logout"))
     |> assert_has(Query.text("Logged out successfully"))
     |> click(Query.link("Login"))
     |> fill_in(Query.text_field("Email"), with: "chanandler@bong.com")
@@ -21,7 +20,7 @@ defmodule DujuduWeb.E2E.LoginTest do
     |> click(Query.button("Login"))
     |> assert_has(Query.text("Logged in successfully"))
     |> refute_has(Query.link("Login"))
-    |> click(Query.button("Logout"))
+    |> click(Query.link("Logout"))
 
     # check that logging in with invalid credentials errors correctly
     session
