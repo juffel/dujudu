@@ -12,7 +12,6 @@ defmodule Dujudu.Auth.Pipeline do
   plug :set_current_account
 
   defp set_current_account(conn, _) do
-    IO.inspect(conn, label: "within Dujudu.Auth.Pipeline")
     account = Dujudu.Auth.Guardian.Plug.current_resource(conn)
     assign(conn, :current_account, account)
   end
