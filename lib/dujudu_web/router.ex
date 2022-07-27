@@ -23,7 +23,7 @@ defmodule DujuduWeb.Router do
     delete "/sessions", SessionController, :delete
 
     get "/ingredients", IngredientController, :index
-    get "/ingredients/:id", IngredientController, :show
+    live "/ingredients/:id", IngredientLive
 
     scope "/account" do
       pipe_through Guardian.Plug.EnsureAuthenticated
