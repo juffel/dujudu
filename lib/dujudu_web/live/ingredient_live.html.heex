@@ -1,14 +1,16 @@
 <h1 class="ingredient-header">
   <%= @ingredient.title %>
-  <%= if is_nil(assigns[:fav]) do %>
-    <button phx-click="add-fav">Save fav</button>
-  <% else %>
-    💜 <button phx-click="remove-fav">Unfav</button>
+  <%= unless is_nil(assigns[:current_account]) do %>
+    <%= if is_nil(assigns[:fav]) do %>
+      <button phx-click="add-fav">Save fav</button>
+    <% else %>
+      💜 <button phx-click="remove-fav">Unfav</button>
+    <% end %>
   <% end %>
 </h1>
 
 <%= if not is_nil(@instance_of_ingredient) do %>
-  A kind of <%= link @instance_of_ingredient.title, to: Routes.ingredient_path(@socket, :show, @instance_of_ingredient) %>.
+  A kind of <%= link @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
 <% end %>
 
 <p><em><%= @ingredient.description %></em></p>
@@ -28,9 +30,9 @@
     <%= for ingredient <- @ingredients_of_this_kind do %>
       <% image = ingredient.images |> List.first %>
       <div class="grid-cell">
-        <h4><%= link ingredient.title, to: Routes.ingredient_path(@socket, :show, ingredient) %></h4>
+        <h4><%= link ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %></h4>
         <%= if not is_nil(image) do %>
-          <%= link img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.ingredient_path(@socket, :show, ingredient) %>
+          <%= link img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
         <% end %>
       </div>
     <% end %>

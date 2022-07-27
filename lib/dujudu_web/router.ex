@@ -14,21 +14,23 @@ defmodule DujuduWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", DujuduWeb do
-    pipe_through [:browser, Dujudu.Auth.Pipeline]
+  live_session :default, on_mount: DujuduWeb.Auth.LiveAuth do
+    scope "/", DujuduWeb do
+      pipe_through [:browser, Dujudu.Auth.Pipeline]
 
-    get "/", PageController, :index
-    resources "/accounts", AccountController, only: [:new, :create]
-    resources "/sessions", SessionController, only: [:new, :create]
-    delete "/sessions", SessionController, :delete
+      get "/", PageController, :index
+      resources "/accounts", AccountController, only: [:new, :create]
+      resources "/sessions", SessionController, only: [:new, :create]
+      delete "/sessions", SessionController, :delete
 
-    get "/ingredients", IngredientController, :index
-    live "/ingredients/:id", IngredientLive
+      get "/ingredients", IngredientController, :index
+      live "/ingredients/:id", IngredientLive
 
-    scope "/account" do
-      pipe_through Guardian.Plug.EnsureAuthenticated
+      scope "/account" do
+        pipe_through Guardian.Plug.EnsureAuthenticated
 
-      resources "/favs", FavController, only: [:index, :create, :delete]
+        resources "/favs", FavController, only: [:index, :create, :delete]
+      end
     end
   end
 

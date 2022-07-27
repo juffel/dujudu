@@ -6,12 +6,12 @@
   path_helper={{Routes, :ingredient_path, [@conn, :index]}}
 >
   <:col let={ingredient} label="Title" field={:title}>
-    <%= link ingredient.title, to: Routes.ingredient_path(@conn, :show, ingredient) %>
+    <%= link ingredient.title, to: Routes.live_path(@conn, DujuduWeb.IngredientLive, ingredient) %>
   </:col>
   <:col let={ingredient} label="Image" field={:image}>
     <% image = image_for(ingredient) %>
     <%= if not is_nil(image) do %>
-      <%= link to: Routes.ingredient_path(@conn, :show, ingredient) do %>
+      <%= link to: Routes.live_path(@conn, DujuduWeb.IngredientLive, ingredient) do %>
         <%= img_tag(resize_wikidata_image(image.commons_url, 120)) %>
       <% end %>
     <% end %>

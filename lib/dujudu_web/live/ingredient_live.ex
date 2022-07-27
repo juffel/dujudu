@@ -5,7 +5,10 @@ defmodule DujuduWeb.IngredientLive do
 
   import Dujudu.Wikidata.ImageUrls, only: [resize_wikidata_image: 2]
 
-  def mount(%{"id" => id}, _dunno, socket) do
+  on_mount DujuduWeb.Auth.LiveAuth
+
+  @spec mount(map, any, any) :: {:ok, atom | map}
+  def mount(%{"id" => id}, _session, socket) do
     {:ok, fetch_data(id, socket)}
   end
 
@@ -23,6 +26,17 @@ defmodule DujuduWeb.IngredientLive do
       similar_ingredients: similar_ingredients,
       ingredients_of_this_kind: ingredients_of_this_kind
     )
+    |> load_fav()
+  end
+
+  defp load_fav(socket) do
+    case socket.assigns[:current_account] do
+      %{id: account_id} ->
+        fav = Favs.get(account_id, socket.assigns[:ingredient].id)
+        assign(socket, :fav, fav)
+
+      _else -> socket
+    end
   end
 
   def handle_event("add-fav", _value, socket) do
@@ -30,14 +44,18 @@ defmodule DujuduWeb.IngredientLive do
     %{id: ingredient_id} = socket.assigns[:ingredient]
 
     case Favs.create(account.id, ingredient_id) do
-      {:ok, _} ->
-        refreshed_ingredient = Ingredients.get_ingredient(ingredient_id)
-        {:noreply, assign(socket, :ingredient, refreshed_ingredient)}
+      {:ok, _} -> {:noreply, load_fav(socket)}
+      {:error, _changeset} -> {:noreply, socket}
+    end
+  end
 
-      {:error, _changeset} ->
-        # conn
-        # |> put_flash(:error, "Something went wrong.")
-        # |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
+  def handle_event("remove-fav", _value, socket) do
+    account = socket.assigns[:current_account]
+    %{id: ingredient_id} = socket.assigns[:ingredient]
+
+    case Favs.delete(account.id, ingredient_id) do
+      {:ok, _} -> {:noreply, load_fav(socket)}
+      {:error, _changeset} -> {:noreply, socket}
     end
   end
 end
