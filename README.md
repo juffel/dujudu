@@ -58,3 +58,4 @@ As noted in the [interfacing guide](https://www.wikidata.org/wiki/Wikidata:SPARQ
 
 * integrate LiveView
 * fetch additional data from Wikidata, when viewing a single ingredient, like direct links to wikipedia articles or titles in different languages
+* add login with Firefox
