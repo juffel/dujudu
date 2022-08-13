@@ -7,7 +7,6 @@ defmodule DujuduWeb.IngredientLive do
 
   on_mount DujuduWeb.Auth.LiveAuth
 
-  @spec mount(map, any, any) :: {:ok, atom | map}
   def mount(%{"id" => id}, _session, socket) do
     {:ok, fetch_data(id, socket)}
   end
@@ -35,7 +34,8 @@ defmodule DujuduWeb.IngredientLive do
         fav = Favs.get(account_id, socket.assigns[:ingredient].id)
         assign(socket, :fav, fav)
 
-      _else -> socket
+      _else ->
+        socket
     end
   end
 
