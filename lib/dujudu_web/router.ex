@@ -14,7 +14,7 @@ defmodule DujuduWeb.Router do
     plug :accepts, ["json"]
   end
 
-  live_session :default, on_mount: DujuduWeb.Auth.LiveAuth do
+  live_session :default, on_mount: [DujuduWeb.Live.AllowEctoSandbox, DujuduWeb.Auth.LiveAuth] do
     scope "/", DujuduWeb do
       pipe_through [:browser, Dujudu.Auth.Pipeline]
 
