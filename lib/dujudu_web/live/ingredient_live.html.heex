@@ -19,8 +19,6 @@
   <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
 <% end %>
 
-<span><%= link "Back to ingredients", to: Routes.ingredient_path(@socket, :index) %></span>
-|
 <span><%= link "Wikidata", to: wikidata_url(@ingredient) %></span>
 
 <hr>

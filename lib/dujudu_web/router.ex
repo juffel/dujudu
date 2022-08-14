@@ -23,7 +23,7 @@ defmodule DujuduWeb.Router do
       resources "/sessions", SessionController, only: [:new, :create]
       delete "/sessions", SessionController, :delete
 
-      get "/ingredients", IngredientController, :index
+      live "/ingredients", IngredientIndexLive
       live "/ingredients/:id", IngredientLive
 
       scope "/account" do
