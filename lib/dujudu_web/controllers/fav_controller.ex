@@ -24,12 +24,12 @@ defmodule DujuduWeb.FavController do
     case Favs.create(account.id, ingredient_id) do
       {:ok, _} ->
         conn
-        |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
+        |> redirect(to: Routes.live_path(conn, DujuduWeb.IngredientLive, ingredient_id))
 
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Something went wrong.")
-        |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
+        |> redirect(to: Routes.live_path(conn, DujuduWeb.IngredientLive, ingredient_id))
     end
   end
 
@@ -39,12 +39,12 @@ defmodule DujuduWeb.FavController do
     case Favs.delete(account.id, ingredient_id) do
       {:ok, _fav} ->
         conn
-        |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
+        |> redirect(to: Routes.live_path(conn, DujuduWeb.IngredientLive, ingredient_id))
 
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Something went wrong.")
-        |> redirect(to: Routes.ingredient_path(conn, :show, ingredient_id))
+        |> redirect(to: Routes.live_path(conn, DujuduWeb.IngredientLive, ingredient_id))
     end
   end
 end

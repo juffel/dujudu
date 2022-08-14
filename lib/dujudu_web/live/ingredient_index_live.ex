@@ -10,7 +10,16 @@ defmodule DujuduWeb.IngredientIndexLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(params, _session, socket) do
-    socket = assign(socket, :params, params)
+    search =
+      case params do
+        %{"filters" => %{"0" => %{"value" => search}}} -> search
+        _ -> ""
+      end
+
+    search_params = %{"0" => %{"field" => "title", "op" => "ilike", "value" => search}}
+    merged_params = Map.merge(params, %{"filters" => search_params})
+
+    socket = assign(socket, :params, merged_params)
     {:ok, fetch_ingredients(socket)}
   end
 
@@ -38,14 +47,15 @@ defmodule DujuduWeb.IngredientIndexLive do
   defp fetch_ingredients(socket) do
     with {:ok, flop} <- Flop.validate(socket.assigns.params, for: Ingredient) do
       {ingredients, meta} = Ingredients.list_ingredients(flop)
-      assign(socket, meta: meta, ingredients: ingredients, current_search: get_current_search(meta))
+      search = get_current_search(meta)
+      assign(socket, meta: meta, ingredients: ingredients, current_search: search)
     end
   end
 
   defp get_current_search(%{flop: %{filters: filters}}) do
     search = Enum.find(filters, fn element -> Map.get(element, :field) == :title end)
-    Map.get(search, :value, nil)
+    Map.get(search || %{}, :value, "")
   end
 
-  defp get_current_search(_), do: nil
+  defp get_current_search(_), do: ""
 end
