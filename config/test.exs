@@ -20,10 +20,12 @@ config :dujudu, DujuduWeb.Endpoint,
   secret_key_base: "VRmL26i+eUx4mazuGP0WKSAJRPFj51z+TYlBbLTNna2oR/ii+csWf++4+gAM+r7+",
   server: true
 
+config :dujudu, :sandbox, Ecto.Adapters.SQL.Sandbox
+
 # In test we don't send emails.
 config :dujudu, Dujudu.Mailer, adapter: Swoosh.Adapters.Test
 
-# Print only warnings and errors during test
+# Print only warnings and errors during test, set to :info to get detailed output
 config :logger, level: :warn
 
 config :tesla, adapter: Tesla.Mock

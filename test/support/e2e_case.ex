@@ -15,6 +15,19 @@ defmodule DujuduWeb.E2ECase do
   end
 
   @doc """
+  Helper function to wait for a liveview to be fully connected,
+  before interacting with it.
+  """
+  def await_live_connected(session) do
+    # use execute_query/2 directly instead of assert_has/2 since assert_has
+    # is not a function but a macro, and is harder to properly integrate in
+    # a helper function.
+    {:ok, _query} = Wallaby.Browser.execute_query(session, Wallaby.Query.css(".phx-connected"))
+
+    session
+  end
+
+  @doc """
   Print the current page's html source to the console.
   kudos to https://stackoverflow.com/a/56700661/1870317
   """

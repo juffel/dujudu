@@ -16,7 +16,7 @@ config :dujudu, DujuduWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: DujuduWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Dujudu.PubSub,
-  live_view: [signing_salt: "IOPWcewM"]
+  live_view: [signing_salt: System.get_env("LIVEVIEW_SECRET_SALT")]
 
 # Configures the mailer
 #

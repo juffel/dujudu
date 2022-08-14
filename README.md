@@ -54,8 +54,9 @@ WHERE
 
 As noted in the [interfacing guide](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service#Interfacing) of the wikidata sparql guide, the api can be queried via GET to `https://query.wikidata.org/sparql?query={SPARQL}`, while the response format defaults to XML but can be set to JSON with a respective header `Accept: application/sparql-results+json`
 
-# Roadmap
+# Roadmap / Ideas
 
-* integrate LiveView
+* add LiveView for ingredients index / search
 * fetch additional data from Wikidata, when viewing a single ingredient, like direct links to wikipedia articles or titles in different languages
 * add login with Firefox
+* review docker setup

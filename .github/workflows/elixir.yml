@@ -100,6 +100,7 @@ jobs:
         env:
           POSTGRES_HOST: localhost
           GUARDIAN_SECRET_KEY: XsXcf+2Ar+i1Zj4zCcwQ5jKeSn6ORnzne2iVBz3WKegiPTYjmtEY6frUat2UsAUS
+          LIVEVIEW_SECRET_SALT: bo6FvjYPaPjJpof/OKsB6hI2EAWOE5W7
 
       # upload screenshots after failed tests, they can be downloaded at the
       # bottom of the action run's summary page
