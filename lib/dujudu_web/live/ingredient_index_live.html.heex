@@ -1,7 +1,7 @@
 <h1 class="ingredient-header">Ingredients</h1>
 
 <.form let={f} for={@meta} method="get">
-  <.filter_fields let={e} form={f} fields={[title: [label: "Search", type: :text_input]]} input_opts={["phx-change": "search", "phx-debounce": 700]}>
+  <.filter_fields let={e} form={f} fields={[title: [label: "Search", type: :text_input]]} input_opts={["phx-change": "search", "phx-debounce": 500, "value": @current_search]}>
     <%= e.label %>
     <%= e.input %>
   </.filter_fields>
@@ -13,12 +13,12 @@
   path_helper={{Routes, :live_path, [@socket, DujuduWeb.IngredientIndexLive]}}
 >
   <:col let={ingredient} label="Title" field={:title}>
-    <%= link ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+    <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
   </:col>
   <:col let={ingredient} label="Image" field={:image}>
     <% image = image_for(ingredient) %>
     <%= if not is_nil(image) do %>
-      <%= link to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) do %>
+      <%= live_redirect to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) do %>
         <%= img_tag(resize_wikidata_image(image.commons_url, 120)) %>
       <% end %>
     <% end %>
