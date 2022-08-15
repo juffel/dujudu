@@ -56,6 +56,4 @@ defmodule DujuduWeb.IngredientIndexLive do
     search = Enum.find(filters, fn element -> Map.get(element, :field) == :title end)
     Map.get(search || %{}, :value, "")
   end
-
-  defp get_current_search(_), do: ""
 end

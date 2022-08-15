@@ -4,6 +4,7 @@
   items={@ingredients}
   meta={@meta}
   path_helper={{Routes, :live_path, [@conn, DujuduWeb.IngredientIndexLive]}}
+  class="e2e-search-results"
 >
   <:col let={ingredient} label="Title" field={:title}>
     <%= link ingredient.title, to: Routes.live_path(@conn, DujuduWeb.IngredientLive, ingredient) %>

@@ -38,4 +38,15 @@ defmodule DujuduWeb.E2ECase do
 
     session
   end
+
+  @doc """
+  Waits for a fixed amount of time. Only use this for debugging,
+  not in an actual test, since it causes unnecessary waiting and
+  fuzzy results.
+  """
+  def debug_sleep(session, seconds) do
+    Process.sleep(seconds * 1000)
+
+    session
+  end
 end
