@@ -9,43 +9,24 @@ defmodule DujuduWeb.IngredientIndexLive do
 
   on_mount DujuduWeb.Auth.LiveAuth
 
-  def mount(params, _session, socket) do
-    search =
-      case params do
-        %{"filters" => %{"0" => %{"value" => search}}} -> search
-        _ -> ""
-      end
-
-    search_params = %{"0" => %{"field" => "title", "op" => "ilike", "value" => search}}
-    merged_params = Map.merge(params, %{"filters" => search_params})
-
-    socket = assign(socket, :params, merged_params)
-    {:ok, fetch_ingredients(socket)}
+  def mount(_params, _session, socket) do
+    {:ok, socket}
   end
 
   def handle_params(params, _uri, socket) do
-    case params["page"] do
-      nil ->
-        {:noreply, socket}
-
-      page ->
-        merged_params = Map.merge(socket.assigns.params, %{"page" => page})
-        updated_socket = assign(socket, :params, merged_params)
-
-        {:noreply, fetch_ingredients(updated_socket)}
-    end
+    {:noreply, fetch_ingredients(socket, params)}
   end
 
   def handle_event("search", %{"filters" => %{"0" => %{"value" => search}}}, socket) do
     search_params = %{"0" => %{"field" => "title", "op" => "ilike", "value" => search}}
     merged_params = Map.merge(socket.assigns.params, %{"filters" => search_params})
 
-    updated_socket = assign(socket, params: merged_params)
-    {:noreply, fetch_ingredients(updated_socket)}
+    to_path = Routes.live_path(socket, DujuduWeb.IngredientIndexLive, merged_params)
+    {:noreply, push_patch(socket, to: to_path)}
   end
 
-  defp fetch_ingredients(socket) do
-    with {:ok, flop} <- Flop.validate(socket.assigns.params, for: Ingredient) do
+  defp fetch_ingredients(socket, params) do
+    with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
       {ingredients, meta} = Ingredients.list_ingredients(flop)
       search = get_current_search(meta)
       assign(socket, meta: meta, ingredients: ingredients, current_search: search)
