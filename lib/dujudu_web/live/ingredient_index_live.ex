@@ -9,17 +9,21 @@ defmodule DujuduWeb.IngredientIndexLive do
 
   on_mount DujuduWeb.Auth.LiveAuth
 
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(params, _session, socket) do
+    # keep params in socket, in order to access them within handle_event
+    updated_socket = assign(socket, current_params: params)
+    {:ok, updated_socket}
   end
 
   def handle_params(params, _uri, socket) do
-    {:noreply, fetch_ingredients(socket, params)}
+    # keep params in socket, in order to access them within handle_event
+    updated_socket = assign(socket, current_params: params)
+    {:noreply, fetch_ingredients(updated_socket, params)}
   end
 
   def handle_event("search", %{"filters" => %{"0" => %{"value" => search}}}, socket) do
     search_params = %{"0" => %{"field" => "title", "op" => "ilike", "value" => search}}
-    merged_params = Map.merge(socket.assigns.params, %{"filters" => search_params})
+    merged_params = Map.merge(socket.assigns.current_params, %{"filters" => search_params})
 
     to_path = Routes.live_path(socket, DujuduWeb.IngredientIndexLive, merged_params)
     {:noreply, push_patch(socket, to: to_path)}
