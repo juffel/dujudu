@@ -14,8 +14,8 @@ defmodule DujuduWeb.IngredientLive do
   defp fetch_data(ingredient_id, socket) do
     ingredient = Ingredients.get_ingredient(ingredient_id)
     instance_of_ingredient = ingredient.instance_of
-    similar_ingredients = Ingredients.get_similar_ingredients(ingredient, 5)
-    ingredients_of_this_kind = Ingredients.get_ingredients_of_this_kind(ingredient, 5)
+    similar_ingredients = Ingredients.get_similar_ingredients(ingredient, 3)
+    ingredients_of_this_kind = Ingredients.get_ingredients_of_this_kind(ingredient, 3)
 
     socket
     |> assign(
