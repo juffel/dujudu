@@ -22,7 +22,7 @@ defmodule DujuduWeb.IngredientIndexLive do
   end
 
   def handle_event("search", %{"filters" => %{"0" => %{"value" => search}}}, socket) do
-    search_params = %{"0" => %{"field" => "title", "op" => "ilike", "value" => search}}
+    search_params = %{"0" => %{"field" => "title_or_wid", "op" => "ilike", "value" => search}}
     merged_params = Map.merge(socket.assigns.current_params, %{"filters" => search_params})
 
     to_path = Routes.live_path(socket, DujuduWeb.IngredientIndexLive, merged_params)
@@ -38,7 +38,7 @@ defmodule DujuduWeb.IngredientIndexLive do
   end
 
   defp get_current_search(%{flop: %{filters: filters}}) do
-    search = Enum.find(filters, fn element -> Map.get(element, :field) == :title end)
+    search = Enum.find(filters, fn element -> Map.get(element, :field) == :title_or_wid end)
     Map.get(search || %{}, :value, "")
   end
 end
