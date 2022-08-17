@@ -2,6 +2,7 @@ defmodule DujuduWeb.IngredientLive do
   use DujuduWeb, :live_view
 
   alias Dujudu.Access.{Favs, Ingredients}
+  alias Dujudu.Wikidata.EntityDataClient
 
   import Dujudu.Wikidata.ImageUrls, only: [resize_wikidata_image: 2]
 
@@ -13,6 +14,7 @@ defmodule DujuduWeb.IngredientLive do
 
   defp fetch_data(ingredient_id, socket) do
     ingredient = Ingredients.get_ingredient(ingredient_id)
+    extra_data = get_extra_data(ingredient.wikidata_id) # TODO: can this be loaded async?
     instance_of_ingredient = ingredient.instance_of
     similar_ingredients = Ingredients.get_similar_ingredients(ingredient, 5)
     ingredients_of_this_kind = Ingredients.get_ingredients_of_this_kind(ingredient, 5)
@@ -23,9 +25,15 @@ defmodule DujuduWeb.IngredientLive do
       page_title: ingredient.title,
       instance_of_ingredient: instance_of_ingredient,
       similar_ingredients: similar_ingredients,
-      ingredients_of_this_kind: ingredients_of_this_kind
+      ingredients_of_this_kind: ingredients_of_this_kind,
+      extra_data: extra_data
     )
     |> load_fav()
+  end
+
+  defp get_extra_data(wikidata_id) do
+    {:ok, data} = EntityDataClient.get_data(wikidata_id)
+    data
   end
 
   defp load_fav(socket) do

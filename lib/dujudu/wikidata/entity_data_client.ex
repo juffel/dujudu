@@ -7,7 +7,8 @@ defmodule Dujudu.Wikidata.EntityDataClient do
 
   def get_data(wikidata_id) do
     with {:ok, response} <- get(wikidata_id <> ".json") do
-      {:ok, response.body}
+      %{"entities" => entities} = response.body
+      {:ok, entities[wikidata_id]}
     else
       {:error, :timeout} ->
         {:error, :wikidata_client_timeout}

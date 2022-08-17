@@ -14,6 +14,17 @@
 <% end %>
 
 <p><em><%= @ingredient.description %></em></p>
+<%= if not is_nil(@extra_data["sitelinks"]) do %>
+  <p>
+    <ul>
+    <%= for {wiki_locale, sitelink} <- @extra_data["sitelinks"] do %>
+      <li>
+        <%= link sitelink["title"], to: sitelink["url"], target: "_blank", rel: "noopener noreferrer" %> on <%= sitelink["site"] %>
+      </li>
+    <% end %>
+    </ul>
+  </p>
+<% end %>
 
 <%= for image <- @ingredient.images do %>
   <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
