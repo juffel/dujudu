@@ -9,8 +9,8 @@
       <%= for image <- @sample_images do %>
         <div>
           <% ingredient = image.ingredient %>
-          <h4><%= link ingredient.title, to: Routes.live_path(@conn, DujuduWeb.IngredientLive, ingredient) %></h4>
-          <%= link img_tag(resize_wikidata_image(image.commons_url, 240)), to: Routes.live_path(@conn, DujuduWeb.IngredientLive, ingredient) %>
+          <h4><%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %></h4>
+          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 240)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
         </div>
       <% end %>
     </div>

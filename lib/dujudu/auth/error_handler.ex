@@ -8,6 +8,6 @@ defmodule Dujudu.Auth.ErrorHandler do
     conn
     |> Dujudu.Auth.Guardian.Plug.sign_out()
     |> Phoenix.Controller.put_flash(:error, "Sign in error")
-    |> Phoenix.Controller.redirect(to: Routes.page_path(conn, :index))
+    |> Phoenix.Controller.redirect(to: Routes.live_path(conn, DujuduWeb.HomeLive))
   end
 end

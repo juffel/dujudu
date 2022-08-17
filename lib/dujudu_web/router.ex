@@ -18,11 +18,11 @@ defmodule DujuduWeb.Router do
     scope "/", DujuduWeb do
       pipe_through [:browser, Dujudu.Auth.Pipeline]
 
-      get "/", PageController, :index
       resources "/accounts", AccountController, only: [:new, :create]
       resources "/sessions", SessionController, only: [:new, :create]
       delete "/sessions", SessionController, :delete
 
+      live "/", HomeLive
       live "/ingredients", IngredientIndexLive
       live "/ingredients/:id", IngredientLive
 
