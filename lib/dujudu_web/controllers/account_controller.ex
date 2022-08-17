@@ -15,7 +15,7 @@ defmodule DujuduWeb.AccountController do
         conn
         |> Dujudu.Auth.Guardian.Plug.sign_in(account)
         |> put_flash(:info, "Account created")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.live_path(conn, DujuduWeb.HomeLive))
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)

@@ -10,7 +10,7 @@
 </h1>
 
 <%= if not is_nil(@instance_of_ingredient) do %>
-  A kind of <%= link @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
+  A kind of <%= live_redirect @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
 <% end %>
 
 <p><em><%= @ingredient.description %></em></p>

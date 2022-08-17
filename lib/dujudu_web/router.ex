@@ -29,7 +29,7 @@ defmodule DujuduWeb.Router do
       scope "/account" do
         pipe_through Guardian.Plug.EnsureAuthenticated
 
-        resources "/favs", FavController, only: [:index, :create, :delete]
+        live "/favs", FavLive
       end
     end
   end
