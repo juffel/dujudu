@@ -19,8 +19,6 @@
   <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
 <% end %>
 
-<span><%= link "Back to ingredients", to: Routes.ingredient_path(@socket, :index) %></span>
-|
 <span><%= link "Wikidata", to: wikidata_url(@ingredient) %></span>
 
 <hr>
@@ -30,9 +28,9 @@
     <%= for ingredient <- @ingredients_of_this_kind do %>
       <% image = ingredient.images |> List.first %>
       <div class="grid-cell">
-        <h4><%= link ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %></h4>
+        <h4><%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %></h4>
         <%= if not is_nil(image) do %>
-          <%= link img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
         <% end %>
       </div>
     <% end %>
@@ -45,9 +43,9 @@
     <%= for ingredient <- @similar_ingredients do %>
       <% image = ingredient.images |> List.first %>
       <div class="grid-cell">
-        <h4><%= link ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %></h4>
+        <h4><%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %></h4>
         <%= if not is_nil(image) do %>
-          <%= link img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
         <% end %>
       </div>
     <% end %>

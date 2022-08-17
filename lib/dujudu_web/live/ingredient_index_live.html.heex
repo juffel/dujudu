@@ -1,0 +1,31 @@
+<h1 class="ingredient-header">Ingredients</h1>
+
+<.form let={f} for={@meta} method="get" phx-submit="search" phx-trigger-submit="false">
+  <.filter_fields let={e} form={f} fields={[title: [label: "Search", type: :text_input]]} input_opts={["phx-change": "search", "phx-debounce": 500, value: @current_search]}>
+    <%= e.label %>
+    <%= e.input %>
+  </.filter_fields>
+</.form>
+
+<Flop.Phoenix.table
+  items={@ingredients}
+  meta={@meta}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.IngredientIndexLive]}}
+>
+  <:col let={ingredient} label="Title" field={:title}>
+    <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+  </:col>
+  <:col let={ingredient} label="Image" field={:image}>
+    <% image = image_for(ingredient) %>
+    <%= if not is_nil(image) do %>
+      <%= live_redirect to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) do %>
+        <%= img_tag(resize_wikidata_image(image.commons_url, 120)) %>
+      <% end %>
+    <% end %>
+  </:col>
+</Flop.Phoenix.table>
+
+<Flop.Phoenix.pagination
+  meta={@meta}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.IngredientIndexLive]}}
+/>
