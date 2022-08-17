@@ -18,18 +18,18 @@ defmodule DujuduWeb.Router do
     scope "/", DujuduWeb do
       pipe_through [:browser, Dujudu.Auth.Pipeline]
 
-      get "/", PageController, :index
       resources "/accounts", AccountController, only: [:new, :create]
       resources "/sessions", SessionController, only: [:new, :create]
       delete "/sessions", SessionController, :delete
 
+      live "/", HomeLive
       live "/ingredients", IngredientIndexLive
       live "/ingredients/:id", IngredientLive
 
       scope "/account" do
         pipe_through Guardian.Plug.EnsureAuthenticated
 
-        resources "/favs", FavController, only: [:index, :create, :delete]
+        live "/favs", FavLive
       end
     end
   end

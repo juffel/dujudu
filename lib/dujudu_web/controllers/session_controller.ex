@@ -13,7 +13,7 @@ defmodule DujuduWeb.SessionController do
         conn
         |> Dujudu.Auth.Guardian.Plug.sign_in(account)
         |> put_flash(:info, "Logged in successfully")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.live_path(conn, DujuduWeb.HomeLive))
 
       {:error, _reason} ->
         conn
@@ -32,6 +32,6 @@ defmodule DujuduWeb.SessionController do
     conn
     |> Dujudu.Auth.Guardian.Plug.sign_out()
     |> put_flash(:info, "Logged out successfully")
-    |> redirect(to: Routes.page_path(conn, :index))
+    |> redirect(to: Routes.live_path(conn, DujuduWeb.HomeLive))
   end
 end
