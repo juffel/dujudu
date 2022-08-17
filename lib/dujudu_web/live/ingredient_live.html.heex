@@ -19,7 +19,7 @@
   <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
 <% end %>
 
-<span><%= link "Wikidata", to: wikidata_url(@ingredient) %></span>
+<span><%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%></span>
 
 <hr>
 <%= if length(@ingredients_of_this_kind) > 0 do %>
