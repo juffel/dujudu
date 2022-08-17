@@ -5,7 +5,10 @@ defmodule Dujudu.Schemas.Ingredient do
 
   @derive {
     Flop.Schema,
-    filterable: [:title], sortable: [:title], default_limit: 50
+    compound_fields: [title_or_wid: [:title, :wikidata_id]],
+    filterable: [:title_or_wid],
+    sortable: [:title],
+    default_limit: 50
   }
 
   @primary_key {:id, :binary_id, autogenerate: true}
