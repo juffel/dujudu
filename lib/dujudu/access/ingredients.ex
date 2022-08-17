@@ -4,7 +4,6 @@ defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Wikidata.Ingredients
 
   import Ecto.Query, only: [from: 2]
-  import Ecto.Query.API, only: [fragment: 1]
 
   def get_ingredient(id) do
     query =
@@ -22,18 +21,18 @@ defmodule Dujudu.Access.Ingredients do
       from i in Ingredient,
         where: i.instance_of_wikidata_id == ^wid and i.id != ^id,
         limit: ^limit,
-        order_by: fragment("RANDOM()"),
+        order_by: fragment("md5(id || ?)", ^id),
         preload: [:images]
 
     Repo.all(query)
   end
 
-  def get_ingredients_of_this_kind(%Ingredient{wikidata_id: wid}, limit) do
+  def get_ingredients_of_this_kind(%Ingredient{id: id, wikidata_id: wid}, limit) do
     query =
       from i in Ingredient,
         where: i.instance_of_wikidata_id == ^wid,
         limit: ^limit,
-        order_by: fragment("RANDOM()"),
+        order_by: fragment("md5(id || ?)", ^id),
         preload: [:images]
 
     Repo.all(query)
