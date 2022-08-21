@@ -27,8 +27,18 @@ defmodule Dujudu.Schemas.Ingredient do
       type: :binary,
       primary_key: false
 
+    belongs_to :subclass_of, __MODULE__,
+      foreign_key: :subclass_of_wikidata_id,
+      references: :wikidata_id,
+      type: :binary,
+      primary_key: false
+
     has_many :instances, __MODULE__,
       foreign_key: :instance_of_wikidata_id,
+      references: :wikidata_id
+
+    has_many :subclasses, __MODULE__,
+      foreign_key: :subclass_of_wikidata_id,
       references: :wikidata_id
 
     has_many :favs, Dujudu.Schemas.Fav

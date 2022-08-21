@@ -3,5 +3,6 @@ defmodule Dujudu.Wikidata.Entity do
             description: nil,
             wikidata_id: nil,
             instance_of_wikidata_id: nil,
+            subclass_of_wikidata_id: nil,
             commons_image_url: nil
 end

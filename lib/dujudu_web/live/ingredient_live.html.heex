@@ -13,6 +13,10 @@
   A kind of <%= live_redirect @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
 <% end %>
 
+<%= if not is_nil(@subclass_of_ingredient) do %>
+  A kind of <%= live_redirect @subclass_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @subclass_of_ingredient) %>.
+<% end %>
+
 <p><em><%= @ingredient.description %></em></p>
 
 <%= for image <- @ingredient.images do %>

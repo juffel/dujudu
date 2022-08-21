@@ -9,7 +9,7 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
         where: i.id == ^id,
-        preload: [:images, :instance_of]
+        preload: [:images, :instance_of, :subclass_of]
 
     Repo.one(query)
   end
