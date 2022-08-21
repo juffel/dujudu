@@ -44,6 +44,8 @@ defmodule Dujudu.Wikidata.Ingredients do
       wikidata_id: get_in(wikidata_ingredient, [:item, :value]) |> parse_wikidata_id(),
       instance_of_wikidata_id:
         get_in(wikidata_ingredient, [:instanceOf, :value]) |> parse_wikidata_id(),
+      subclass_of_wikidata_id:
+        get_in(wikidata_ingredient, [:subclassOf, :value]) |> parse_wikidata_id(),
       description: get_in(wikidata_ingredient, [:itemDescription, :value]),
       commons_image_url: get_in(wikidata_ingredient, [:imageUrl, :value])
     }

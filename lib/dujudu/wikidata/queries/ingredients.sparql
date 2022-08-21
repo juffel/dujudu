@@ -1,8 +1,9 @@
-SELECT ?item ?itemLabel ?itemDescription ?imageUrl ?instanceOf
+SELECT ?item ?itemLabel ?itemDescription ?imageUrl ?instanceOf ?subclassOf
 WHERE
 {
   ?item wdt:P31*/wdt:P279* wd:Q25403900.
   OPTIONAL { ?item wdt:P18 ?imageUrl }
   OPTIONAL { ?item wdt:P31 ?instanceOf }
+  OPTIONAL { ?item wdt:P31 ?subclassOf }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }

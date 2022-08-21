@@ -12,8 +12,9 @@ defmodule DujuduWeb.IngredientLive do
   end
 
   defp fetch_data(ingredient_id, socket) do
-    ingredient = Ingredients.get_ingredient(ingredient_id)
+    ingredient = Ingredients.get_ingredient(ingredient_id) |> IO.inspect()
     instance_of_ingredient = ingredient.instance_of
+    subclass_of_ingredient = ingredient.subclass_of
     similar_ingredients = Ingredients.get_similar_ingredients(ingredient, 3)
     ingredients_of_this_kind = Ingredients.get_ingredients_of_this_kind(ingredient, 3)
 
@@ -22,6 +23,7 @@ defmodule DujuduWeb.IngredientLive do
       ingredient: ingredient,
       page_title: ingredient.title,
       instance_of_ingredient: instance_of_ingredient,
+      subclass_of_ingredient: subclass_of_ingredient,
       similar_ingredients: similar_ingredients,
       ingredients_of_this_kind: ingredients_of_this_kind
     )
