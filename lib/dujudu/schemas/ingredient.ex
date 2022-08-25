@@ -6,7 +6,7 @@ defmodule Dujudu.Schemas.Ingredient do
   @derive {
     Flop.Schema,
     compound_fields: [title_or_wid: [:title, :wikidata_id]],
-    filterable: [:title_or_wid],
+    filterable: [:title_or_wid, :instance_of_wikidata_id],
     sortable: [:title],
     default_limit: 50
   }

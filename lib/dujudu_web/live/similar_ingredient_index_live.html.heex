@@ -1,0 +1,30 @@
+<h1 class="ingredient-header">
+  <%= if is_nil(@ingredient) do %>
+    Instances of <%= @wikidata_id %>
+  <% else %>
+    Instances of <%= @ingredient.title %>
+  <% end %>
+</h1>
+
+<Flop.Phoenix.table
+  items={@ingredients}
+  meta={@meta}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient]}}
+>
+  <:col let={ingredient} label="Title" field={:title}>
+    <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+  </:col>
+  <:col let={ingredient} label="Image" field={:image}>
+    <% image = image_for(ingredient) %>
+    <%= if not is_nil(image) do %>
+      <%= live_redirect to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) do %>
+        <%= img_tag(resize_wikidata_image(image.commons_url, 120)) %>
+      <% end %>
+    <% end %>
+  </:col>
+</Flop.Phoenix.table>
+
+<Flop.Phoenix.pagination
+  meta={@meta}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive]}}
+/>

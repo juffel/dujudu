@@ -25,6 +25,7 @@ defmodule DujuduWeb.Router do
       live "/", HomeLive
       live "/ingredients", IngredientIndexLive
       live "/ingredients/:id", IngredientLive
+      live "/similar/:id", SimilarIngredientIndexLive
 
       scope "/account" do
         pipe_through Guardian.Plug.EnsureAuthenticated
