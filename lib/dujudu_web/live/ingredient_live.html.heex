@@ -35,7 +35,7 @@
       </div>
     <% end %>
     <div class="grid-cell">
-      <h4><%= live_redirect "Show all of this kind", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %></h4>
+      <h4><%= live_redirect "Show all of this kind", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, List.first(@ingredients_of_this_kind)) %></h4>
     </div>
   </div>
 <% end %>

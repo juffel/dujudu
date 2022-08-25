@@ -2,7 +2,7 @@
   <%= if is_nil(@ingredient) do %>
     Instances of <%= @wikidata_id %>
   <% else %>
-    Instances of <%= @ingredient.title %>
+    Instances of <%= live_redirect @ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @ingredient) %>
   <% end %>
 </h1>
 
@@ -26,5 +26,5 @@
 
 <Flop.Phoenix.pagination
   meta={@meta}
-  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive]}}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient]}}
 />
