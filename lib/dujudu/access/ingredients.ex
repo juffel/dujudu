@@ -15,7 +15,7 @@ defmodule Dujudu.Access.Ingredients do
   end
 
   def get_ingredient_by_wid(wikidata_id) do
-     query =
+    query =
       from i in Ingredient,
         where: i.wikidata_id == ^wikidata_id,
         preload: [:images, :instance_of]

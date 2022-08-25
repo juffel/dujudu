@@ -25,7 +25,10 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     |> assert_has(Query.link("gochujang"))
   end
 
-  feature "browse similar ingredients", %{session: session, ingredients: [limabean, _gochujang, cucumber]} do
+  feature "browse similar ingredients", %{
+    session: session,
+    ingredients: [limabean, _gochujang, cucumber]
+  } do
     insert_similar_ingredients()
 
     session

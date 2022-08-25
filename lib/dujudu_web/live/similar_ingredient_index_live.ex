@@ -15,7 +15,14 @@ defmodule DujuduWeb.SimilarIngredientIndexLive do
   end
 
   def handle_params(params, _uri, socket) do
-    search_params = %{"0" => %{"field" => "instance_of_wikidata_id", "op" => "==", "value" => socket.assigns.wikidata_id}}
+    search_params = %{
+      "0" => %{
+        "field" => "instance_of_wikidata_id",
+        "op" => "==",
+        "value" => socket.assigns.wikidata_id
+      }
+    }
+
     merged_params = Map.merge(params, %{"filters" => search_params})
 
     {:noreply, fetch_similar_ingredients(socket, merged_params)}

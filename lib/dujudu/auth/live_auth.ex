@@ -14,6 +14,7 @@ defmodule DujuduWeb.Auth.LiveAuth do
       {:error, :invalid_token} ->
         IO.inspect("DujuduWeb.Auth.LiveAuth: no account is logged in")
         {:cont, socket}
+
       {:error, reason} ->
         IO.inspect(reason, label: "Auth error in DujuduWeb.Auth.LiveAuth#on_mount/4")
         {:cont, socket}
