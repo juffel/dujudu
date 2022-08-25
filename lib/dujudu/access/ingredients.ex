@@ -14,6 +14,15 @@ defmodule Dujudu.Access.Ingredients do
     Repo.one(query)
   end
 
+  def get_ingredient_by_wid(wikidata_id) do
+    query =
+      from i in Ingredient,
+        where: i.wikidata_id == ^wikidata_id,
+        preload: [:images, :instance_of]
+
+    Repo.one(query)
+  end
+
   def get_similar_ingredients(%Ingredient{instance_of_wikidata_id: nil}, _limit), do: []
 
   def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_id: wid}, limit) do

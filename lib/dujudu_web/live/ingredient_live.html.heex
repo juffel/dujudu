@@ -21,8 +21,8 @@
 
 <span><%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%></span>
 
-<hr>
 <%= if length(@ingredients_of_this_kind) > 0 do %>
+  <hr>
   <h3>Ingredients of this kind:</h3>
   <div class="grid">
     <%= for ingredient <- @ingredients_of_this_kind do %>
@@ -34,11 +34,15 @@
         <% end %>
       </div>
     <% end %>
+    <div class="grid-cell">
+      <h4><%= live_redirect "Show all of this kind", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, List.first(@ingredients_of_this_kind)) %></h4>
+    </div>
   </div>
 <% end %>
 
 <%= if length(@similar_ingredients) > 0 do %>
-  <h3>Other ingredients:</h3>
+  <hr>
+  <h3>Similar ingredients:</h3>
   <div class="grid">
     <%= for ingredient <- @similar_ingredients do %>
       <% image = ingredient.images |> List.first %>
@@ -49,5 +53,8 @@
         <% end %>
       </div>
     <% end %>
+    <div class="grid-cell">
+      <h4><%= live_redirect "Show all similar", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %></h4>
+    </div>
   </div>
 <% end %>

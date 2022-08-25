@@ -11,8 +11,12 @@ defmodule DujuduWeb.Auth.LiveAuth do
       socket = assign_new(socket, :current_account, fn -> account end)
       {:cont, socket}
     else
+      {:error, :invalid_token} ->
+        IO.inspect("DujuduWeb.Auth.LiveAuth: no account is logged in")
+        {:cont, socket}
+
       {:error, reason} ->
-        IO.inspect(reason, label: "Auth error in Auth.LiveAuth#on_mount/4")
+        IO.inspect(reason, label: "Auth error in DujuduWeb.Auth.LiveAuth#on_mount/4")
         {:cont, socket}
     end
   end

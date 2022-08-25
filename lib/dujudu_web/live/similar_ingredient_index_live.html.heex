@@ -1,10 +1,15 @@
-<h1 class="ingredient-header"><%= @page_title %></h1>
+<h1 class="ingredient-header">
+  <%= if is_nil(@ingredient) do %>
+    Instances of <%= @wikidata_id %>
+  <% else %>
+    Instances of <%= live_redirect @ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @ingredient) %>
+  <% end %>
+</h1>
 
 <Flop.Phoenix.table
   items={@ingredients}
   meta={@meta}
-  path_helper={{Routes, :live_path, [@socket, DujuduWeb.FavLive]}}
-  class="e2e-search-results"
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient]}}
 >
   <:col let={ingredient} label="Title" field={:title}>
     <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
@@ -21,5 +26,5 @@
 
 <Flop.Phoenix.pagination
   meta={@meta}
-  path_helper={{Routes, :live_path, [@socket, DujuduWeb.FavLive]}}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient]}}
 />
