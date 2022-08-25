@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Vollkorn";
+  font-style: normal;
+  src: url("/fonts/vollkorn/Vollkorn-Regular.woff2") format("woff2");
+}
+
 nav.page-navigation li {
   font-family: serif;
   text-transform: uppercase;
