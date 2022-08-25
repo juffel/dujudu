@@ -25,6 +25,23 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     |> assert_has(Query.link("gochujang"))
   end
 
+  feature "browse similar ingredients", %{session: session, ingredients: [limabean, _gochujang, cucumber]} do
+    insert_similar_ingredients()
+
+    session
+    |> login_user()
+    |> visit("/ingredients/" <> limabean.id)
+    |> await_live_connected()
+    |> refute_has(Query.link("flour"))
+    |> click(Query.link("mung bean"))
+    |> assert_has(Query.text("bean from Vigna radiata"))
+    |> visit("/ingredients/" <> cucumber.id)
+    |> await_live_connected()
+    |> refute_has(Query.link("mung bean"))
+    |> click(Query.link("flour"))
+    |> assert_has(Query.text("powder which is made by grinding cereal grains"))
+  end
+
   feature "search ingredients", %{session: session} do
     session
     |> login_user()
@@ -110,6 +127,26 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
       )
 
     %{ingredients: [limabean, gochujang, cucumber]}
+  end
+
+  defp insert_similar_ingredients() do
+    mungbean =
+      insert(:ingredient,
+        title: "mung bean",
+        wikidata_id: "Q104664662",
+        instance_of_wikidata_id: "Q379813",
+        description: "bean from Vigna radiata"
+      )
+
+    flour =
+      insert(:ingredient,
+        title: "flour",
+        wikidata_id: "Q36465",
+        instance_of_wikidata_id: "Q25403900",
+        description: "powder which is made by grinding cereal grains"
+      )
+
+    %{similar_ingredients: [mungbean, flour]}
   end
 
   defp login_user(session) do
