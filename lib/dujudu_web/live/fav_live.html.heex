@@ -3,7 +3,7 @@
 <Flop.Phoenix.table
   items={@ingredients}
   meta={@meta}
-  path_helper={{Routes, :live_path, [@socket, DujuduWeb.IngredientIndexLive]}}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.FavLive]}}
   class="e2e-search-results"
 >
   <:col let={ingredient} label="Title" field={:title}>
@@ -21,5 +21,5 @@
 
 <Flop.Phoenix.pagination
   meta={@meta}
-  path_helper={{Routes, :live_path, [@socket, DujuduWeb.IngredientIndexLive]}}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.FavLive]}}
 />
