@@ -1,21 +1,23 @@
-<h1 class="ingredient-header">
-  <%= @ingredient.title %>
-  <%= unless is_nil(assigns[:current_account]) do %>
-    <%= if is_nil(assigns[:fav]) do %>
-      <button phx-click="add-fav">Save fav</button>
-    <% else %>
-      💜 <button phx-click="remove-fav">Unfav</button>
+<div class="sm-menu-link-spacer">
+  <h1 class="ingredient-header">
+    <%= @ingredient.title %>
+    <%= unless is_nil(assigns[:current_account]) do %>
+      <%= if is_nil(assigns[:fav]) do %>
+        <button phx-click="add-fav">Save fav</button>
+      <% else %>
+        💜 <button phx-click="remove-fav">Unfav</button>
+      <% end %>
     <% end %>
+  </h1>
+
+  <%= if not is_nil(@instance_of_ingredient) do %>
+    A kind of <%= live_redirect @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
   <% end %>
-</h1>
 
-<%= if not is_nil(@instance_of_ingredient) do %>
-  A kind of <%= live_redirect @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
-<% end %>
-
-<p>
-  <div class="ingredient-desc"><%= @ingredient.description %></div>
-</p>
+  <p>
+    <div class="ingredient-desc"><%= @ingredient.description %></div>
+  </p>
+</div>
 
 <%= for image <- @ingredient.images do %>
   <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
