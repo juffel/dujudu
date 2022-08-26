@@ -39,13 +39,6 @@
   font-size: 200%;
 }
 
-nav.page-navigation li {
-  font-family: Vollkorn, serif;
-  text-transform: uppercase;
-  margin-right: 20px;
-  float: left;
-}
-
 ul.pagination-list {
   list-style-type: none;
 }

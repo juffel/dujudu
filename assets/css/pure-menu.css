@@ -1,0 +1,151 @@
+#layout,
+#menu,
+.menu-link {
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+#layout {
+  position: relative;
+  left: 0;
+  padding-left: 0;
+}
+
+#layout.active #menu {
+  left: 200px;
+  width: 200px;
+}
+
+#layout.active .menu-link {
+  left: 200px;
+}
+
+#menu {
+  margin-left: -200px;
+  width: 200px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+#menu a {
+  font-family: Mechanical, monospace;
+  color: #999;
+  border: none;
+  padding: 0.6em 0 0.6em 0.6em;
+}
+
+#menu .pure-menu,
+#menu .pure-menu ul {
+  border: none;
+  background: transparent;
+}
+
+#menu .pure-menu li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#menu .pure-menu li a {
+  font-size: 1.4em;
+  padding: 0.5em;
+}
+
+#menu .pure-menu li a:hover,
+#menu .pure-menu li a:focus {
+  color: white;
+  background: black;
+}
+
+#menu .pure-menu-heading {
+  font-family: Vollkorn, serif;
+  font-size: 2em;
+  color: white;
+  background: rgb(75, 46, 10);
+}
+
+#menu .pure-menu-heading:hover {
+  background: black;
+}
+
+#menu .pure-menu-selected a {
+  color: #fff;
+}
+
+.menu-link {
+  position: fixed;
+  display: block; /* show this only on small screens */
+  top: 0;
+  left: 0; /* "#menu width" */
+  background: #000;
+  background: rgba(0,0,0,0.7);
+  font-size: 1.5em;
+  z-index: 10;
+  width: 2em;
+  height: auto;
+  padding: 2.1em 1.6em;
+}
+
+.menu-link:hover,
+.menu-link:focus {
+  background: #000;
+}
+
+.menu-link span {
+  position: relative;
+  display: block;
+}
+
+.menu-link span,
+.menu-link span:before,
+.menu-link span:after {
+  background-color: #fff;
+  pointer-events: none;
+  width: 100%;
+  height: 0.2em;
+}
+
+.menu-link span:before,
+.menu-link span:after {
+  position: absolute;
+  margin-top: -0.6em;
+  content: " ";
+}
+
+.menu-link span:after {
+  margin-top: 0.6em;
+}
+
+@media (min-width: 48em) {
+  #layout {
+    padding-left: 200px;
+    left: 0;
+  }
+
+  #menu {
+    left: 200px;
+  }
+
+  .menu-link {
+    position: fixed;
+    left: 200px;
+    display: none;
+  }
+
+  #layout.active .menu-link {
+    left: 200px;
+  }
+}
+
+@media (max-width: 48em) {
+  #layout.active {
+    position: relative;
+    left: 200px;
+  }
+}

@@ -8,7 +8,7 @@
   <article class="column">
     <div class="ingredients-grid pure-g">
       <%= for image <- @sample_images do %>
-        <div class="ingredient-cell pure-u-1 pure-u-sm-1-2 pure-u-md-1-3">
+        <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
           <% ingredient = image.ingredient %>
           <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
           <div class="ingredient-label">
