@@ -14,7 +14,7 @@
       <section class="container">
         <nav class="page-navigation">
           <ul>
-            <li><%= live_redirect "Home", to: Routes.live_path(@conn, DujuduWeb.HomeLive) %></li>
+            <li><%= live_redirect "Dujudu!", to: Routes.live_path(@conn, DujuduWeb.HomeLive) %></li>
             <li><%= live_redirect "Ingredients", to: Routes.live_path(@conn, DujuduWeb.IngredientIndexLive) %></li>
             <li>|</li>
             <%= if is_nil(assigns[:current_account]) do %>

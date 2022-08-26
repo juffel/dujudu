@@ -4,8 +4,35 @@
   src: url("/fonts/vollkorn/Vollkorn-Regular.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "Vollkorn-bold";
+  font-style: normal;
+  src: url("/fonts/vollkorn/Vollkorn-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Vollkorn-italic";
+  font-style: italic;
+  src: url("/fonts/vollkorn/Vollkorn-Italic.woff2") format("woff2");
+}
+
+.hero {
+  background-color: #e8d7b6;
+}
+
+.hero-title {
+  font-family: Vollkorn, serif;
+  font-size: 800%;
+  color: rgb(75, 46, 10);
+}
+
+.hero-subtitle {
+  font-family: monospace;
+  font-size: 200%;
+}
+
 nav.page-navigation li {
-  font-family: serif;
+  font-family: Vollkorn, serif;
   text-transform: uppercase;
   margin-right: 20px;
   float: left;
@@ -21,7 +48,7 @@ ul.pagination-list li {
 }
 
 h1.ingredient-header {
-  font-family: serif;
+  font-family: Vollkorn-bold, serif;
   text-transform: uppercase;
 }
 
