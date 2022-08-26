@@ -26,6 +26,13 @@
   margin: 2em;
 }
 
+@media (max-width: 48em) {
+  #main {
+    margin: 2em;
+  }
+}
+
+
 .hero {
   background-color: #e8d7b6;
 }
@@ -55,6 +62,13 @@ ul.pagination-list li {
 h1.ingredient-header {
   font-family: Vollkorn-bold, serif;
   text-transform: uppercase;
+  font-size: 4em;
+}
+
+@media (max-width: 48em) {
+  h1.ingredient-header {
+    font-size: 2em;
+  }
 }
 
 .ingredient-cell {
@@ -86,4 +100,22 @@ h1.ingredient-header {
 
 .ingredient-desc {
   font-family: Mechanical, monospace;
+}
+
+.add-fav-button {
+  background-color: gray;
+  border-color: gray;
+}
+
+.add-fav-button:hover {
+  background-color: unset;
+}
+
+.remove-fav-button {
+  background-color: red;
+  border-color: red;
+}
+.remove-fav-button:hover {
+  background-color: red;
+  border-color: red;
 }

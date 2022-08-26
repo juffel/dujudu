@@ -10,7 +10,7 @@ defmodule DujuduWeb.HomeLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(%{"seed" => seed}, _session, socket) do
-    sample_images = Images.sample_images(9, sanitize_seed(seed))
+    sample_images = Images.sample_images(6, sanitize_seed(seed))
 
     {:ok, assign(socket, sample_images: sample_images)}
   end

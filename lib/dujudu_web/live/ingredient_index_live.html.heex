@@ -1,29 +1,31 @@
-<h1 class="ingredient-header">Ingredients</h1>
+<div class="sm-menu-link-spacer">
+  <h1 class="ingredient-header">Ingredients</h1>
 
-<.form let={f} for={@meta} method="get" phx-submit="search" phx-trigger-submit="false">
-  <.filter_fields let={e} form={f} fields={[title_or_wid: [label: "Search", type: :text_input]]} input_opts={["phx-change": "search", "phx-debounce": 500, value: @current_search]}>
-    <%= e.label %>
-    <%= e.input %>
-  </.filter_fields>
-</.form>
+  <.form let={f} for={@meta} method="get" phx-submit="search" phx-trigger-submit="false">
+    <.filter_fields let={e} form={f} fields={[title_or_wid: [label: "Search", type: :text_input]]} input_opts={["phx-change": "search", "phx-debounce": 500, value: @current_search]}>
+      <%= e.label %>
+      <%= e.input %>
+    </.filter_fields>
+  </.form>
+</div>
 
-<Flop.Phoenix.table
-  items={@ingredients}
-  meta={@meta}
-  path_helper={{Routes, :live_path, [@socket, DujuduWeb.IngredientIndexLive]}}
->
-  <:col let={ingredient} label="Title" field={:title}>
-    <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
-  </:col>
-  <:col let={ingredient} label="Image" field={:image}>
-    <% image = image_for(ingredient) %>
-    <%= if not is_nil(image) do %>
-      <%= live_redirect to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) do %>
-        <%= img_tag(resize_wikidata_image(image.commons_url, 120)) %>
+<div class="ingredients-grid pure-g">
+  <%= for ingredient <- @ingredients do %>
+    <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
+      <% image = List.first(ingredient.images) %>
+      <%= if is_nil(image) do %>
+        <div class="ingredient-label">
+          <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+        </div>
+      <% else %>
+        <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+        <div class="ingredient-label">
+          <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+        </div>
       <% end %>
-    <% end %>
-  </:col>
-</Flop.Phoenix.table>
+    </div>
+  <% end %>
+</div>
 
 <Flop.Phoenix.pagination
   meta={@meta}
