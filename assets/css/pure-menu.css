@@ -82,17 +82,15 @@
   display: block; /* show this only on small screens */
   top: 0;
   left: 0;
-  background: rgb(75, 46, 10);
+  background-color: rgb(75, 46, 10);
   color: white;
-  font-size: 2em;
+  font-size: 1.5em;
   font-family: Vollkorn, serif;
   writing-mode: vertical-rl;
-  text-orientation: upright;
-  letter-spacing: .2em;
   z-index: 10;
   padding-top: .5em;
+  padding-bottom: .5em;
   width: 1.5em;
-  height: 5em;
 }
 
 .sm-menu-link-spacer {

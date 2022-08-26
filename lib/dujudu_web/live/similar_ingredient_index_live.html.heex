@@ -1,6 +1,6 @@
 <h1 class="ingredient-header">
   <%= if is_nil(@class_ingredient) do %>
-    <%= @instance_ingredient.instance_of_wikidata_id %>s
+    Instances of <%= @instance_ingredient.instance_of_wikidata_id %>
   <% else %>
     <%= live_redirect @class_ingredient.title <> "s", to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @class_ingredient) %>
   <% end %>

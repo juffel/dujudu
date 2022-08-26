@@ -31,18 +31,26 @@
 <%= if length(@ingredients_of_this_kind) > 0 do %>
   <hr>
   <h3>Ingredients of this kind:</h3>
-  <div class="grid">
+  <div class="ingredients-grid pure-g">
     <%= for ingredient <- @ingredients_of_this_kind do %>
-      <% image = ingredient.images |> List.first %>
-      <div class="grid-cell">
-        <h4><%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %></h4>
-        <%= if not is_nil(image) do %>
-          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+      <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
+        <% image = List.first(ingredient.images) %>
+        <%= if is_nil(image) do %>
+          <div class="ingredient-label">
+            <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          </div>
+        <% else %>
+          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <div class="ingredient-label">
+            <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          </div>
         <% end %>
       </div>
     <% end %>
-    <div class="grid-cell">
-      <h4><%= live_redirect "Show all of this kind", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, List.first(@ingredients_of_this_kind)) %></h4>
+    <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
+      <div class="ingredient-label-inverted">
+        <%= live_redirect "Show all of this kind", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, List.first(@ingredients_of_this_kind)) %>
+      </div>
     </div>
   </div>
 <% end %>
@@ -50,18 +58,26 @@
 <%= if length(@similar_ingredients) > 0 do %>
   <hr>
   <h3>Similar ingredients:</h3>
-  <div class="grid">
+  <div class="ingredients-grid pure-g">
     <%= for ingredient <- @similar_ingredients do %>
-      <% image = ingredient.images |> List.first %>
-      <div class="grid-cell">
-        <h4><%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %></h4>
-        <%= if not is_nil(image) do %>
-          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 120)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+      <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
+        <% image = List.first(ingredient.images) %>
+        <%= if is_nil(image) do %>
+          <div class="ingredient-label">
+            <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          </div>
+        <% else %>
+          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <div class="ingredient-label">
+            <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          </div>
         <% end %>
       </div>
     <% end %>
-    <div class="grid-cell">
-      <h4><%= live_redirect "Show all similar", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %></h4>
+    <div class="ingredient-cell inverted pure-u-1-2 pure-u-md-1-3">
+      <div class="ingredient-label inverted">
+        <%= live_redirect "Show all similar", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %>
+      </div>
     </div>
   </div>
 <% end %>

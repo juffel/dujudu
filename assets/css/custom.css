@@ -26,6 +26,10 @@
   margin: 2em;
 }
 
+main.container {
+  padding: 0;
+}
+
 @media (max-width: 48em) {
   #main {
     margin: 2em;
@@ -87,15 +91,25 @@ h1.ingredient-header {
   position: absolute;
   bottom: 1em;
   right: 1em;
-  background-color: black;
   font-family: Mechanical, monospace;
+  padding: 0;
+}
+
+.ingredient-cell .ingredient-label.inverted a {
+  border: .2em dashed black;
+  background-color: white;
+}
+
+.ingredient-cell .ingredient-label a {
+  color: white;
+  background-color: black;
   padding: 0.5em;
   padding-left: 1em;
   padding-right: 1em;
 }
 
-.ingredient-cell .ingredient-label a {
-  color: white;
+.ingredient-cell .ingredient-label.inverted a {
+  color: black;
 }
 
 .ingredient-desc {
