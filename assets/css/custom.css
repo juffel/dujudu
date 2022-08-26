@@ -16,6 +16,12 @@
   src: url("/fonts/vollkorn/Vollkorn-Italic.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "Mechanical";
+  font-style: normal;
+  src: url("/fonts/mechanical/Mechanical-g5Y5.woff") format("woff");
+}
+
 .hero {
   background-color: #e8d7b6;
 }
@@ -27,7 +33,7 @@
 }
 
 .hero-subtitle {
-  font-family: monospace;
+  font-family: Mechanical, monospace;
   font-size: 200%;
 }
 
@@ -56,4 +62,8 @@ h1.ingredient-header {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+}
+
+.ingredient-desc {
+  font-family: Mechanical, monospace;
 }

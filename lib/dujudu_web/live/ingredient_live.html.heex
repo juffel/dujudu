@@ -13,7 +13,9 @@
   A kind of <%= live_redirect @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
 <% end %>
 
-<p><em><%= @ingredient.description %></em></p>
+<p>
+  <div class="ingredient-desc"><%= @ingredient.description %></div>
+</p>
 
 <%= for image <- @ingredient.images do %>
   <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
