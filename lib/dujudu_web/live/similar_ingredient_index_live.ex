@@ -9,9 +9,9 @@ defmodule DujuduWeb.SimilarIngredientIndexLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(%{"id" => ingredient_id}, _session, socket) do
-    %{instance_of_wikidata_id: wid} = Ingredients.get_ingredient(ingredient_id) |> IO.inspect()
-    ingredient = Ingredients.get_ingredient_by_wid(wid)
-    {:ok, assign(socket, ingredient: ingredient, wikidata_id: wid)}
+    instance_ingredient = Ingredients.get_ingredient(ingredient_id)
+    class_ingredient = Ingredients.get_ingredient_by_wid(instance_ingredient.instance_of_wikidata_id)
+    {:ok, assign(socket, class_ingredient: class_ingredient, instance_ingredient: instance_ingredient)}
   end
 
   def handle_params(params, _uri, socket) do
@@ -19,7 +19,7 @@ defmodule DujuduWeb.SimilarIngredientIndexLive do
       "0" => %{
         "field" => "instance_of_wikidata_id",
         "op" => "==",
-        "value" => socket.assigns.wikidata_id
+        "value" => socket.assigns.instance_ingredient.instance_of_wikidata_id
       }
     }
 
