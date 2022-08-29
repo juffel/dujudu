@@ -9,7 +9,6 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
         where: i.id == ^id,
-        # , :instance_of_wikidata_ids, :subclass_of_wikidata_ids]
         preload: [:images]
 
     Repo.one(query)
@@ -19,7 +18,6 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
         where: i.wikidata_id == ^wikidata_id,
-        # , :instance_of_wikidata_ids, :subclass_of_wikidata_ids]
         preload: [:images]
 
     Repo.one(query)
