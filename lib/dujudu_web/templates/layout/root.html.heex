@@ -20,7 +20,7 @@
         <div class="pure-menu">
           <%= live_redirect "Dujudu!", to: Routes.live_path(@conn, DujuduWeb.HomeLive), class: "pure-menu-heading" %>
           <ul class="pure-menu-list">
-            <li class="pure-menu-item"><%= live_redirect "Ingredients", to: Routes.live_path(@conn, DujuduWeb.IngredientIndexLive) %></li>
+            <li class="pure-menu-item"><%= live_redirect "All Ingredients", to: Routes.live_path(@conn, DujuduWeb.IngredientIndexLive) %></li>
             <%= if is_nil(assigns[:current_account]) do %>
               <li class="pure-menu-item"><%= link "Login", to: Routes.session_path(@conn, :new) %></li>
             <% else %>

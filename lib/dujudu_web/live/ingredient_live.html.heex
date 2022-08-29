@@ -3,15 +3,16 @@
     <%= @ingredient.title %>
   </h1>
 
-  <%= unless is_nil(assigns[:current_account]) do %>
-    <p>
+  <p>
+    <%= unless is_nil(assigns[:current_account]) do %>
       <%= if is_nil(assigns[:fav]) do %>
         <button class="add-fav-button" phx-click="add-fav">️❤️</button>
       <% else %>
         <button class="remove-fav-button" phx-click="remove-fav">🤍</button>
       <% end %>
-    </p>
-  <% end %>
+    <% end %>
+    <%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer", class: "button button-secondary"%>
+  </p>
 
   <%= if not is_nil(@instance_of_ingredient) do %>
     A kind of <%= live_redirect @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
@@ -25,8 +26,6 @@
 <%= for image <- @ingredient.images do %>
   <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
 <% end %>
-
-<span><%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%></span>
 
 <%= if length(@ingredients_of_this_kind) > 0 do %>
   <hr>

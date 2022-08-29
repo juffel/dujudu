@@ -15,17 +15,17 @@
 }
 
 #layout.active #menu {
-  left: 200px;
-  width: 200px;
+  left: 240px;
+  width: 240px;
 }
 
 #layout.active .menu-link {
-  left: 200px;
+  left: 240px;
 }
 
 #menu {
-  margin-left: -200px;
-  width: 200px;
+  margin-left: -240px;
+  width: 240px;
   position: fixed;
   top: 0;
   left: 0;
@@ -47,19 +47,18 @@
 }
 
 #menu .pure-menu li {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-top: 1.5em;
 }
 
 #menu .pure-menu li a {
   font-size: 1.4em;
-  padding: 0.5em;
+  padding: 0.7em;
 }
 
 #menu .pure-menu li a:hover,
 #menu .pure-menu li a:focus {
   color: white;
-  background: black;
+  background: rgb(75, 46, 10);
 }
 
 #menu .pure-menu-heading {
@@ -106,29 +105,29 @@
 
 @media (min-width: 48em) {
   #layout {
-    padding-left: 200px;
+    padding-left: 240px;
     left: 0;
   }
 
   #menu {
-    left: 200px;
+    left: 240px;
   }
 
   .menu-link {
     position: fixed;
-    left: 200px;
+    left: 240px;
     display: none;
   }
 
   #layout.active .menu-link {
-    left: 200px;
+    left: 240px;
   }
 }
 
 @media (max-width: 48em) {
   #layout.active {
     position: relative;
-    left: 200px;
+    left: 240px;
   }
 
   .sm-menu-link-spacer {
