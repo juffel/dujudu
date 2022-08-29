@@ -18,6 +18,8 @@ defmodule Dujudu.Schemas.Ingredient do
     field :unit, Ecto.Enum, values: [:liter, :kilo, :unknown]
     field :description, :string
     field :wikidata_id, :string
+    # TODO: check if ecto supports array-based :has_many relations
+    field :subclass_of_wikidata_ids, {:array, :string}
 
     has_many :images, Image, on_replace: :delete
 
@@ -27,18 +29,8 @@ defmodule Dujudu.Schemas.Ingredient do
       type: :binary,
       primary_key: false
 
-    belongs_to :subclass_of, __MODULE__,
-      foreign_key: :subclass_of_wikidata_id,
-      references: :wikidata_id,
-      type: :binary,
-      primary_key: false
-
     has_many :instances, __MODULE__,
       foreign_key: :instance_of_wikidata_id,
-      references: :wikidata_id
-
-    has_many :subclasses, __MODULE__,
-      foreign_key: :subclass_of_wikidata_id,
       references: :wikidata_id
 
     has_many :favs, Dujudu.Schemas.Fav

@@ -3,9 +3,9 @@ defmodule Dujudu.Repo.Migrations.AddSubclassWikidataReferenceToIngredients do
 
   def change do
     alter table(:ingredients) do
-      add :subclass_of_wikidata_id, :string
+      add :subclass_of_wikidata_ids, {:array, :string}
     end
 
-    create index("ingredients", [:subclass_of_wikidata_id])
+    create index("ingredients", [:subclass_of_wikidata_ids])
   end
 end
