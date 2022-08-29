@@ -23,9 +23,10 @@ defmodule Dujudu.Access.Ingredients do
     Repo.one(query)
   end
 
-  def get_similar_ingredients(%Ingredient{instance_of_wikidata_id: nil}, _limit), do: []
+  def get_similar_ingredients(%Ingredient{instance_of_wikidata_ids: nil}, _limit), do: []
 
-  def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_id: wid}, limit) do
+  def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_ids: wids}, limit) do
+    wid = List.first(wids)
     query =
       from i in Ingredient,
         where: i.instance_of_wikidata_id == ^wid and i.id != ^id,
@@ -78,8 +79,8 @@ defmodule Dujudu.Access.Ingredients do
   def update_ingredients() do
     Ingredients.fetch_cached_ingredients()
     |> Enum.each(fn entity ->
-      upsert_ingredient(entity)
-      |> upsert_image(entity)
+      %{id: ingredient_id} = upsert_ingredient(entity)
+      Enum.each(entity.commons_image_urls, & upsert_image(ingredient_id, &1))
     end)
   end
 
@@ -96,7 +97,7 @@ defmodule Dujudu.Access.Ingredients do
 
   defp upsert_image(_, %{commons_image_url: nil}), do: nil
 
-  defp upsert_image(%{id: ingredient_id}, %{commons_image_url: url}) do
+  defp upsert_image(ingredient_id, %{commons_image_url: url}) do
     %{commons_url: url, ingredient_id: ingredient_id}
     |> Image.create_changeset()
     |> Repo.insert(conflict_target: [:commons_url, :ingredient_id], on_conflict: :nothing)
