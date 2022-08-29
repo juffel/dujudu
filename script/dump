@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# script/db: Pull a dev db dump.
+
+set -e
+
+echo "==> access database..."
+
+docker-compose run db sh -c 'pg_dump -h db -U postgres dujudu_dev > /dumps/dump.sql'
