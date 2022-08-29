@@ -3,6 +3,8 @@
     <%= @ingredient.title %>
   </h1>
 
+  <hr class="light-dotted">
+
   <p>
     <%= unless is_nil(assigns[:current_account]) do %>
       <%= if is_nil(assigns[:fav]) do %>
