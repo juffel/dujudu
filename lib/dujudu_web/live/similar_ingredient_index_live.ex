@@ -10,8 +10,12 @@ defmodule DujuduWeb.SimilarIngredientIndexLive do
 
   def mount(%{"id" => ingredient_id}, _session, socket) do
     instance_ingredient = Ingredients.get_ingredient(ingredient_id)
-    class_ingredient = Ingredients.get_ingredient_by_wid(instance_ingredient.instance_of_wikidata_id)
-    {:ok, assign(socket, class_ingredient: class_ingredient, instance_ingredient: instance_ingredient)}
+
+    class_ingredient =
+      Ingredients.get_ingredient_by_wid(instance_ingredient.instance_of_wikidata_id)
+
+    {:ok,
+     assign(socket, class_ingredient: class_ingredient, instance_ingredient: instance_ingredient)}
   end
 
   def handle_params(params, _uri, socket) do
