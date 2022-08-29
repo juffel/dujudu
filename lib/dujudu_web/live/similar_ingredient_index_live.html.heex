@@ -1,11 +1,13 @@
-<h1 class="ingredient-header">
-  <%= if is_nil(@ingredient) do %>
-    Instances of
-  <% else %>
-    <%= live_redirect @ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @ingredient) %>
-    varieties
-  <% end %>
-</h1>
+<div class="sm-menu-link-spacer">
+  <h1 class="ingredient-header">
+    <%= if is_nil(@ingredient) do %>
+      Instances of
+    <% else %>
+      <%= live_redirect @ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @ingredient) %>
+      varieties
+    <% end %>
+  </h1>
+</div>
 
 <div class="ingredients-grid pure-g">
   <%= for ingredient <- @instances do %>

@@ -2,9 +2,11 @@
   <h1 class="ingredient-header">
     <%= @ingredient.title %>
   </h1>
+</div>
 
-  <hr class="light-dotted">
+<hr class="light-dotted">
 
+<div class="ingredient-content">
   <p>
     <%= unless is_nil(assigns[:current_account]) do %>
       <%= if is_nil(assigns[:fav]) do %>
@@ -29,11 +31,11 @@
     <br>
     Source: <%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%>
   </p>
-</div>
 
-<%= for image <- @ingredient.images do %>
-  <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
-<% end %>
+  <%= for image <- @ingredient.images do %>
+    <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
+  <% end %>
+</div>
 
 <hr class="light-dotted">
 

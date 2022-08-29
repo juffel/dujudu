@@ -1,14 +1,14 @@
 <div class="sm-menu-link-spacer">
   <h1 class="ingredient-header">Ingredients</h1>
-
-  <hr class="light-dotted">
-  <.form let={f} for={@meta} method="get" phx-submit="search" phx-trigger-submit="false" class="search">
-    <.filter_fields let={e} form={f} fields={[title_or_wid: [label: "Search", type: :text_input]]} input_opts={["phx-change": "search", "phx-debounce": 500, value: @current_search]}>
-      <%= e.label %>
-      <%= e.input %>
-    </.filter_fields>
-  </.form>
 </div>
+
+<hr class="light-dotted">
+<.form let={f} for={@meta} method="get" phx-submit="search" phx-trigger-submit="false" class="search">
+  <.filter_fields let={e} form={f} fields={[title_or_wid: [label: "Search", type: :text_input]]} input_opts={["phx-change": "search", "phx-debounce": 500, value: @current_search]}>
+    <%= e.label %>
+    <%= e.input %>
+  </.filter_fields>
+</.form>
 
 <div class="ingredients-grid pure-g">
   <%= for ingredient <- @ingredients do %>
