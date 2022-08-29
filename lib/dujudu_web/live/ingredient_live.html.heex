@@ -2,7 +2,11 @@
   <h1 class="ingredient-header">
     <%= @ingredient.title %>
   </h1>
+</div>
 
+<hr class="light-dotted">
+
+<div class="ingredient-content">
   <p>
     <%= unless is_nil(assigns[:current_account]) do %>
       <%= if is_nil(assigns[:fav]) do %>
@@ -11,27 +15,34 @@
         <button class="remove-fav-button" phx-click="remove-fav">Unfav</button>
       <% end %>
     <% end %>
-    <%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer", class: "button button-secondary"%>
   </p>
 
-  <%= if not is_nil(@instance_of_ingredient) do %>
-    A kind of <%= live_redirect @instance_of_ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @instance_of_ingredient) %>.
+  <%= if length(@supers) > 0 do %>
+  <p class="ingredient-desc">
+    This is a kind of
+    <%= for {ingredient, index} <- Enum.with_index(@supers) do %>
+      <%= if index > 0, do: "/", else: "" %>
+      <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+    <% end %>
+  </p>
   <% end %>
-
-  <p>
-    <div class="ingredient-desc"><%= @ingredient.description %></div>
+  <p class="ingredient-desc">
+    <%= @ingredient.description %>
+    <br>
+    Source: <%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%>
   </p>
+
+  <%= for image <- @ingredient.images do %>
+    <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
+  <% end %>
 </div>
 
-<%= for image <- @ingredient.images do %>
-  <p><%= img_tag(resize_wikidata_image(image.commons_url, 640)) %></p>
-<% end %>
+<hr class="light-dotted">
 
-<%= if length(@ingredients_of_this_kind) > 0 do %>
-  <hr>
-  <h3>Ingredients of this kind:</h3>
+<%= if length(@instances) > 0 do %>
+  <h3 class="ingredient-subheader">Varieties:</h3>
   <div class="ingredients-grid pure-g">
-    <%= for ingredient <- @ingredients_of_this_kind do %>
+    <%= for ingredient <- @instances do %>
       <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
         <% image = List.first(ingredient.images) %>
         <%= if is_nil(image) do %>
@@ -46,37 +57,13 @@
         <% end %>
       </div>
     <% end %>
-    <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
-      <div class="ingredient-label-inverted">
-        <%= live_redirect "Show all of this kind", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, List.first(@ingredients_of_this_kind)) %>
+    <%= if @instances_count > 5 do %>
+      <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
+        <div class="ingredient-label inverted">
+          <%= live_redirect "Show all #{@instances_count} varieties", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 <% end %>
 
-<%= if length(@similar_ingredients) > 0 do %>
-  <hr>
-  <h3>Similar ingredients:</h3>
-  <div class="ingredients-grid pure-g">
-    <%= for ingredient <- @similar_ingredients do %>
-      <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
-        <% image = List.first(ingredient.images) %>
-        <%= if is_nil(image) do %>
-          <div class="ingredient-label">
-            <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
-          </div>
-        <% else %>
-          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
-          <div class="ingredient-label">
-            <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-    <div class="ingredient-cell inverted pure-u-1-2 pure-u-md-1-3">
-      <div class="ingredient-label inverted">
-        <%= live_redirect "Show all similar", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %>
-      </div>
-    </div>
-  </div>
-<% end %>

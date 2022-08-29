@@ -8,22 +8,27 @@ defmodule DujuduWeb.IngredientLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(%{"id" => id}, _session, socket) do
-    {:ok, fetch_data(id, socket)}
+    case Ingredients.get_ingredient(id) do
+      nil ->
+        {:ok, redirect(socket, to: Routes.live_path(socket, DujuduWeb.IngredientIndexLive))}
+
+      ingredient ->
+        {:ok, fetch_data(ingredient, socket)}
+    end
   end
 
-  defp fetch_data(ingredient_id, socket) do
-    ingredient = Ingredients.get_ingredient(ingredient_id)
-    instance_of_ingredient = ingredient.instance_of
-    similar_ingredients = Ingredients.get_similar_ingredients(ingredient, 3)
-    ingredients_of_this_kind = Ingredients.get_ingredients_of_this_kind(ingredient, 3)
+  defp fetch_data(ingredient, socket) do
+    supers = Ingredients.get_supers(ingredient)
+    instances = Ingredients.get_instances(ingredient)
+    instances_count = length(instances)
 
     socket
     |> assign(
       ingredient: ingredient,
       page_title: ingredient.title,
-      instance_of_ingredient: instance_of_ingredient,
-      similar_ingredients: similar_ingredients,
-      ingredients_of_this_kind: ingredients_of_this_kind
+      supers: supers,
+      instances: Enum.take(instances, 5),
+      instances_count: instances_count
     )
     |> load_fav()
   end

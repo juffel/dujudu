@@ -26,7 +26,7 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
 
   feature "browse similar ingredients", %{
     session: session,
-    ingredients: [limabean, _gochujang, cucumber]
+    ingredients: [limabean, _gochujang, _cucumber]
   } do
     insert_similar_ingredients()
 
@@ -35,13 +35,10 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     |> visit("/ingredients/" <> limabean.id)
     |> await_live_connected()
     |> refute_has(Query.link("flour"))
-    |> click(Query.link("mung bean"))
-    |> assert_has(Query.text("bean from Vigna radiata"))
-    |> visit("/ingredients/" <> cucumber.id)
-    |> await_live_connected()
-    |> refute_has(Query.link("mung bean"))
-    |> click(Query.link("flour"))
-    |> assert_has(Query.text("powder which is made by grinding cereal grains"))
+    |> click(Query.link("vegetable"))
+    |> assert_has(Query.text("edible plant or part of a plant, involved in cooking"))
+    |> click(Query.link("cucumber"))
+    |> assert_has(Query.text("fruit used as vegetable"))
   end
 
   feature "search ingredients", %{session: session} do
@@ -109,7 +106,7 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
         title: "lima bean",
         wikidata_id: "Q104007010",
         description: "seed from Phaseolus lunatus",
-        instance_of_wikidata_id: "Q379813"
+        instance_of_wikidata_ids: ["Q379813", "Q11004"]
       )
 
     gochujang =
@@ -117,7 +114,7 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
         title: "gochujang",
         wikidata_id: "Q699637",
         description: "Korean red chilli paste",
-        instance_of_wikidata_id: "Q178359"
+        instance_of_wikidata_ids: ["Q178359"]
       )
 
     cucumber =
@@ -125,30 +122,30 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
         title: "cucumber",
         wikidata_id: "Q2735883",
         description: "fruit used as vegetable",
-        instance_of_wikidata_id: "Q25403900"
+        instance_of_wikidata_ids: ["Q25403900", "Q11004"]
       )
 
     %{ingredients: [limabean, gochujang, cucumber]}
   end
 
   defp insert_similar_ingredients() do
-    mungbean =
+    vegetable =
       insert(:ingredient,
-        title: "mung bean",
-        wikidata_id: "Q104664662",
-        instance_of_wikidata_id: "Q379813",
-        description: "bean from Vigna radiata"
+        title: "vegetable",
+        wikidata_id: "Q11004",
+        instance_of_wikidata_ids: [],
+        description: "edible plant or part of a plant, involved in cooking"
       )
 
     flour =
       insert(:ingredient,
         title: "flour",
         wikidata_id: "Q36465",
-        instance_of_wikidata_id: "Q25403900",
+        instance_of_wikidata_ids: ["Q25403900"],
         description: "powder which is made by grinding cereal grains"
       )
 
-    %{similar_ingredients: [mungbean, flour]}
+    %{similar_ingredients: [vegetable, flour]}
   end
 
   defp login_user(session) do

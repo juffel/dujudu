@@ -20,7 +20,11 @@
       },
       "instanceOf": {
         "type" : "uri",
-        "value" : "http://www.wikidata.org/entity/Q12345"
+        "value" : "http://www.wikidata.org/entity/Q25403900"
+      },
+      "subclassOf": {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2095"
       },
       "imageUrl": {
         "type" : "uri",
@@ -61,9 +65,9 @@
         "type" : "literal",
         "value" : "rabbits like 'em"
       },
-      "instanceOf": {
+      "subclassOf": {
         "type" : "uri",
-        "value" : "http://www.wikidata.org/entity/Q654321"
+        "value" : "http://www.wikidata.org/entity/Q10675206"
       },
       "imageUrl": {
         "type" : "uri",

@@ -10,6 +10,7 @@ services:
     image: 'postgres:11-alpine'
     restart: always
     volumes:
+      - ./tmp/dumps:/dumps
       - 'pgdata:/var/lib/postgresql/data'
   web:
     build: .

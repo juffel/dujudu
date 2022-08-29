@@ -29,16 +29,13 @@ defmodule Dujudu.Wikidata.IngredientsTest do
         title: "carrot",
         description: "rabbits like 'em",
         wikidata_id: "Q81",
-        instance_of_wikidata_id: "Q12345",
-        commons_image_url: "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg"
-      },
-      %Dujudu.Wikidata.Entity{
-        title: "carrot",
-        description: "rabbits like 'em",
-        wikidata_id: "Q81",
-        instance_of_wikidata_id: "Q654321",
-        commons_image_url:
-          "http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg"
+        instance_of_wikidata_ids: MapSet.new(["Q25403900"]),
+        subclass_of_wikidata_ids: MapSet.new(["Q10675206", "Q2095"]),
+        commons_image_urls:
+          MapSet.new([
+            "http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg",
+            "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg"
+          ])
       }
     ]
 
