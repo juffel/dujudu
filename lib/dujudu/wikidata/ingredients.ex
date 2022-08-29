@@ -43,18 +43,23 @@ defmodule Dujudu.Wikidata.Ingredients do
     |> Map.get(:bindings)
   end
 
-  defp merge_rows(ingredient_rows) do
+  defp merge_rows({_wid, ingredient_rows}) do
     ingredient_rows
     |> Enum.reduce(%Entity{}, fn row, acc ->
       %Entity{
         title: acc.title || get_in(row, [:itemLabel, :value]),
         wikidata_id: acc.wikidata_id || get_in(row, [:item, :value]) |> parse_wikidata_id(),
         description: acc.description || get_in(row, [:itemDescription, :value]),
-        instance_of_wikidata_ids: acc.instance_of_wikidata_ids <> [get_in(wikidata_ingredient, [:instanceOf, :value]) |> parse_wikidata_id()],
-        subclass_of_wikidata_ids: acc.subclass_of_wikidata_ids <> [get_in(wikidata_ingredient, [:subclassOf, :value]) |> parse_wikidata_id()],
-        commons_image_urls: acc.commons_image_urls <> get_in(wikidata_ingredient, [:imageUrl, :value])
+        instance_of_wikidata_ids: append(acc.instance_of_wikidata_ids, get_in(row, [:instanceOf, :value]) |> parse_wikidata_id()),
+        subclass_of_wikidata_ids: append(acc.subclass_of_wikidata_ids, get_in(row, [:subclassOf, :value]) |> parse_wikidata_id()),
+        commons_image_urls: append(acc.commons_image_urls, get_in(row, [:imageUrl, :value]))
       }
     end)
+  end
+
+  defp append(set, nil), do: set
+  defp append(set, value) do
+    MapSet.put(set, value)
   end
 
   defp parse_wikidata_id(nil), do: nil

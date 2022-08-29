@@ -80,12 +80,13 @@ defmodule Dujudu.Access.Ingredients do
     Ingredients.fetch_cached_ingredients()
     |> Enum.each(fn entity ->
       %{id: ingredient_id} = upsert_ingredient(entity)
-      Enum.each(entity.commons_image_urls, & upsert_image(ingredient_id, &1))
+      Enum.each(entity.commons_image_urls, fn url -> upsert_image(ingredient_id, url) end)
     end)
   end
 
   defp upsert_ingredient(entity) do
-    struct(Ingredient, Map.from_struct(entity))
+    entity
+    |> ingest_entity()
     |> Repo.insert(
       conflict_target: :wikidata_id,
       on_conflict: {:replace_all_except, [:id, :wikidata_id]}
@@ -95,9 +96,23 @@ defmodule Dujudu.Access.Ingredients do
     Repo.get_by(Ingredient, wikidata_id: entity.wikidata_id)
   end
 
-  defp upsert_image(_, %{commons_image_url: nil}), do: nil
+  defp ingest_entity(%{
+    title: title,
+    wikidata_id: wikidata_id,
+    description: description,
+    instance_of_wikidata_ids: instance_of_wikidata_ids,
+    subclass_of_wikidata_ids: subclass_of_wikidata_ids
+  }) do
+    %Ingredient{
+      title: title,
+      wikidata_id: wikidata_id,
+      description: description,
+      instance_of_wikidata_ids: MapSet.to_list(instance_of_wikidata_ids),
+      subclass_of_wikidata_ids: MapSet.to_list(subclass_of_wikidata_ids)
+    }
+  end
 
-  defp upsert_image(ingredient_id, %{commons_image_url: url}) do
+  defp upsert_image(ingredient_id, url) do
     %{commons_url: url, ingredient_id: ingredient_id}
     |> Image.create_changeset()
     |> Repo.insert(conflict_target: [:commons_url, :ingredient_id], on_conflict: :nothing)
