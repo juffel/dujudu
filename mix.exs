@@ -78,7 +78,7 @@ defmodule Dujudu.MixProject do
         "ecto.migrate --quiet",
         "test"
       ],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["esbuild default --minify --loader:.woff2=file", "phx.digest"]
     ]
   end
 end

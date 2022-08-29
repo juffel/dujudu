@@ -1,8 +1,69 @@
-nav.page-navigation li {
-  font-family: serif;
-  text-transform: uppercase;
-  margin-right: 20px;
-  float: left;
+@font-face {
+  font-family: "Vollkorn";
+  font-style: normal;
+  src: url("/fonts/vollkorn/Vollkorn-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Vollkorn-bold";
+  font-style: normal;
+  src: url("/fonts/vollkorn/Vollkorn-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Vollkorn-italic";
+  font-style: italic;
+  src: url("/fonts/vollkorn/Vollkorn-Italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Mechanical";
+  font-style: normal;
+  src: url("/fonts/mechanical/Mechanical-g5Y5.woff") format("woff");
+}
+
+#main {
+  margin: 2em;
+}
+
+main.container {
+  padding: 0;
+}
+
+@media (max-width: 48em) {
+  #main {
+    margin: .5em;
+  }
+}
+
+.hero {
+  background-color: #e8d7b6;
+}
+
+.hero-title {
+  font-family: Vollkorn, serif;
+  font-size: 10rem;
+  color: rgb(75, 46, 10);
+}
+
+.hero-subtitle {
+  font-family: Mechanical, monospace;
+  background-color: black;
+  color: white;
+  font-size: 3.5rem;
+}
+
+@media (max-width: 48em) {
+  .hero-title {
+    font-size: 5rem;
+  }
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+  .phx-hero {
+    margin: 1em;
+    padding: 1em;
+  }
 }
 
 ul.pagination-list {
@@ -15,12 +76,79 @@ ul.pagination-list li {
 }
 
 h1.ingredient-header {
-  font-family: serif;
+  font-family: Vollkorn-bold, serif;
   text-transform: uppercase;
+  font-size: 4em;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+@media (max-width: 48em) {
+  h1.ingredient-header {
+    font-size: 2em;
+  }
+}
+
+.ingredient-cell {
+  position: relative;
+  aspect-ratio: 1/1;
+  padding: 0.5em;
+}
+
+.ingredient-cell img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.ingredient-cell .ingredient-label {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  font-family: Mechanical, monospace;
+  font-size: 1em;
+  padding: 0;
+}
+
+@media (max-width: 48em) {
+  .ingredient-cell .ingredient-label {
+    font-size: .7em;
+  }
+}
+
+.ingredient-cell .ingredient-label.inverted a {
+  border: .2em dashed black;
+  background-color: white;
+}
+
+.ingredient-cell .ingredient-label a {
+  color: white;
+  background-color: black;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.ingredient-cell .ingredient-label.inverted a {
+  color: black;
+}
+
+.ingredient-desc {
+  font-family: Mechanical, monospace;
+}
+
+.add-fav-button {
+  background-color: gray;
+  border-color: gray;
+}
+
+.add-fav-button:hover {
+  background-color: unset;
+}
+
+.remove-fav-button {
+  background-color: red;
+  border-color: red;
+}
+.remove-fav-button:hover {
+  background-color: red;
+  border-color: red;
 }
