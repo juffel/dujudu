@@ -3,8 +3,8 @@ defmodule Dujudu.Repo.Migrations.AddSubclassWikidataReferenceToIngredients do
 
   def change do
     alter table(:ingredients) do
-      add :subclass_of_wikidata_ids, {:array, :string}
-      add :instance_of_wikidata_ids, {:array, :string}
+      add :subclass_of_wikidata_ids, {:array, :string}, default: []
+      add :instance_of_wikidata_ids, {:array, :string}, default: []
 
       remove :instance_of_wikidata_id, :string
       remove :unit, :string

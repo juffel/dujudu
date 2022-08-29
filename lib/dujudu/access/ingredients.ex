@@ -9,7 +9,7 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
         where: i.id == ^id,
-        preload: [:images, :instance_of, :subclass_of]
+        preload: [:images]#, :instance_of_wikidata_ids, :subclass_of_wikidata_ids]
 
     Repo.one(query)
   end
@@ -18,18 +18,37 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
         where: i.wikidata_id == ^wikidata_id,
-        preload: [:images, :instance_of]
+        preload: [:images]#, :instance_of_wikidata_ids, :subclass_of_wikidata_ids]
 
     Repo.one(query)
   end
 
-  def get_similar_ingredients(%Ingredient{instance_of_wikidata_ids: nil}, _limit), do: []
+  def get_supers(%Ingredient{id: id, instance_of_wikidata_ids: instance_ofs, subclass_of_wikidata_ids: subclass_ofs}) do
+    wids = instance_ofs ++ subclass_ofs
+    query =
+      from i in Ingredient,
+        where: i.wikidata_id in ^wids and i.id != ^id,
+        order_by: fragment("md5(id || ?)", ^id),
+        preload: [:images]
+
+    Repo.all(query)
+  end
+
+  def get_instances(%Ingredient{id: id, wikidata_id: wid}) do
+     query =
+      from i in Ingredient,
+        where: ^wid in i.instance_of_wikidata_ids or ^wid in i.subclass_of_wikidata_ids,
+        order_by: fragment("md5(id || ?)", ^id),
+        preload: [:images]
+
+    Repo.all(query)
+  end
 
   def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_ids: wids}, limit) do
     wid = List.first(wids)
     query =
       from i in Ingredient,
-        where: i.instance_of_wikidata_id == ^wid and i.id != ^id,
+        where: ^wid in i.instance_of_wikidata_ids and i.id != ^id,
         limit: ^limit,
         order_by: fragment("md5(id || ?)", ^id),
         preload: [:images]
@@ -40,7 +59,7 @@ defmodule Dujudu.Access.Ingredients do
   def get_ingredients_of_this_kind(%Ingredient{id: id, wikidata_id: wid}, limit) do
     query =
       from i in Ingredient,
-        where: i.instance_of_wikidata_id == ^wid,
+        where: ^wid in i.instance_of_wikidata_ids,
         limit: ^limit,
         order_by: fragment("md5(id || ?)", ^id),
         preload: [:images]

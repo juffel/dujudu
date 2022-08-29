@@ -22,7 +22,6 @@ defmodule Dujudu.Schemas.Ingredient do
     field :instance_of_wikidata_ids, {:array, :string}
 
     has_many :images, Image, on_replace: :delete
-
     has_many :favs, Dujudu.Schemas.Fav
 
     timestamps()
