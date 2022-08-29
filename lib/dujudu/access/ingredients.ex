@@ -9,7 +9,8 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
         where: i.id == ^id,
-        preload: [:images]#, :instance_of_wikidata_ids, :subclass_of_wikidata_ids]
+        # , :instance_of_wikidata_ids, :subclass_of_wikidata_ids]
+        preload: [:images]
 
     Repo.one(query)
   end
@@ -18,60 +19,47 @@ defmodule Dujudu.Access.Ingredients do
     query =
       from i in Ingredient,
         where: i.wikidata_id == ^wikidata_id,
-        preload: [:images]#, :instance_of_wikidata_ids, :subclass_of_wikidata_ids]
+        # , :instance_of_wikidata_ids, :subclass_of_wikidata_ids]
+        preload: [:images]
 
     Repo.one(query)
   end
 
-  def get_supers(%Ingredient{id: id, instance_of_wikidata_ids: instance_ofs, subclass_of_wikidata_ids: subclass_ofs}) do
+  def get_supers(%Ingredient{
+        id: id,
+        instance_of_wikidata_ids: instance_ofs,
+        subclass_of_wikidata_ids: subclass_ofs
+      }) do
     wids = instance_ofs ++ subclass_ofs
+
     query =
       from i in Ingredient,
         where: i.wikidata_id in ^wids and i.id != ^id,
-        order_by: fragment("md5(id || ?)", ^id),
         preload: [:images]
 
     Repo.all(query)
   end
 
-  def get_instances(%Ingredient{id: id, wikidata_id: wid}) do
-     query =
-      from i in Ingredient,
-        where: ^wid in i.instance_of_wikidata_ids or ^wid in i.subclass_of_wikidata_ids,
-        order_by: fragment("md5(id || ?)", ^id),
-        preload: [:images]
-
-    Repo.all(query)
+  def get_instances(ingredient, limit \\ nil) do
+    ingredient
+    |> get_instances_query(limit)
+    |> Repo.all()
   end
 
-  def get_similar_ingredients(%Ingredient{id: id, instance_of_wikidata_ids: wids}, limit) do
-    wid = List.first(wids)
-    query =
-      from i in Ingredient,
-        where: ^wid in i.instance_of_wikidata_ids and i.id != ^id,
-        limit: ^limit,
-        order_by: fragment("md5(id || ?)", ^id),
-        preload: [:images]
-
-    Repo.all(query)
-  end
-
-  def get_ingredients_of_this_kind(%Ingredient{id: id, wikidata_id: wid}, limit) do
-    query =
-      from i in Ingredient,
-        where: ^wid in i.instance_of_wikidata_ids,
-        limit: ^limit,
-        order_by: fragment("md5(id || ?)", ^id),
-        preload: [:images]
-
-    Repo.all(query)
+  def get_instances_query(%Ingredient{wikidata_id: wid}, limit \\ nil) do
+    from i in Ingredient,
+      where: ^wid in i.instance_of_wikidata_ids or ^wid in i.subclass_of_wikidata_ids,
+      limit: ^limit,
+      preload: [:images]
   end
 
   def list_ingredients(flop) do
-    query =
-      from i in Ingredient,
-        preload: [:images]
+    query = from i in Ingredient, preload: [:images]
 
+    list_ingredients(query, flop)
+  end
+
+  def list_ingredients(query, flop) do
     Flop.run(query, flop, for: Ingredient)
   end
 
@@ -84,15 +72,6 @@ defmodule Dujudu.Access.Ingredients do
         preload: [:images]
 
     Flop.run(query, flop, for: Ingredient)
-  end
-
-  def sample_ingredient() do
-    query =
-      from i in Ingredient,
-        order_by: fragment("RANDOM()"),
-        limit: 1
-
-    Repo.one(query)
   end
 
   def update_ingredients() do
@@ -116,12 +95,12 @@ defmodule Dujudu.Access.Ingredients do
   end
 
   defp ingest_entity(%{
-    title: title,
-    wikidata_id: wikidata_id,
-    description: description,
-    instance_of_wikidata_ids: instance_of_wikidata_ids,
-    subclass_of_wikidata_ids: subclass_of_wikidata_ids
-  }) do
+         title: title,
+         wikidata_id: wikidata_id,
+         description: description,
+         instance_of_wikidata_ids: instance_of_wikidata_ids,
+         subclass_of_wikidata_ids: subclass_of_wikidata_ids
+       }) do
     %Ingredient{
       title: title,
       wikidata_id: wikidata_id,

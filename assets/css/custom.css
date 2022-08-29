@@ -131,8 +131,13 @@ h1.ingredient-header {
   color: black;
 }
 
-.ingredient-desc {
+.ingredient-desc,
+.ingredient-subheader {
   font-family: Mechanical, monospace;
+}
+
+hr.light-dotted {
+  border-bottom: .5em dotted rgba(81, 50, 11, 0.12);
 }
 
 .add-fav-button {

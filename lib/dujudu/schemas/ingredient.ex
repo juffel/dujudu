@@ -5,8 +5,11 @@ defmodule Dujudu.Schemas.Ingredient do
 
   @derive {
     Flop.Schema,
-    compound_fields: [title_or_wid: [:title, :wikidata_id]],
-    filterable: [:title_or_wid],
+    compound_fields: [
+      title_or_wid: [:title, :wikidata_id],
+      instance_of_wid: [:instance_of_wikidata_ids, :subclass_of_wikidata_ids]
+    ],
+    filterable: [:title_or_wid, :instance_of_wid],
     sortable: [:title],
     default_limit: 48
   }

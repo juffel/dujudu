@@ -1,13 +1,14 @@
 <h1 class="ingredient-header">
-  <%= if is_nil(@class_ingredient) do %>
-    Instances of <%= @instance_ingredient.instance_of_wikidata_id %>
+  <%= if is_nil(@ingredient) do %>
+    Instances of
   <% else %>
-    <%= live_redirect @class_ingredient.title <> "s", to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @class_ingredient) %>
+    <%= live_redirect @ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @ingredient) %>
+    varieties
   <% end %>
 </h1>
 
 <div class="ingredients-grid pure-g">
-  <%= for ingredient <- @ingredients do %>
+  <%= for ingredient <- @instances do %>
     <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
       <% image = List.first(ingredient.images) %>
       <%= if is_nil(image) do %>
@@ -26,5 +27,5 @@
 
 <Flop.Phoenix.pagination
   meta={@meta}
-  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @instance_ingredient.id]}}
+  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient.id]}}
 />

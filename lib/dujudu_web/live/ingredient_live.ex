@@ -15,13 +15,15 @@ defmodule DujuduWeb.IngredientLive do
     ingredient = Ingredients.get_ingredient(ingredient_id)
     supers = Ingredients.get_supers(ingredient)
     instances = Ingredients.get_instances(ingredient)
+    instances_count = length(instances)
 
     socket
     |> assign(
       ingredient: ingredient,
       page_title: ingredient.title,
       supers: supers,
-      instances: instances
+      instances: Enum.take(instances, 5),
+      instances_count: instances_count
     )
     |> load_fav()
   end
