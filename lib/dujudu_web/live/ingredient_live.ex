@@ -8,11 +8,16 @@ defmodule DujuduWeb.IngredientLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(%{"id" => id}, _session, socket) do
-    {:ok, fetch_data(id, socket)}
+    case Ingredients.get_ingredient(id) do
+      nil ->
+        {:ok, redirect(socket, to: Routes.live_path(socket, DujuduWeb.IngredientIndexLive))}
+
+      ingredient ->
+        {:ok, fetch_data(ingredient, socket)}
+    end
   end
 
-  defp fetch_data(ingredient_id, socket) do
-    ingredient = Ingredients.get_ingredient(ingredient_id)
+  defp fetch_data(ingredient, socket) do
     supers = Ingredients.get_supers(ingredient)
     instances = Ingredients.get_instances(ingredient)
     instances_count = length(instances)
