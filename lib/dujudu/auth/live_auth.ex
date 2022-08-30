@@ -1,4 +1,6 @@
 defmodule DujuduWeb.Auth.LiveAuth do
+  require Logger
+
   import Phoenix.LiveView
 
   @claims %{typ: "access"}
@@ -12,11 +14,11 @@ defmodule DujuduWeb.Auth.LiveAuth do
       {:cont, socket}
     else
       {:error, :invalid_token} ->
-        IO.inspect("DujuduWeb.Auth.LiveAuth: no account is logged in")
+        Logger.info("DujuduWeb.Auth.LiveAuth: no account is logged in")
         {:cont, socket}
 
       {:error, reason} ->
-        IO.inspect(reason, label: "Auth error in DujuduWeb.Auth.LiveAuth#on_mount/4")
+        Logger.info("Auth error in DujuduWeb.Auth.LiveAuth#on_mount/4: #{inspect(reason)}")
         {:cont, socket}
     end
   end
