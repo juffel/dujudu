@@ -1,7 +1,7 @@
 defmodule Dujudu.Wikidata.ClientTest do
   use DujuduWeb.ConnCase
 
-  import Dujudu.Wikidata.Client, only: [get_ingredients: 0, get_ingredient_images: 1]
+  import Dujudu.Wikidata.Client, only: [get_ingredients: 0]
 
   alias Dujudu.Wikidata.ClientRequest
   alias Dujudu.Repo
