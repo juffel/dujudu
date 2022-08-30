@@ -1,7 +1,7 @@
 defmodule DujuduWeb.HomeLive do
   use DujuduWeb, :live_view
 
-  alias Dujudu.Access.Images
+  alias Dujudu.Access.Ingredients
 
   import Dujudu.Wikidata.ImageUrls, only: [resize_wikidata_image: 2]
 
@@ -10,9 +10,9 @@ defmodule DujuduWeb.HomeLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(%{"seed" => seed}, _session, socket) do
-    sample_images = Images.sample_images(11, sanitize_seed(seed))
+    samples = Ingredients.sample_ingredients(11, sanitize_seed(seed))
 
-    {:ok, assign(socket, sample_images: sample_images)}
+    {:ok, assign(socket, samples: samples)}
   end
 
   def mount(_params, _session, socket) do

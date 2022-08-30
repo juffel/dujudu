@@ -1,6 +1,6 @@
 defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Repo
-  alias Dujudu.Schemas.{Fav, Image, Ingredient}
+  alias Dujudu.Schemas.{Fav, Ingredient}
   alias Dujudu.Wikidata.Ingredients
 
   import Ecto.Query, only: [from: 2]
@@ -21,6 +21,16 @@ defmodule Dujudu.Access.Ingredients do
         preload: [:images]
 
     Repo.one(query)
+  end
+
+  def sample_ingredients(length, seed) do
+    query =
+      from i in Ingredient,
+        order_by: fragment("md5(wikidata_id || ?)", ^seed),
+        where: i.commons_image_urls != fragment("'{}'"),
+        limit: ^length
+
+    Repo.all(query)
   end
 
   def get_supers(%Ingredient{
