@@ -83,23 +83,17 @@ defmodule Dujudu.Access.Ingredients do
   end
 
   def update_ingredients() do
-    Ingredients.fetch_cached_ingredients()
-    |> Enum.each(fn entity ->
-      %{id: ingredient_id} = upsert_ingredient(entity)
-      Enum.each(entity.commons_image_urls, fn url -> upsert_image(ingredient_id, url) end)
-    end)
-  end
+    ingredients =
+      Ingredients.fetch_cached_ingredients()
+      |> Enum.map(fn entity -> ingest_entity(entity) end)
 
-  defp upsert_ingredient(entity) do
-    entity
-    |> ingest_entity()
-    |> Repo.insert(
+    Repo.insert_all(
+      Ingredient,
+      ingredients,
+      placeholders: %{timestamp: timestamp()},
       conflict_target: :wikidata_id,
-      on_conflict: {:replace_all_except, [:id, :wikidata_id]}
+      on_conflict: {:replace_all_except, [:id, :wikidata_id, :created_at]}
     )
-
-    # do a fresh load from db, since insert + on_conflict returns a fake/unpersisted id in case the record already exists
-    Repo.get_by(Ingredient, wikidata_id: entity.wikidata_id)
   end
 
   defp ingest_entity(%{
@@ -107,20 +101,23 @@ defmodule Dujudu.Access.Ingredients do
          wikidata_id: wikidata_id,
          description: description,
          instance_of_wikidata_ids: instance_of_wikidata_ids,
-         subclass_of_wikidata_ids: subclass_of_wikidata_ids
+         subclass_of_wikidata_ids: subclass_of_wikidata_ids,
+         commons_image_urls: commons_image_urls
        }) do
-    %Ingredient{
+    %{
       title: title,
       wikidata_id: wikidata_id,
       description: description,
       instance_of_wikidata_ids: MapSet.to_list(instance_of_wikidata_ids),
-      subclass_of_wikidata_ids: MapSet.to_list(subclass_of_wikidata_ids)
+      subclass_of_wikidata_ids: MapSet.to_list(subclass_of_wikidata_ids),
+      commons_image_urls: MapSet.to_list(commons_image_urls),
+      inserted_at: {:placeholder, :timestamp},
+      updated_at: {:placeholder, :timestamp}
     }
   end
 
-  defp upsert_image(ingredient_id, url) do
-    %{commons_url: url, ingredient_id: ingredient_id}
-    |> Image.create_changeset()
-    |> Repo.insert(conflict_target: [:commons_url, :ingredient_id], on_conflict: :nothing)
+  defp timestamp() do
+    NaiveDateTime.utc_now()
+    |> NaiveDateTime.truncate(:second)
   end
 end
