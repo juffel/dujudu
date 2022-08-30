@@ -8,8 +8,7 @@ defmodule Dujudu.Access.Ingredients do
   def get_ingredient(id) do
     query =
       from i in Ingredient,
-        where: i.id == ^id,
-        preload: [:images]
+        where: i.id == ^id
 
     Repo.one(query)
   end
@@ -17,8 +16,7 @@ defmodule Dujudu.Access.Ingredients do
   def get_ingredient_by_wid(wikidata_id) do
     query =
       from i in Ingredient,
-        where: i.wikidata_id == ^wikidata_id,
-        preload: [:images]
+        where: i.wikidata_id == ^wikidata_id
 
     Repo.one(query)
   end
@@ -42,8 +40,7 @@ defmodule Dujudu.Access.Ingredients do
 
     query =
       from i in Ingredient,
-        where: i.wikidata_id in ^wids and i.id != ^id,
-        preload: [:images]
+        where: i.wikidata_id in ^wids and i.id != ^id
 
     Repo.all(query)
   end
@@ -57,14 +54,11 @@ defmodule Dujudu.Access.Ingredients do
   def get_instances_query(%Ingredient{wikidata_id: wid}, limit \\ nil) do
     from i in Ingredient,
       where: ^wid in i.instance_of_wikidata_ids or ^wid in i.subclass_of_wikidata_ids,
-      limit: ^limit,
-      preload: [:images]
+      limit: ^limit
   end
 
   def list_ingredients(flop) do
-    query = from i in Ingredient, preload: [:images]
-
-    list_ingredients(query, flop)
+    list_ingredients(Ingredient, flop)
   end
 
   def list_ingredients(query, flop) do
@@ -76,8 +70,7 @@ defmodule Dujudu.Access.Ingredients do
       from i in Ingredient,
         right_join: f in Fav,
         on: [ingredient_id: i.id],
-        where: f.account_id == ^account_id,
-        preload: [:images]
+        where: f.account_id == ^account_id
 
     Flop.run(query, flop, for: Ingredient)
   end

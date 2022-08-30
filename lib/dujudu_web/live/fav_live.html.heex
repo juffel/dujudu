@@ -4,19 +4,14 @@
 
 <div class="ingredients-grid pure-g">
   <%= for ingredient <- @ingredients do %>
-    <% image = List.first(ingredient.images) %>
     <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
-      <%= if is_nil(image) do %>
-        <div class="ingredient-label">
-          <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
-        </div>
-      <% else %>
-        <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
-        <div class="ingredient-label">
-          <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
-        </div>
+      <%= for image_url <- [image_url_for(ingredient)] do %>
+        <%= live_redirect img_tag(resize_wikidata_image(image_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
       <% end %>
-    </div>
+      <div class="ingredient-label">
+        <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+      </div>
+   </div>
   <% end %>
 </div>
 
