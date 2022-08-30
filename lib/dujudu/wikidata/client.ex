@@ -14,9 +14,10 @@ defmodule Dujudu.Wikidata.Client do
   end
 
   defp get_response(query) do
-    with {:ok, response} <- get("/sparql", query: [query: query]) do
-      {:ok, response.body}
-    else
+    case get("/sparql", query: [query: query]) do
+      {:ok, response} ->
+        {:ok, response.body}
+
       {:error, :timeout} ->
         {:error, :wikidata_client_timeout}
 

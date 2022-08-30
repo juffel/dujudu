@@ -18,7 +18,7 @@ defmodule Dujudu.Factory do
     %Dujudu.Schemas.Ingredient{
       title: "bell pepper",
       description: "group of fruits of Capsicum annuum",
-      wikidata_id: sequence(:wikidata_id, & "Q1234#{&1}")
+      wikidata_id: sequence(:wikidata_id, &"Q1234#{&1}")
     }
   end
 

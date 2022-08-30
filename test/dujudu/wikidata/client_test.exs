@@ -66,27 +66,4 @@ defmodule Dujudu.Wikidata.ClientTest do
       assert {:error, :wikidata_client_error, {:error, :something_else}} == get_ingredients()
     end
   end
-
-  @ingredient_id "Q1548030"
-  @ingredient_images_query File.read!("test/dujudu/wikidata/sample_ingredient_images.sparql")
-  @ingredient_images_response File.read!("test/dujudu/wikidata/sample_ingredient_images.json")
-
-  describe "get_ingredient_images/1" do
-    setup do
-      Tesla.Mock.mock(fn %{
-                           method: :get,
-                           url: "https://query.wikidata.org/sparql",
-                           headers: [{"accept", "application/sparql-results+json"}],
-                           query: [query: @ingredient_images_query]
-                         } ->
-        %Tesla.Env{status: 200, body: @ingredient_images_response}
-      end)
-
-      :ok
-    end
-
-    test "retrieves images for the given ingredient and unpacks response" do
-      assert {:ok, @ingredient_images_response} == get_ingredient_images(@ingredient_id)
-    end
-  end
 end

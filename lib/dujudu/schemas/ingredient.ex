@@ -19,7 +19,7 @@ defmodule Dujudu.Schemas.Ingredient do
     field :title, :string
     field :description, :string
     field :wikidata_id, :string
-    # TODO: check if ecto supports array-based :has_many relations
+
     field :subclass_of_wikidata_ids, {:array, :string}
     field :instance_of_wikidata_ids, {:array, :string}
     field :commons_image_urls, {:array, :string}

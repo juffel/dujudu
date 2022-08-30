@@ -16,17 +16,17 @@ defmodule Dujudu.Wikidata.Ingredients do
   end
 
   defp fetch_cached_json() do
-    with %{response_body: response_body} <- ClientRequests.get_cached() do
-      response_body
-    else
+    case ClientRequests.get_cached() do
+      %{response_body: response_body} -> response_body
       _ -> fetch_ingredients()
     end
   end
 
   defp fetch_ingredients(retry \\ true) do
-    with {:ok, ingredients} <- Client.get_ingredients() do
-      ingredients
-    else
+    case Client.get_ingredients() do
+      {:ok, ingredients} ->
+        ingredients
+
       {:error, :wikidata_client_timeout} ->
         if retry do
           fetch_ingredients(false)

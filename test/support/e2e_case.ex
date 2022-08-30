@@ -36,6 +36,8 @@ defmodule DujuduWeb.E2ECase do
     |> Wallaby.Browser.page_source()
     |> IO.inspect()
 
+    # credo:disable-for-previous-line
+
     session
   end
 

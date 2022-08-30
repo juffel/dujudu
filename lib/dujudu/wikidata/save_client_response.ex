@@ -10,12 +10,13 @@ defmodule Dujudu.Wikidata.SaveClientResponse do
 
   @impl Tesla.Middleware
   def call(env, next, _options) do
-    with {:ok, env} <- Tesla.run(env, next) do
-      save_request_data(env)
+    case Tesla.run(env, next) do
+      {:ok, env} ->
+        save_request_data(env)
+        {:ok, env}
 
-      {:ok, env}
-    else
-      result -> result
+      result ->
+        result
     end
   end
 
