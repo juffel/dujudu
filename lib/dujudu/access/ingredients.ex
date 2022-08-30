@@ -1,6 +1,6 @@
 defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Repo
-  alias Dujudu.Schemas.{Fav, Image, Ingredient}
+  alias Dujudu.Schemas.{Fav, Ingredient}
   alias Dujudu.Wikidata.Ingredients
 
   import Ecto.Query, only: [from: 2]
@@ -8,8 +8,7 @@ defmodule Dujudu.Access.Ingredients do
   def get_ingredient(id) do
     query =
       from i in Ingredient,
-        where: i.id == ^id,
-        preload: [:images]
+        where: i.id == ^id
 
     Repo.one(query)
   end
@@ -17,10 +16,19 @@ defmodule Dujudu.Access.Ingredients do
   def get_ingredient_by_wid(wikidata_id) do
     query =
       from i in Ingredient,
-        where: i.wikidata_id == ^wikidata_id,
-        preload: [:images]
+        where: i.wikidata_id == ^wikidata_id
 
     Repo.one(query)
+  end
+
+  def sample_ingredients(length, seed) do
+    query =
+      from i in Ingredient,
+        order_by: fragment("md5(wikidata_id || ?)", ^seed),
+        where: i.commons_image_urls != fragment("'{}'"),
+        limit: ^length
+
+    Repo.all(query)
   end
 
   def get_supers(%Ingredient{
@@ -32,8 +40,7 @@ defmodule Dujudu.Access.Ingredients do
 
     query =
       from i in Ingredient,
-        where: i.wikidata_id in ^wids and i.id != ^id,
-        preload: [:images]
+        where: i.wikidata_id in ^wids and i.id != ^id
 
     Repo.all(query)
   end
@@ -47,14 +54,11 @@ defmodule Dujudu.Access.Ingredients do
   def get_instances_query(%Ingredient{wikidata_id: wid}, limit \\ nil) do
     from i in Ingredient,
       where: ^wid in i.instance_of_wikidata_ids or ^wid in i.subclass_of_wikidata_ids,
-      limit: ^limit,
-      preload: [:images]
+      limit: ^limit
   end
 
   def list_ingredients(flop) do
-    query = from i in Ingredient, preload: [:images]
-
-    list_ingredients(query, flop)
+    list_ingredients(Ingredient, flop)
   end
 
   def list_ingredients(query, flop) do
@@ -66,30 +70,23 @@ defmodule Dujudu.Access.Ingredients do
       from i in Ingredient,
         right_join: f in Fav,
         on: [ingredient_id: i.id],
-        where: f.account_id == ^account_id,
-        preload: [:images]
+        where: f.account_id == ^account_id
 
     Flop.run(query, flop, for: Ingredient)
   end
 
   def update_ingredients() do
-    Ingredients.fetch_cached_ingredients()
-    |> Enum.each(fn entity ->
-      %{id: ingredient_id} = upsert_ingredient(entity)
-      Enum.each(entity.commons_image_urls, fn url -> upsert_image(ingredient_id, url) end)
-    end)
-  end
+    ingredients =
+      Ingredients.fetch_cached_ingredients()
+      |> Enum.map(fn entity -> ingest_entity(entity) end)
 
-  defp upsert_ingredient(entity) do
-    entity
-    |> ingest_entity()
-    |> Repo.insert(
+    Repo.insert_all(
+      Ingredient,
+      ingredients,
+      placeholders: %{timestamp: timestamp()},
       conflict_target: :wikidata_id,
-      on_conflict: {:replace_all_except, [:id, :wikidata_id]}
+      on_conflict: {:replace_all_except, [:id, :wikidata_id, :created_at]}
     )
-
-    # do a fresh load from db, since insert + on_conflict returns a fake/unpersisted id in case the record already exists
-    Repo.get_by(Ingredient, wikidata_id: entity.wikidata_id)
   end
 
   defp ingest_entity(%{
@@ -97,20 +94,23 @@ defmodule Dujudu.Access.Ingredients do
          wikidata_id: wikidata_id,
          description: description,
          instance_of_wikidata_ids: instance_of_wikidata_ids,
-         subclass_of_wikidata_ids: subclass_of_wikidata_ids
+         subclass_of_wikidata_ids: subclass_of_wikidata_ids,
+         commons_image_urls: commons_image_urls
        }) do
-    %Ingredient{
+    %{
       title: title,
       wikidata_id: wikidata_id,
       description: description,
       instance_of_wikidata_ids: MapSet.to_list(instance_of_wikidata_ids),
-      subclass_of_wikidata_ids: MapSet.to_list(subclass_of_wikidata_ids)
+      subclass_of_wikidata_ids: MapSet.to_list(subclass_of_wikidata_ids),
+      commons_image_urls: MapSet.to_list(commons_image_urls),
+      inserted_at: {:placeholder, :timestamp},
+      updated_at: {:placeholder, :timestamp}
     }
   end
 
-  defp upsert_image(ingredient_id, url) do
-    %{commons_url: url, ingredient_id: ingredient_id}
-    |> Image.create_changeset()
-    |> Repo.insert(conflict_target: [:commons_url, :ingredient_id], on_conflict: :nothing)
+  defp timestamp() do
+    NaiveDateTime.utc_now()
+    |> NaiveDateTime.truncate(:second)
   end
 end

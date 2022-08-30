@@ -1,7 +1,6 @@
 defmodule Dujudu.Schemas.Ingredient do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Dujudu.Schemas.Image
 
   @derive {
     Flop.Schema,
@@ -20,11 +19,11 @@ defmodule Dujudu.Schemas.Ingredient do
     field :title, :string
     field :description, :string
     field :wikidata_id, :string
-    # TODO: check if ecto supports array-based :has_many relations
+
     field :subclass_of_wikidata_ids, {:array, :string}
     field :instance_of_wikidata_ids, {:array, :string}
+    field :commons_image_urls, {:array, :string}
 
-    has_many :images, Image, on_replace: :delete
     has_many :favs, Dujudu.Schemas.Fav
 
     timestamps()

@@ -5,10 +5,11 @@
 <section class="row">
   <article class="column">
     <div class="ingredients-grid pure-g">
-      <%= for image <- @sample_images do %>
+      <%= for ingredient <- @samples do %>
         <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
-          <% ingredient = image.ingredient %>
-          <%= live_redirect img_tag(resize_wikidata_image(image.commons_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <%= if not is_nil(image_url = image_url_for(ingredient)) do %>
+            <%= live_redirect img_tag(resize_wikidata_image(image_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <% end %>
           <div class="ingredient-label">
             <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
           </div>

@@ -34,6 +34,7 @@ defmodule DujuduWeb.E2ECase do
   def print_page_source(session) do
     session
     |> Wallaby.Browser.page_source()
+    # credo:disable-for-next-line
     |> IO.inspect()
 
     session
