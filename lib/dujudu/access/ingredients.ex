@@ -1,7 +1,7 @@
 defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Repo
   alias Dujudu.Schemas.{Fav, Ingredient}
-  alias Dujudu.Wikidata.Ingredients
+  alias Dujudu.Wikidata.StreamResponse
 
   import Ecto.Query, only: [from: 2]
 
@@ -76,37 +76,17 @@ defmodule Dujudu.Access.Ingredients do
   end
 
   def update_ingredients() do
-    ingredients =
-      Ingredients.fetch_cached_ingredients()
-      |> Enum.map(fn entity -> ingest_entity(entity) end)
-
-    Repo.insert_all(
-      Ingredient,
-      ingredients,
-      placeholders: %{timestamp: timestamp()},
-      conflict_target: :wikidata_id,
-      on_conflict: {:replace_all_except, [:id, :wikidata_id, :created_at]}
-    )
-  end
-
-  defp ingest_entity(%{
-         title: title,
-         wikidata_id: wikidata_id,
-         description: description,
-         instance_of_wikidata_ids: instance_of_wikidata_ids,
-         subclass_of_wikidata_ids: subclass_of_wikidata_ids,
-         commons_image_urls: commons_image_urls
-       }) do
-    %{
-      title: title,
-      wikidata_id: wikidata_id,
-      description: description,
-      instance_of_wikidata_ids: MapSet.to_list(instance_of_wikidata_ids),
-      subclass_of_wikidata_ids: MapSet.to_list(subclass_of_wikidata_ids),
-      commons_image_urls: MapSet.to_list(commons_image_urls),
-      inserted_at: {:placeholder, :timestamp},
-      updated_at: {:placeholder, :timestamp}
-    }
+    StreamResponse.stream_cached_ingredients()
+    |> Stream.map(fn ingredient_maps ->
+      Repo.insert_all(
+        Ingredient,
+        ingredient_maps,
+        placeholders: %{timestamp: timestamp()},
+        conflict_target: :wikidata_id,
+        on_conflict: {:replace_all_except, [:id, :wikidata_id, :created_at]}
+      )
+    end)
+    |> Stream.run()
   end
 
   defp timestamp() do

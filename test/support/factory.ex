@@ -28,8 +28,8 @@ defmodule Dujudu.Factory do
 
   def wikidata_client_request_factory do
     %Dujudu.Wikidata.ClientRequest{
-      query: "",
-      response_body: "{}"
+      query: "SELECT SOMETHING",
+      file_path: "tmp/some/path"
     }
   end
 end
