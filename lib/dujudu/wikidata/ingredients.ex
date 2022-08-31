@@ -11,6 +11,17 @@ defmodule Dujudu.Wikidata.Ingredients do
     |> Enum.map(&merge_rows/1)
   end
 
+  def stream_fetch_cached_ingredients() do
+    fetch_cached_json()
+    |> File.stream!()
+    |> Jaxon.Stream.from_enumerable()
+    |> Jaxon.Stream.query([:root, "results", "bindings"])
+    |> Stream.chunk_every(100)
+    |> Stream.map(fn chunk ->
+      IO.inspect(chunk)
+    end)
+  end
+
   defp get_wid(element) do
     get_in(element, [:item, :value]) |> parse_wikidata_id()
   end
