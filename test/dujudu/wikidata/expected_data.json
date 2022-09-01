@@ -1,0 +1,25 @@
+[
+  {
+    "commons_image_urls": [],
+    "description": "sesame oil used in Mandaean rituals",
+    "instance_of_wikidata_ids": [
+      "Q212317"
+    ],
+    "subclass_of_wikidata_ids": [],
+    "title": "misha",
+    "wikidata_id": "Q110974067"
+  },
+  {
+    "commons_image_urls": [
+      "http://commons.wikimedia.org/wiki/Special:FilePath/Daslook%20%28Allium%20ursinum%29%2007-04-2020.%20%28actm.%29%2004.jpg",
+      "http://commons.wikimedia.org/wiki/Special:FilePath/Ramsons%20700.jpg"
+    ],
+    "description": "species of plant, herb",
+    "instance_of_wikidata_ids": [
+      "Q16521"
+    ],
+    "subclass_of_wikidata_ids": [],
+    "title": "Allium ursinum",
+    "wikidata_id": "Q130882"
+  }
+]

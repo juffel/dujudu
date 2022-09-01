@@ -11,7 +11,7 @@ defmodule Dujudu.Wikidata.Ingredients do
   end
 
   defp get_wikidata_id(element) do
-    get_in(element, [:itemId, :value]) |> parse_wikidata_id()
+    get_in(element, ["item", "value"]) |> parse_wikidata_id()
   end
 
   defp merge_rows({_wid, ingredient_rows}) do
@@ -63,9 +63,7 @@ defmodule Dujudu.Wikidata.Ingredients do
       description: description,
       instance_of_wikidata_ids: MapSet.to_list(instance_of_wikidata_ids),
       subclass_of_wikidata_ids: MapSet.to_list(subclass_of_wikidata_ids),
-      commons_image_urls: MapSet.to_list(commons_image_urls),
-      inserted_at: {:placeholder, :timestamp},
-      updated_at: {:placeholder, :timestamp}
+      commons_image_urls: MapSet.to_list(commons_image_urls)
     }
   end
 

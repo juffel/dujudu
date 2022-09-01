@@ -1,9 +1,21 @@
 defmodule Dujudu.Wikidata.IngredientsTest do
   use DujuduWeb.ConnCase
 
-  alias Dujudu.Wikidata.Entity
+  import Dujudu.Wikidata.Ingredients, only: [ingredient_data_from_rows: 1]
 
-  @sample_response File.read!("test/dujudu/wikidata/sample_ingredients.json")
+  @sample_rows File.read!("test/dujudu/wikidata/sample_rows.json")
+  @expected_ingredient_data File.read!("test/dujudu/wikidata/expected_data.json")
+
+  describe "ingredient_data_from_rows/1" do
+    test "extracts data properly" do
+      ingredient_data =
+        @sample_rows
+        |> Jason.decode!()
+        |> ingredient_data_from_rows()
+
+      assert Jason.decode!(@expected_ingredient_data, keys: :atoms) == ingredient_data
+    end
+  end
 
   setup do
     Tesla.Mock.mock(fn %{method: :get} ->
@@ -12,6 +24,8 @@ defmodule Dujudu.Wikidata.IngredientsTest do
 
     :ok
   end
+
+  @sample_response File.read!("test/dujudu/wikidata/sample_ingredients.json")
 
   describe "fetch_cached_ingredients/0" do
     import Dujudu.Wikidata.Ingredients, only: [fetch_cached_ingredients: 0]
