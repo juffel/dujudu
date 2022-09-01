@@ -58,6 +58,8 @@ config :dujudu, Dujudu.Auth.Pipeline,
   module: Dujudu.Auth.Guardian,
   error_handler: Dujudu.Auth.ErrorHandler
 
+config :dujudu, wikidata_request_cache_directory: "tmp/wikidata_client_cache"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
