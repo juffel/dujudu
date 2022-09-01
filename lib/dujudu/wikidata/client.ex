@@ -16,7 +16,8 @@ defmodule Dujudu.Wikidata.Client do
 
   defp do_get_ingredients(query) do
     case get("/sparql", query: [query: query]) do
-      {:ok, response} -> {:ok, response}
+      {:ok, response} ->
+        {:ok, response}
 
       {:error, :timeout} ->
         {:error, :wikidata_client_timeout}

@@ -67,20 +67,24 @@ defmodule Dujudu.Access.IngredientsTest do
       assert :ok = update_ingredients()
 
       ingredients = Repo.all(Ingredient)
+
       assert %{
-        title: "carrot",
-        wikidata_id: "Q81",
-        commons_image_urls: ["http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg", "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg"],
-        description: "rabbits like 'em",
-        instance_of_wikidata_ids: ["Q25403900"],
-        subclass_of_wikidata_ids: ["Q10675206", "Q2095"],
-      } = List.last(ingredients)
+               title: "carrot",
+               wikidata_id: "Q81",
+               commons_image_urls: [
+                 "http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg",
+                 "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg"
+               ],
+               description: "rabbits like 'em",
+               instance_of_wikidata_ids: ["Q25403900"],
+               subclass_of_wikidata_ids: ["Q10675206", "Q2095"]
+             } = List.last(ingredients)
 
       assert [
-        %Ingredient{title: "honey"},
-        %Ingredient{title: "zucchini"},
-        %Ingredient{title: "carrot"}
-      ] = ingredients
+               %Ingredient{title: "honey"},
+               %Ingredient{title: "zucchini"},
+               %Ingredient{title: "carrot"}
+             ] = ingredients
     end
 
     test "only updates ingredients with updated values" do
@@ -91,7 +95,14 @@ defmodule Dujudu.Access.IngredientsTest do
 
       # sneakily update cached response
       request = Repo.one(ClientRequest)
-      updated_response = String.replace(@sample_response, "rabbits like 'em", "universally delicious root vegetable")
+
+      updated_response =
+        String.replace(
+          @sample_response,
+          "rabbits like 'em",
+          "universally delicious root vegetable"
+        )
+
       :ok = File.write(request.file_path, updated_response)
 
       assert :ok = update_ingredients()

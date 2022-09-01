@@ -66,5 +66,4 @@ defmodule Dujudu.Wikidata.Ingredients do
       commons_image_urls: MapSet.to_list(commons_image_urls)
     }
   end
-
 end

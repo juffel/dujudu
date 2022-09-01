@@ -86,12 +86,13 @@ defmodule Dujudu.Access.Ingredients do
     client_request
     |> StreamResponse.stream_cached_ingredients()
     |> Stream.map(fn ingredient_maps ->
-      augmented_maps = Enum.map(ingredient_maps, fn ingredient ->
-        Map.merge(ingredient, %{
-          inserted_at: {:placeholder, :timestamp},
-          updated_at: {:placeholder, :timestamp}
-        })
-      end)
+      augmented_maps =
+        Enum.map(ingredient_maps, fn ingredient ->
+          Map.merge(ingredient, %{
+            inserted_at: {:placeholder, :timestamp},
+            updated_at: {:placeholder, :timestamp}
+          })
+        end)
 
       Repo.insert_all(
         Ingredient,

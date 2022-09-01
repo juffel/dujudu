@@ -21,11 +21,12 @@ defmodule Dujudu.Wikidata.CachedClient do
   @spec fetch_new_request(boolean()) :: {:ok, ClientRequest.t()} | {:error, any()}
   defp fetch_new_request(retry \\ true) do
     with {:ok, response} <- Client.get_ingredients(),
-      {:ok, request} <- save_request_data((response)) do
-        {:ok, request}
+         {:ok, request} <- save_request_data(response) do
+      {:ok, request}
     else
       {:error, :wikidata_client_timeout} ->
         Logger.info("wikidata client timeout")
+
         if retry do
           Logger.info("retrying...")
           fetch_new_request(false)
@@ -33,16 +34,16 @@ defmodule Dujudu.Wikidata.CachedClient do
           {:error, :timeout}
         end
 
-      {:error, reason} -> {:error, reason}
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 
   defp save_request_data(%{query: [query: query], body: body}) do
     with file_name <- file_name_for_query(query),
-      :ok <- File.mkdir_p(@responses_cache_dir),
-      file_path <- Path.join([@responses_cache_dir, "#{file_name}.json"]),
-      :ok <- File.write(file_path, body) do
-
+         :ok <- File.mkdir_p(@responses_cache_dir),
+         file_path <- Path.join([@responses_cache_dir, "#{file_name}.json"]),
+         :ok <- File.write(file_path, body) do
       client_request =
         %{query: query, file_path: file_path}
         |> ClientRequest.create_changeset()

@@ -45,7 +45,9 @@ defmodule Dujudu.Wikidata.CachedClientTest do
     test "removes outdated record and creates a new one" do
       old_file_path = Path.join(@cache_directory, "old.json")
       File.write(old_file_path, "{'foo': 'bar'}")
-      outdated_request = insert(:wikidata_client_request, inserted_at: @hours_ago_25, file_path: old_file_path)
+
+      outdated_request =
+        insert(:wikidata_client_request, inserted_at: @hours_ago_25, file_path: old_file_path)
 
       {:ok, new_request} = get_cached()
 
@@ -56,7 +58,7 @@ defmodule Dujudu.Wikidata.CachedClientTest do
   end
 
   defp mock_request(_) do
-    Tesla.Mock.mock(fn %{method: :get, query: [query: @ingredients_query] } ->
+    Tesla.Mock.mock(fn %{method: :get, query: [query: @ingredients_query]} ->
       %Tesla.Env{
         status: 200,
         query: [query: "QUERY-FOO"],
