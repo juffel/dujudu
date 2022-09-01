@@ -78,9 +78,16 @@ defmodule Dujudu.Access.Ingredients do
   def update_ingredients() do
     StreamResponse.stream_cached_ingredients()
     |> Stream.map(fn ingredient_maps ->
+      augmented_maps = Enum.map(ingredient_maps, fn ingredient ->
+        Map.merge(ingredient, %{
+          inserted_at: {:placeholder, :timestamp},
+          updated_at: {:placeholder, :timestamp}
+        })
+      end)
+
       Repo.insert_all(
         Ingredient,
-        ingredient_maps,
+        augmented_maps,
         placeholders: %{timestamp: timestamp()},
         conflict_target: :wikidata_id,
         on_conflict: {:replace_all_except, [:id, :wikidata_id, :created_at]}

@@ -1,7 +1,10 @@
 defmodule Dujudu.Access.IngredientsTest do
   use DujuduWeb.ConnCase
 
-  import Dujudu.Access.Ingredients, only: [sample_ingredients: 2]
+  alias Dujudu.Schemas.Ingredient
+  alias Dujudu.Repo
+
+  import Dujudu.Access.Ingredients, only: [sample_ingredients: 2, update_ingredients: 0]
 
   describe "sample_ingredients/2" do
     setup do
@@ -38,6 +41,50 @@ defmodule Dujudu.Access.IngredientsTest do
 
       assert [["booourl", "schnourl"], ["fooooourl"]] ==
                result2 |> Enum.map(& &1.commons_image_urls)
+    end
+  end
+
+  describe "update_ingredients/0" do
+    @sample_response File.read!("test/dujudu/wikidata/sample_ingredients.json")
+
+    setup do
+      Tesla.Mock.mock(fn %{method: :get} ->
+        %Tesla.Env{status: 200, body: @sample_response, query: [query: "foo=bar"]}
+      end)
+
+      :ok
+    end
+
+    test "fills in data from request" do
+      assert :ok = update_ingredients()
+
+      ingredients = Repo.all(Ingredient)
+      assert %{
+        title: "carrot",
+        wikidata_id: "Q81",
+        commons_image_urls: ["http://commons.wikimedia.org/wiki/Special:FilePath/Another_Carrot_pic.jpg", "http://commons.wikimedia.org/wiki/Special:FilePath/Foo.Bar.02.jpg"],
+        description: "rabbits like 'em",
+        instance_of_wikidata_ids: ["Q25403900"],
+        subclass_of_wikidata_ids: ["Q10675206", "Q2095"],
+      } = List.last(ingredients)
+
+      assert [
+        %Ingredient{title: "honey"},
+        %Ingredient{title: "zucchini"},
+        %Ingredient{title: "carrot"}
+      ] = ingredients
+    end
+
+    test "only updates ingredients with updated values" do
+      # TODO: implement
+      # - test that existing entries are stable
+      # - test that updated entries have proper timestamps
+      # - ...?
+      # update_ingredients()
+      # ingredients_old = Repo.all(Ingredient)
+
+      # update_ingredients()
+      # ingredients_latest = Repo.all(Ingredient)
     end
   end
 end

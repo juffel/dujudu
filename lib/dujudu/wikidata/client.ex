@@ -29,7 +29,7 @@ defmodule Dujudu.Wikidata.Client do
         {:error, :timeout} ->
           {:error, :wikidata_client_timeout}
 
-        error ->
+        {:error, error} ->
           {:error, :wikidata_client_error, error}
     end
   end
@@ -51,7 +51,7 @@ defmodule Dujudu.Wikidata.Client do
     end
   end
 
-  defp save_request_data(_), do: nil
+  defp save_request_data(_), do: {:error, :invalid_response}
 
   defp file_name_for_query(query) do
     :crypto.hash(:md5, query) |> Base.encode16()

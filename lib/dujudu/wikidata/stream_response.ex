@@ -1,8 +1,10 @@
 defmodule Dujudu.Wikidata.StreamResponse do
+  require Logger
+
   alias Dujudu.Wikidata.{Client, ClientRequest, Ingredients}
   alias Dujudu.Wikidata.Access.ClientRequests
 
-  @chunk_size 3 #100
+  @chunk_size 100
 
   @spec stream_cached_ingredients() :: Stream.t() | {:error, any()}
   def stream_cached_ingredients() do
@@ -36,12 +38,14 @@ defmodule Dujudu.Wikidata.StreamResponse do
 
   @spec fetch_new_request(boolean()) :: {:ok, ClientRequest.t()} | {:error, any()}
   defp fetch_new_request(retry \\ true) do
-    case Client.get_request() |> IO.inspect(label: "Client.get_request()") do
+    case Client.get_request() do
       {:ok, request} ->
         {:ok, request}
 
       {:error, :wikidata_client_timeout} ->
+        Logger.info("wikidata client timeout")
         if retry do
+          Logger.info("retrying...")
           fetch_new_request(false)
         else
           {:error, :timeout}
