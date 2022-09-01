@@ -1,6 +1,6 @@
 defmodule Dujudu.Wikidata.Access.ClientRequests do
-  alias Dujudu.Wikidata.ClientRequest
   alias Dujudu.Repo
+  alias Dujudu.Wikidata.ClientRequest
 
   import Ecto.Query, only: [from: 2]
 

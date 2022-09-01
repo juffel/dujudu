@@ -9,7 +9,7 @@ defmodule Dujudu.Repo.Migrations.CreateIngredients do
       add :wikidata_id, :string
       add :description, :text
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     create unique_index(:ingredients, [:wikidata_id])

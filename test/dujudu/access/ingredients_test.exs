@@ -3,8 +3,16 @@ defmodule Dujudu.Access.IngredientsTest do
 
   alias Dujudu.Schemas.Ingredient
   alias Dujudu.Repo
+  alias Dujudu.Wikidata.ClientRequest
 
   import Dujudu.Access.Ingredients, only: [sample_ingredients: 2, update_ingredients: 0]
+
+  @cache_directory Application.fetch_env!(:dujudu, :wikidata_request_cache_directory)
+
+  setup do
+    # remove test artifacts
+    on_exit(fn -> File.rm_rf(@cache_directory) end)
+  end
 
   describe "sample_ingredients/2" do
     setup do
@@ -76,15 +84,22 @@ defmodule Dujudu.Access.IngredientsTest do
     end
 
     test "only updates ingredients with updated values" do
-      # TODO: implement
-      # - test that existing entries are stable
-      # - test that updated entries have proper timestamps
-      # - ...?
-      # update_ingredients()
-      # ingredients_old = Repo.all(Ingredient)
+      assert :ok = update_ingredients()
 
-      # update_ingredients()
-      # ingredients_latest = Repo.all(Ingredient)
+      carrot = Repo.get_by(Ingredient, wikidata_id: "Q81")
+      assert %{description: "rabbits like 'em"} = carrot
+
+      # sneakily update cached response
+      request = Repo.one(ClientRequest)
+      updated_response = String.replace(@sample_response, "rabbits like 'em", "universally delicious root vegetable")
+      :ok = File.write(request.file_path, updated_response)
+
+      assert :ok = update_ingredients()
+
+      fresh_carrot = Repo.get_by(Ingredient, wikidata_id: "Q81")
+      assert %{description: "universally delicious root vegetable"} = fresh_carrot
+      assert fresh_carrot.inserted_at == carrot.inserted_at
+      assert fresh_carrot.updated_at != carrot.updated_at
     end
   end
 end

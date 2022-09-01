@@ -75,5 +75,4 @@ defmodule Dujudu.Wikidata.CachedClient do
     DateTime.utc_now()
     |> DateTime.add(-(hours * 60 * 60), :second)
   end
-
 end

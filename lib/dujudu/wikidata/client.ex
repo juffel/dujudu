@@ -4,6 +4,8 @@ defmodule Dujudu.Wikidata.Client do
   @ingredients_query_path "lib/dujudu/wikidata/queries/ingredients.sparql"
 
   plug Tesla.Middleware.BaseUrl, "https://query.wikidata.org"
+  # TODO: timeout seems to be problematic in test env
+  # plug Tesla.Middleware.Timeout, timeout: 10_000
   plug Tesla.Middleware.Headers, [{"accept", "application/sparql-results+json"}]
 
   def get_ingredients do

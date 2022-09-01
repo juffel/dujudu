@@ -1,7 +1,7 @@
 defmodule Dujudu.Access.Ingredients do
   alias Dujudu.Repo
   alias Dujudu.Schemas.{Fav, Ingredient}
-  alias Dujudu.Wikidata.StreamResponse
+  alias Dujudu.Wikidata.{CachedClient, StreamResponse}
 
   import Ecto.Query, only: [from: 2]
 
@@ -76,7 +76,15 @@ defmodule Dujudu.Access.Ingredients do
   end
 
   def update_ingredients() do
-    StreamResponse.stream_cached_ingredients()
+    case CachedClient.get_cached() do
+      {:ok, client_request} -> handle_response(client_request)
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
+  defp handle_response(client_request) do
+    client_request
+    |> StreamResponse.stream_cached_ingredients()
     |> Stream.map(fn ingredient_maps ->
       augmented_maps = Enum.map(ingredient_maps, fn ingredient ->
         Map.merge(ingredient, %{
@@ -88,16 +96,11 @@ defmodule Dujudu.Access.Ingredients do
       Repo.insert_all(
         Ingredient,
         augmented_maps,
-        placeholders: %{timestamp: timestamp()},
+        placeholders: %{timestamp: DateTime.utc_now()},
         conflict_target: :wikidata_id,
-        on_conflict: {:replace_all_except, [:id, :wikidata_id, :created_at]}
+        on_conflict: {:replace_all_except, [:id, :wikidata_id, :inserted_at]}
       )
     end)
     |> Stream.run()
-  end
-
-  defp timestamp() do
-    NaiveDateTime.utc_now()
-    |> NaiveDateTime.truncate(:second)
   end
 end
