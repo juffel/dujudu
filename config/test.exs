@@ -35,6 +35,7 @@ config :wallaby,
   driver: Wallaby.Chrome,
   screenshot_on_failure: true
 
+config :dujudu, wikidata_request_timeout_ms: 1_000
 config :dujudu, wikidata_request_cache_directory: "tmp/wikidata_client_cache_test"
 
 config :dujudu, :sandbox, Ecto.Adapters.SQL.Sandbox
