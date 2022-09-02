@@ -191,10 +191,11 @@ hr.light-dotted {
   border-color: lightgray;
 }
 
-.remove-fav-button {
+.remove-fav-button, .remove-fav-button:focus {
   background-color: lightcoral;
   border-color: lightcoral;
 }
+
 
 .remove-fav-button:hover {
   background-color: rgb(238, 192, 192);

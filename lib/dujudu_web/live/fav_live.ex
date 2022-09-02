@@ -9,7 +9,7 @@ defmodule DujuduWeb.FavLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Favourites")}
+    {:ok, assign(socket, page_title: "Bookmarks")}
   end
 
   def handle_params(params, _uri, socket) do
@@ -18,7 +18,7 @@ defmodule DujuduWeb.FavLive do
     with {:ok, flop} <- Flop.validate(params, for: Ingredient) do
       {ingredients, meta} = Ingredients.list_fav_ingredients(flop, account_id)
 
-      {:noreply, assign(socket, meta: meta, ingredients: ingredients, page_title: "Favourites")}
+      {:noreply, assign(socket, meta: meta, ingredients: ingredients, page_title: "Bookmarks")}
     end
   end
 end

@@ -10,9 +10,9 @@
   <div>
     <%= unless is_nil(assigns[:current_account]) do %>
       <%= if is_nil(assigns[:fav]) do %>
-        <button class="fav-button add-fav-button" phx-click="add-fav">️Save fav</button>
+        <button class="fav-button add-fav-button" phx-click="add-fav">️Save</button>
       <% else %>
-        <button class="fav-button remove-fav-button" phx-click="remove-fav">Unfav</button>
+        <button class="fav-button remove-fav-button" phx-click="remove-fav">Saved</button>
       <% end %>
     <% end %>
   </div>
