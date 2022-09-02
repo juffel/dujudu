@@ -2,6 +2,7 @@ defmodule Dujudu.Wikidata.ClientRequest do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @timestamps_opts [type: :utc_datetime_usec]
   schema "wikidata_client_requests" do
     field :query, :string
     field :file_path, :string

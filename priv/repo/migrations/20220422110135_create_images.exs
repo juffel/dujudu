@@ -7,7 +7,7 @@ defmodule Dujudu.Repo.Migrations.CreateImages do
       add :commons_url, :text
       add :ingredient_id, references(:ingredients, type: :binary_id)
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     create unique_index(:images, [:commons_url, :ingredient_id])

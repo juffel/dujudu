@@ -6,7 +6,7 @@ defmodule Dujudu.Repo.Migrations.CreateClientRequests do
       add :query, :text
       add :response_body, :text
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
   end
 end
