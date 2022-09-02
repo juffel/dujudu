@@ -12,7 +12,6 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     |> click(Query.link("cucumber"))
     |> click(Query.button("Save"))
     |> assert_has(Query.button("Saved"))
-    |> refute_has(Query.button("Save"))
     |> click(Query.link("Bookmarks"))
     |> assert_has(Query.link("cucumber"))
     |> refute_has(Query.text("gochujang"))
