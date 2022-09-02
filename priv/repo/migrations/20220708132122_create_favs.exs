@@ -7,7 +7,7 @@ defmodule Dujudu.Repo.Migrations.CreateFavs do
       add :account_id, references(:accounts, on_delete: :delete_all, type: :binary_id)
       add :ingredient_id, references(:ingredients, on_delete: :delete_all, type: :binary_id)
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     create index(:favs, [:ingredient_id])

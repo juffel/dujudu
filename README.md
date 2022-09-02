@@ -2,40 +2,6 @@
 
 A wikidata-backed browser for food & ingredients.
 
-## Executing things in the docker container
-
-For most of the following examples, the `script/` directory contains a shortcut, like `script/mix` or `script/test`.
-
-Running migrations:
-
-```sh
-$ docker-compose run web mix ecto.migrate
-```
-
-Running tests:
-
-```sh
-$ docker-compose run -e MIX_ENV=test web mix test test/dujudu/wikidata/client_test.exs
-```
-
-### Getting an interactive shell with phoenix context
-
-```sh
-$ docker-compose run web iex -S mix
-```
-
-### Accessing the database
-
-```sh
-$ docker-compose run db sh -c 'psql -h db -U postgres -d dujudu_dev'
-```
-
-### Running credo
-
-```sh
-$ docker-compose run web mix credo
-```
-
 ## Querying Wikidata
 
 Extensive tutorial on wikidata SPARQL API https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial

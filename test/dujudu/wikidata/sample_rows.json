@@ -1,0 +1,70 @@
+[
+  {
+    "instanceOf": {
+      "type": "uri",
+      "value": "http://www.wikidata.org/entity/Q212317"
+    },
+    "item": {
+      "type": "uri",
+      "value": "http://www.wikidata.org/entity/Q110974067"
+    },
+    "itemDescription": {
+      "type": "literal",
+      "value": "sesame oil used in Mandaean rituals",
+      "xml:lang": "en"
+    },
+    "itemLabel": {
+      "type": "literal",
+      "value": "misha",
+      "xml:lang": "en"
+    }
+  },
+  {
+    "imageUrl": {
+      "type": "uri",
+      "value": "http://commons.wikimedia.org/wiki/Special:FilePath/Ramsons%20700.jpg"
+    },
+    "instanceOf": {
+      "type": "uri",
+      "value": "http://www.wikidata.org/entity/Q16521"
+    },
+    "item": {
+      "type": "uri",
+      "value": "http://www.wikidata.org/entity/Q130882"
+    },
+    "itemDescription": {
+      "type": "literal",
+      "value": "species of plant, herb",
+      "xml:lang": "en"
+    },
+    "itemLabel": {
+      "type": "literal",
+      "value": "Allium ursinum",
+      "xml:lang": "en"
+    }
+  },
+  {
+    "imageUrl": {
+      "type": "uri",
+      "value": "http://commons.wikimedia.org/wiki/Special:FilePath/Daslook%20%28Allium%20ursinum%29%2007-04-2020.%20%28actm.%29%2004.jpg"
+    },
+    "instanceOf": {
+      "type": "uri",
+      "value": "http://www.wikidata.org/entity/Q16521"
+    },
+    "item": {
+      "type": "uri",
+      "value": "http://www.wikidata.org/entity/Q130882"
+    },
+    "itemDescription": {
+      "type": "literal",
+      "value": "species of plant, herb",
+      "xml:lang": "en"
+    },
+    "itemLabel": {
+      "type": "literal",
+      "value": "Allium ursinum",
+      "xml:lang": "en"
+    }
+  }
+]

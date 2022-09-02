@@ -5,23 +5,24 @@ defmodule Dujudu.Wikidata.Client do
 
   plug Tesla.Middleware.BaseUrl, "https://query.wikidata.org"
   plug Tesla.Middleware.Headers, [{"accept", "application/sparql-results+json"}]
-  plug Dujudu.Wikidata.SaveClientResponse
+
+  unless Mix.env() == :test, do: plug(Tesla.Middleware.Timeout, timeout: 10_000)
 
   def get_ingredients do
     @ingredients_query_path
     |> File.read!()
-    |> get_response()
+    |> do_get_ingredients()
   end
 
-  defp get_response(query) do
+  defp do_get_ingredients(query) do
     case get("/sparql", query: [query: query]) do
       {:ok, response} ->
-        {:ok, response.body}
+        {:ok, response}
 
       {:error, :timeout} ->
         {:error, :wikidata_client_timeout}
 
-      error ->
+      {:error, error} ->
         {:error, :wikidata_client_error, error}
     end
   end

@@ -55,6 +55,7 @@ defmodule Dujudu.MixProject do
       {:argon2_elixir, "~> 3.0"},
       {:flop, "~> 0.16.1"},
       {:flop_phoenix, "~> 0.14.1"},
+      {:jaxon, "~> 2.0"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:wallaby, "~> 0.29.0", runtime: false, only: :test},
       {:ex_machina, "~> 2.7.0"}

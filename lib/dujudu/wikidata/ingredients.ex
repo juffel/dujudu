@@ -1,66 +1,37 @@
 defmodule Dujudu.Wikidata.Ingredients do
-  alias Dujudu.Wikidata.{Client, Entity}
-  alias Dujudu.Wikidata.Access.ClientRequests
+  alias Dujudu.Wikidata.Entity
 
   @wikidata_id_prefix "http://www.wikidata.org/entity/"
 
-  def fetch_cached_ingredients() do
-    fetch_cached_json()
-    |> unpack_response()
-    |> Enum.group_by(&get_wid/1)
+  def ingredient_data_from_rows(entities) do
+    entities
+    |> Enum.group_by(&get_wikidata_id/1)
     |> Enum.map(&merge_rows/1)
+    |> Enum.map(fn entity -> ingest_entity(entity) end)
   end
 
-  defp get_wid(element) do
-    get_in(element, [:item, :value]) |> parse_wikidata_id()
-  end
-
-  defp fetch_cached_json() do
-    case ClientRequests.get_cached() do
-      %{response_body: response_body} -> response_body
-      _ -> fetch_ingredients()
-    end
-  end
-
-  defp fetch_ingredients(retry \\ true) do
-    case Client.get_ingredients() do
-      {:ok, ingredients} ->
-        ingredients
-
-      {:error, :wikidata_client_timeout} ->
-        if retry do
-          fetch_ingredients(false)
-        else
-          []
-        end
-    end
-  end
-
-  defp unpack_response(body) do
-    body
-    |> Jason.decode!(keys: :atoms)
-    |> Map.get(:results)
-    |> Map.get(:bindings)
+  defp get_wikidata_id(element) do
+    get_in(element, ["item", "value"]) |> parse_wikidata_id()
   end
 
   defp merge_rows({_wid, ingredient_rows}) do
     ingredient_rows
     |> Enum.reduce(%Entity{}, fn row, acc ->
       %Entity{
-        title: acc.title || get_in(row, [:itemLabel, :value]),
-        wikidata_id: acc.wikidata_id || get_in(row, [:item, :value]) |> parse_wikidata_id(),
-        description: acc.description || get_in(row, [:itemDescription, :value]),
+        title: acc.title || get_in(row, ["itemLabel", "value"]),
+        wikidata_id: acc.wikidata_id || get_in(row, ["item", "value"]) |> parse_wikidata_id(),
+        description: acc.description || get_in(row, ["itemDescription", "value"]),
         instance_of_wikidata_ids:
           append(
             acc.instance_of_wikidata_ids,
-            get_in(row, [:instanceOf, :value]) |> parse_wikidata_id()
+            get_in(row, ["instanceOf", "value"]) |> parse_wikidata_id()
           ),
         subclass_of_wikidata_ids:
           append(
             acc.subclass_of_wikidata_ids,
-            get_in(row, [:subclassOf, :value]) |> parse_wikidata_id()
+            get_in(row, ["subclassOf", "value"]) |> parse_wikidata_id()
           ),
-        commons_image_urls: append(acc.commons_image_urls, get_in(row, [:imageUrl, :value]))
+        commons_image_urls: append(acc.commons_image_urls, get_in(row, ["imageUrl", "value"]))
       }
     end)
   end
@@ -76,5 +47,23 @@ defmodule Dujudu.Wikidata.Ingredients do
   defp parse_wikidata_id(id_url) do
     id_url
     |> String.replace(@wikidata_id_prefix, "")
+  end
+
+  defp ingest_entity(%{
+         title: title,
+         wikidata_id: wikidata_id,
+         description: description,
+         instance_of_wikidata_ids: instance_of_wikidata_ids,
+         subclass_of_wikidata_ids: subclass_of_wikidata_ids,
+         commons_image_urls: commons_image_urls
+       }) do
+    %{
+      title: title,
+      wikidata_id: wikidata_id,
+      description: description,
+      instance_of_wikidata_ids: MapSet.to_list(instance_of_wikidata_ids),
+      subclass_of_wikidata_ids: MapSet.to_list(subclass_of_wikidata_ids),
+      commons_image_urls: MapSet.to_list(commons_image_urls)
+    }
   end
 end

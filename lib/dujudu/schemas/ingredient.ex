@@ -15,6 +15,7 @@ defmodule Dujudu.Schemas.Ingredient do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
+  @timestamps_opts [type: :utc_datetime_usec]
   schema "ingredients" do
     field :title, :string
     field :description, :string

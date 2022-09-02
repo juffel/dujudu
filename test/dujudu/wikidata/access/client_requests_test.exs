@@ -1,4 +1,4 @@
-defmodule Dujudu.Wikidata.Access.IngredientsTest do
+defmodule Dujudu.Wikidata.Access.ClientRequestsTest do
   use Dujudu.DataCase
 
   describe "get_cached/0" do
