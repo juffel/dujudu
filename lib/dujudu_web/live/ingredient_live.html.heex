@@ -7,33 +7,37 @@
 <hr class="light-dotted">
 
 <div class="ingredient-content">
-  <p>
+  <div>
     <%= unless is_nil(assigns[:current_account]) do %>
       <%= if is_nil(assigns[:fav]) do %>
-        <button class="add-fav-button" phx-click="add-fav">️Save fav</button>
+        <button class="fav-button add-fav-button" phx-click="add-fav">️Save</button>
       <% else %>
-        <button class="remove-fav-button" phx-click="remove-fav">Unfav</button>
+        <button class="fav-button remove-fav-button" phx-click="remove-fav">Saved</button>
       <% end %>
     <% end %>
-  </p>
+  </div>
 
   <%= if length(@supers) > 0 do %>
-  <p class="ingredient-desc">
-    This is a kind of
-    <%= for {ingredient, index} <- Enum.with_index(@supers) do %>
-      <%= if index > 0, do: "/", else: "" %>
-      <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
-    <% end %>
-  </p>
+    <div class="ingredient-desc">
+      This is a kind of
+      <%= for {ingredient, index} <- Enum.with_index(@supers) do %>
+        <%= if index > 0, do: "/", else: "" %>
+        <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+      <% end %>
+    </div>
   <% end %>
-  <p class="ingredient-desc">
+
+  <div class="ingredient-desc">
     <%= @ingredient.description %>
-    <br>
-    Source: <%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%>
-  </p>
+  </div>
 
   <%= if not is_nil(image_url = image_url_for(@ingredient)) do %>
-    <p><%= img_tag(resize_wikidata_image(image_url, 640)) %></p>
+    <div class="ingredient-image">
+      <%= img_tag(resize_wikidata_image(image_url, 640)) %>
+      <div class="image-source-link">
+        Source: <%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%>
+      </div>
+    </div>
   <% end %>
 </div>
 

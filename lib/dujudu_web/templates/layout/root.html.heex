@@ -21,14 +21,22 @@
           <%= live_redirect "Dujudu!", to: Routes.live_path(@conn, DujuduWeb.HomeLive), class: "pure-menu-heading" %>
           <ul class="pure-menu-list">
             <li class="pure-menu-item"><%= live_redirect "All Ingredients", to: Routes.live_path(@conn, DujuduWeb.IngredientIndexLive) %></li>
+            <%= if not is_nil(assigns[:current_account]) do %>
+              <li class="pure-menu-item"><%= live_redirect "Bookmarks", to: Routes.live_path(@conn, DujuduWeb.FavLive) %></li>
+            <% end %>
+            <hr>
             <%= if is_nil(assigns[:current_account]) do %>
               <li class="pure-menu-item"><%= link "Login", to: Routes.session_path(@conn, :new) %></li>
             <% else %>
-              <li class="pure-menu-item"><%= live_redirect "Favourites", to: Routes.live_path(@conn, DujuduWeb.FavLive) %></li>
               <li class="pure-menu-item"><%= link "Logout", to: Routes.session_path(@conn, :delete), method: "delete" %></li>
             <% end %>
-          </ul>
+           </ul>
         </div>
+        <hr>
+        <ul class="mini-menu">
+          <li>Built with <a href="https://www.phoenixframework.org/" target="_blank" rel="noopener noreferrer">Phoenix</a></li>
+          <li>Dujudu on <a href="https://github.com/juffel/dujudu" target="_blank" rel="noopener noreferrer">Github</a></li>
+        </ul>
       </div>
       <div id="main">
         <div class="content">

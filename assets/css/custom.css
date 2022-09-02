@@ -42,14 +42,29 @@ main.container {
   }
 }
 
+.mini-menu {
+  font-family: Vollkorn, serif;
+  color: lightgray;
+  padding: 1em;
+  font-size: 1em;
+  list-style: none;
+}
+
+#menu .mini-menu a {
+  font-family: Vollkorn, serif;
+}
+
 .hero {
-  background-color: #e8d7b6;
+  background-color: white;
+  padding: 1em;
+  border: unset;
 }
 
 .hero-title {
   font-family: Vollkorn, serif;
   font-size: 10rem;
   color: rgb(75, 46, 10);
+  margin-bottom: 0px;
 }
 
 .hero-subtitle {
@@ -57,6 +72,7 @@ main.container {
   background-color: black;
   color: white;
   font-size: 3.5rem;
+  margin-bottom: 0px;
 }
 
 @media (max-width: 48em) {
@@ -165,20 +181,79 @@ hr.light-dotted {
   border-bottom: .5em dotted rgba(81, 50, 11, 0.12);
 }
 
+.fav-button {
+  float: right;
+}
+
 .add-fav-button {
   background-color: gray;
   border-color: gray;
 }
 
 .add-fav-button:hover {
-  background-color: unset;
+  background-color: lightgray;
+  border-color: lightgray;
 }
 
-.remove-fav-button {
-  background-color: red;
-  border-color: red;
+.remove-fav-button, .remove-fav-button:focus {
+  background-color: lightcoral;
+  border-color: lightcoral;
 }
+
+
 .remove-fav-button:hover {
-  background-color: red;
-  border-color: red;
+  background-color: rgb(238, 192, 192);
+  border-color: rgb(238, 192, 192);
+}
+
+.ingredient-image {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.ingredient-image img {
+  width: 100%;
+}
+
+.ingredient-image .image-source-link {
+  font-family: Vollkorn, serif;
+  color: gray;
+  float: right;
+}
+
+.ingredients-pagination {
+  font-family: Vollkorn, serif;
+  font-size: 1.5em;
+  color: rgb(192, 182, 168);
+  margin: 1em;
+}
+@media (max-width: 48em) {
+  .ingredients-pagination {
+    font-size: 1em;
+    margin: .5em;
+  }
+}
+
+.ingredients-pagination a {
+  color: rgba(81, 50, 11, 1);
+}
+
+.ingredients-pagination .pagination-previous {
+  margin: .5em;
+  float: left;
+}
+.ingredients-pagination .pagination-next {
+  margin: .5em;
+  float: right;
+}
+.ingredients-pagination .pagination-list {
+  margin: .5em;
+  margin: auto;
+  width: 50%;
+}
+.ingredients-pagination .pagination-list a.is-current {
+  padding: .2em;
+  border-radius: 10%;
+  color: white;
+  background-color: rgba(81, 50, 11, 1);
 }
