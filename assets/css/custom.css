@@ -42,6 +42,18 @@ main.container {
   }
 }
 
+.mini-menu {
+  font-family: Vollkorn, serif;
+  color: lightgray;
+  padding: 1em;
+  font-size: 1em;
+  list-style: none;
+}
+
+#menu .mini-menu a {
+  font-family: Vollkorn, serif;
+}
+
 .hero {
   background-color: #e8d7b6;
 }
@@ -165,20 +177,41 @@ hr.light-dotted {
   border-bottom: .5em dotted rgba(81, 50, 11, 0.12);
 }
 
+.fav-button {
+  float: right;
+}
+
 .add-fav-button {
   background-color: gray;
   border-color: gray;
 }
 
 .add-fav-button:hover {
-  background-color: unset;
+  background-color: lightgray;
+  border-color: lightgray;
 }
 
 .remove-fav-button {
-  background-color: red;
-  border-color: red;
+  background-color: lightcoral;
+  border-color: lightcoral;
 }
+
 .remove-fav-button:hover {
-  background-color: red;
-  border-color: red;
+  background-color: rgb(238, 192, 192);
+  border-color: rgb(238, 192, 192);
+}
+
+.ingredient-image {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.ingredient-image img {
+  width: 100%;
+}
+
+.ingredient-image .image-source-link {
+  font-family: Vollkorn, serif;
+  color: gray;
+  float: right;
 }
