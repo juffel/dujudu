@@ -1,26 +1,21 @@
-# FROM seleniarm/hub:latest
 FROM seleniarm/standalone-chromium:latest
 
-USER root
-RUN apt-get update
-RUN apt-get -y install inotify-tools
+RUN sudo apt-get update
+RUN sudo apt-get -y install gcc make inotify-tools
 
-# install chromedriver
-# RUN apt-get -y install chromium=104.0.5112.101-1~deb11u1
-# WORKDIR /tmp
-# RUN wget https://chromedriver.storage.googleapis.com/104.0.5112.79/chromedriver_linux64.zip
-# RUN unzip chromedriver_linux64.zip
-# RUN mv chromedriver /usr/bin/
-# RUN chmod +x /usr/bin/chromedriver
+WORKDIR /tmp
+RUN sudo apt-get update
+RUN sudo apt-get -y install erlang=1:24.3.4.1+dfsg-1
+RUN sudo apt-get -y install elixir=1.12.2.dfsg-2.2
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY mix.exs .
-# COPY mix.lock .
+COPY mix.exs .
+COPY mix.lock .
 
-# EXPOSE 4000
+EXPOSE 4000
 
-# RUN mix local.hex --force
-# RUN mix local.rebar --force
+RUN mix local.hex --force
+RUN mix local.rebar --force
 
-# CMD mix deps.get && mix phx.server
+CMD mix deps.get && mix phx.server

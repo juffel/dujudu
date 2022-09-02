@@ -19,7 +19,7 @@ services:
     environment:
       MIX_ENV: dev
       # keep iex history; thanks https://stackoverflow.com/a/70419094/1870317
-      ERL_AFLAGS: -kernel shell_history enabled -kernel shell_history_path '"/shell/history"'
+      ERL_AFLAGS: -kernel shell_history enabled -kernel shell_history_path '"~/shell/history"'
     env_file:
       - .env
     ports:
