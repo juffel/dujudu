@@ -21,8 +21,11 @@
     </div>
   <% end %>
 </div>
-
-<Flop.Phoenix.pagination
-  meta={@meta}
-  path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient.id]}}
-/>
+<hr>
+<div class="ingredients-pagination">
+  <Flop.Phoenix.pagination
+    meta={@meta}
+    opts={[page_links: {:ellipsis, 4}, previous_link_content: "<-", next_link_content: "->"]}
+    path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient.id]}}
+  />
+</div>
