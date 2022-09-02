@@ -10,7 +10,7 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     |> click(Query.link("Ingredients"))
     |> await_live_connected()
     |> click(Query.link("cucumber"))
-    |> click(Query.button("Save fav"))
+    |> click(Query.button("Save"))
     |> assert_has(Query.button("Remove bookmark"))
     |> refute_has(Query.button("Add bookmark"))
     |> click(Query.link("Bookmarks"))
@@ -19,7 +19,7 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     |> click(Query.link("Ingredients"))
     |> await_live_connected()
     |> click(Query.link("gochujang"))
-    |> click(Query.button("Save fav"))
+    |> click(Query.button("Save"))
     |> click(Query.link("Bookmarks"))
     |> assert_has(Query.link("gochujang"))
   end
