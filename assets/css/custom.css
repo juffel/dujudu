@@ -55,13 +55,16 @@ main.container {
 }
 
 .hero {
-  background-color: #e8d7b6;
+  background-color: white;
+  padding: 1em;
+  border: unset;
 }
 
 .hero-title {
   font-family: Vollkorn, serif;
   font-size: 10rem;
   color: rgb(75, 46, 10);
+  margin-bottom: 0px;
 }
 
 .hero-subtitle {
@@ -69,6 +72,7 @@ main.container {
   background-color: black;
   color: white;
   font-size: 3.5rem;
+  margin-bottom: 0px;
 }
 
 @media (max-width: 48em) {
