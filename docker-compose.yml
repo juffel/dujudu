@@ -13,7 +13,9 @@ services:
       - ./tmp/dumps:/dumps
       - 'pgdata:/var/lib/postgresql/data'
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
     depends_on:
       - db
     environment:

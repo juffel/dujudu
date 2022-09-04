@@ -43,6 +43,9 @@ if config_env() == :prod do
   host = System.get_env("PHX_HOST") || "example.com"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
+  live_view_signing_salt =
+    System.get_env("LIVEVIEW_SECRET_SALT") || raise "LIVEVIEW_SECRET_SALT is missing"
+
   config :dujudu, DujuduWeb.Endpoint,
     url: [host: host, port: 443],
     http: [
@@ -53,7 +56,8 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    live_view: [signing_salt: live_view_signing_salt]
 
   # ## Using releases
   #
