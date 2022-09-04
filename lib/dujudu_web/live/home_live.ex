@@ -10,9 +10,6 @@ defmodule DujuduWeb.HomeLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(%{"seed" => seed}, _session, socket) do
-    System.get_env("LIVEVIEW_SECRET_SALT") |> IO.inspect(label: "System.get_env(\"LIVEVIEW_SECRET_SALT\")")
-    Application.get_env(:dujudu, DujuduWeb.Endpoint) |> IO.inspect(label: "Application.get_env(:dujudu, DujuduWeb.Endpoint)")
-
     samples = Ingredients.sample_ingredients(11, sanitize_seed(seed))
 
     {:ok, assign(socket, samples: samples)}
