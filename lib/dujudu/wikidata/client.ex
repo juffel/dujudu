@@ -1,7 +1,7 @@
 defmodule Dujudu.Wikidata.Client do
   use Tesla
 
-  @ingredients_query_path "lib/dujudu/wikidata/queries/ingredients.sparql"
+  @ingredients_query File.read!("lib/dujudu/wikidata/queries/ingredients.sparql")
 
   plug Tesla.Middleware.BaseUrl, "https://query.wikidata.org"
   plug Tesla.Middleware.Headers, [{"accept", "application/sparql-results+json"}]
@@ -9,8 +9,7 @@ defmodule Dujudu.Wikidata.Client do
   unless Mix.env() == :test, do: plug(Tesla.Middleware.Timeout, timeout: 10_000)
 
   def get_ingredients do
-    @ingredients_query_path
-    |> File.read!()
+    @ingredients_query
     |> do_get_ingredients()
   end
 
