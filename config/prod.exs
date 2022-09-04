@@ -47,13 +47,3 @@ config :logger, level: :info
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
-
-# Copied over from Gigalixir's getting started guide
-# https://gigalixir.readthedocs.io/en/latest/modify-app/mix.html#modifying-existing-app-with-mix
-config :dujudu, DujuduWeb.Endpoint,
-  # Possibly not needed, but doesn't hurt
-  http: [port: {:system, "PORT"}],
-  url: [host: "dujudu.fly.dev", port: 443],
-  secret_key_base: System.get_env("SECRET_KEY_BASE"),
-  check_origin: ["//dujudu.fly.dev"],
-  server: true
