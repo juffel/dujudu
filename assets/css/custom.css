@@ -22,6 +22,11 @@
   src: url("/fonts/mechanical/Mechanical-g5Y5.woff") format("woff");
 }
 
+:root {
+  --color-primary: rgba(81, 50, 11, 1);
+  --color-primary-transparent: rgba(81, 50, 11, 0.12);
+}
+
 #main {
   margin: 2em;
 }
@@ -29,7 +34,7 @@
 main.container {
   padding: 0;
   padding-left: 2em;
-  border-left: .5em dotted rgba(81, 50, 11, 0.12);
+  border-left: .5em dotted var(--color-primary-transparent);
 }
 
 @media (max-width: 48em) {
@@ -178,7 +183,7 @@ h1.ingredient-header {
 }
 
 hr.light-dotted {
-  border-bottom: .5em dotted rgba(81, 50, 11, 0.12);
+  border-bottom: .5em dotted var(--color-primary-transparent);
 }
 
 .fav-button {
@@ -199,7 +204,6 @@ hr.light-dotted {
   background-color: lightcoral;
   border-color: lightcoral;
 }
-
 
 .remove-fav-button:hover {
   background-color: rgb(238, 192, 192);
@@ -235,7 +239,7 @@ hr.light-dotted {
 }
 
 .ingredients-pagination a {
-  color: rgba(81, 50, 11, 1);
+  color: var(--color-primary);
 }
 
 .ingredients-pagination .pagination-previous {
@@ -255,5 +259,16 @@ hr.light-dotted {
   padding: .2em;
   border-radius: 10%;
   color: white;
-  background-color: rgba(81, 50, 11, 1);
+  background-color: var(--color-primary);
+}
+
+.alert {
+  font-family: Vollkorn, serif;
+  color: var(--color-primary);
+  border: .2em dashed black;
+}
+
+.login-view,
+.register-view {
+  font-family: Vollkorn, serif;
 }
