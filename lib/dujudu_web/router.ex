@@ -14,14 +14,14 @@ defmodule DujuduWeb.Router do
     plug :accepts, ["json"]
   end
 
-  live_session :default, on_mount: [DujuduWeb.Live.AllowEctoSandbox, DujuduWeb.Auth.LiveAuth] do
-    scope "/", DujuduWeb do
-      pipe_through [:browser, Dujudu.Auth.Pipeline]
+  scope "/", DujuduWeb do
+    pipe_through [:browser, Dujudu.Auth.Pipeline]
 
-      resources "/accounts", AccountController, only: [:new, :create]
-      resources "/sessions", SessionController, only: [:new, :create]
-      delete "/sessions", SessionController, :delete
+    resources "/accounts", AccountController, only: [:new, :create]
+    resources "/sessions", SessionController, only: [:new, :create]
+    delete "/sessions", SessionController, :delete
 
+    live_session :default, on_mount: [DujuduWeb.Live.AllowEctoSandbox, DujuduWeb.Auth.LiveAuth] do
       live "/", HomeLive
       live "/ingredients", IngredientIndexLive
       live "/ingredients/:id", IngredientLive
