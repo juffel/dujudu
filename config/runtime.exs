@@ -45,6 +45,7 @@ if config_env() == :prod do
 
   live_view_signing_salt =
     System.get_env("LIVEVIEW_SECRET_SALT") || raise "LIVEVIEW_SECRET_SALT is missing"
+
   guardian_secret_key =
     System.get_env("GUARDIAN_SECRET_KEY") || raise "GUARDIAN_SECRET_KEY is missing"
 
