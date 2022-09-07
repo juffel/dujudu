@@ -184,6 +184,10 @@ h1.ingredient-header {
   .ingredient-cell .ingredient-label {
     font-size: .7em;
   }
+
+  .cell-action .cell-action-label {
+    font-size: 2em;
+  }
 }
 
 .ingredient-cell .ingredient-label.inverted a {
