@@ -10,7 +10,7 @@
 </div>
 
 <div class="ingredient-grid pure-g">
-  <%= for ingredient <- @instances do %>
+  <%= for ingredient <- @ingredients do %>
     <% image_url = image_url_for(ingredient) %>
     <div class="pure-u-1-2 pure-u-md-1-3">
       <% extra_classes = if is_nil(image_url), do: " no-image", else: "" %>

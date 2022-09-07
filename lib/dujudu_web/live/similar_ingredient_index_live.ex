@@ -25,7 +25,7 @@ defmodule DujuduWeb.SimilarIngredientIndexLive do
         |> Ingredients.get_instances_query()
         |> Ingredients.list_ingredients(flop)
 
-      assign(socket, meta: meta, instances: ingredients)
+      assign(socket, meta: meta, ingredients: ingredients)
     end
   end
 end
