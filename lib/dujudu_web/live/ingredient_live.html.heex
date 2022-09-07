@@ -63,9 +63,12 @@
       </div>
     <% end %>
     <%= if @instances_count > 5 do %>
-      <div class="ingredient-cell pure-u-1-2 pure-u-md-1-3">
-        <div class="ingredient-label inverted">
-          <%= live_redirect "Show all #{@instances_count} varieties", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %>
+      <div class="pure-u-1-2 pure-u-md-1-3">
+        <div class="ingredient-cell cell-action">
+          <%= live_redirect img_tag(blank_image_url(@socket)), to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %>
+          <div class="cell-action-label">
+            <%= live_redirect "Show all #{@instances_count} varieties", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %>
+          </div>
         </div>
       </div>
     <% end %>

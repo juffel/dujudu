@@ -163,6 +163,23 @@ h1.ingredient-header {
   padding: 0;
 }
 
+.cell-action {
+  background-color: var(--color-primary);
+}
+
+.cell-action .cell-action-label {
+  font-family: Vollkorn, serif;
+  font-size: 3em;
+  position: absolute;
+  top: 1em;
+  left: .5em;
+  line-height: 1em;
+}
+
+.cell-action .cell-action-label a {
+  color: white;
+}
+
 @media (max-width: 48em) {
   .ingredient-cell .ingredient-label {
     font-size: .7em;
