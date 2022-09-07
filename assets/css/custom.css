@@ -34,7 +34,7 @@
 main.container {
   padding: 0;
   padding-left: 2em;
-  border-left: .5em dotted var(--color-primary-transparent);
+  border-left: .2em dashed var(--color-primary-transparent);
 }
 
 @media (max-width: 48em) {
@@ -213,7 +213,7 @@ h1.ingredient-header {
 }
 
 hr.light-dotted {
-  border-top: .5em dotted var(--color-primary-transparent);
+  border-top: .2em dashed var(--color-primary-transparent);
 }
 
 .fav-button {
