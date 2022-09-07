@@ -219,7 +219,7 @@ hr.light-dotted {
   width: 100%;
 }
 
-.ingredient-image .image-source-link {
+.source-link {
   font-family: Vollkorn, serif;
   color: gray;
   float: right;

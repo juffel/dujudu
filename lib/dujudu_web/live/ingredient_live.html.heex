@@ -34,11 +34,11 @@
   <%= if not is_nil(image_url = image_url_for(@ingredient)) do %>
     <div class="ingredient-image">
       <%= img_tag(resize_wikidata_image(image_url, 640)) %>
-      <div class="image-source-link">
-        Source: <%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%>
-      </div>
     </div>
   <% end %>
+  <div class="source-link">
+    Source: <%= link "Wikidata", to: wikidata_url(@ingredient), target: "_blank", rel: "noopener noreferrer"%>
+  </div>
 </div>
 
 <hr class="light-dotted">
