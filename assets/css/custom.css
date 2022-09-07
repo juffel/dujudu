@@ -133,10 +133,18 @@ h1.ingredient-header {
   }
 }
 
+.ingredient-grid {
+  line-height: 0px;
+}
+
 .ingredient-cell {
   position: relative;
   aspect-ratio: 1/1;
-  padding: 0.5em;
+  margin: 0.5em;
+}
+
+.ingredient-cell.no-image {
+  border: .2em dashed var(--color-primary-transparent);
 }
 
 .ingredient-cell img {
@@ -147,7 +155,7 @@ h1.ingredient-header {
 
 .ingredient-cell .ingredient-label {
   position: absolute;
-  bottom: 1em;
+  bottom: 2em;
   right: 1em;
   font-family: Mechanical, monospace;
   font-size: 1em;
@@ -183,7 +191,7 @@ h1.ingredient-header {
 }
 
 hr.light-dotted {
-  border-bottom: .5em dotted var(--color-primary-transparent);
+  border-top: .5em dotted var(--color-primary-transparent);
 }
 
 .fav-button {
