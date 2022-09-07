@@ -103,7 +103,7 @@
   background: #000;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 72em) {
   #layout {
     padding-left: 240px;
     left: 0;
@@ -124,7 +124,7 @@
   }
 }
 
-@media (max-width: 48em) {
+@media (max-width: 72em) {
   #layout.active {
     position: relative;
     left: 240px;

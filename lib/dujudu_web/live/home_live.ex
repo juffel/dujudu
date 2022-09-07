@@ -10,9 +10,9 @@ defmodule DujuduWeb.HomeLive do
   on_mount DujuduWeb.Auth.LiveAuth
 
   def mount(%{"seed" => seed}, _session, socket) do
-    samples = Ingredients.sample_ingredients(11, sanitize_seed(seed))
+    ingredients = Ingredients.sample_ingredients(11, sanitize_seed(seed))
 
-    {:ok, assign(socket, samples: samples)}
+    {:ok, assign(socket, ingredients: ingredients)}
   end
 
   def mount(_params, _session, socket) do
