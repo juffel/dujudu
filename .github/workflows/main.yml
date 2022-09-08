@@ -9,4 +9,9 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - uses: superfly/flyctl-actions/setup-flyctl@master
+        - run: touch .env.prod
+        - run: echo ${{ secrets.SECRET_KEY_BASE }} >> .env.prod
+        - run: echo ${{ secrets.DATABASE_URL }} >> .env.prod
+        - run: echo ${{ secrets.GUARDIAN_SECRET_KEY }} >> .env.prod
+        - run: echo ${{ secrets.LIVEVIEW_SECRET_SALT }} >> .env.prod
         - run: flyctl deploy --remote-only
