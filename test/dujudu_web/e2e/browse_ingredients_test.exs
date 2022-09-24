@@ -7,7 +7,7 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     session
     |> login_user()
     |> visit("/")
-    |> click(Query.link("Ingredients"))
+    |> click(Query.link("Search"))
     |> await_live_connected()
     |> click(Query.link("cucumber"))
     |> click(Query.button("Save"))
@@ -15,7 +15,7 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     |> click(Query.link("Bookmarks"))
     |> assert_has(Query.link("cucumber"))
     |> refute_has(Query.text("gochujang"))
-    |> click(Query.link("Ingredients"))
+    |> click(Query.link("Search"))
     |> await_live_connected()
     |> click(Query.link("gochujang"))
     |> click(Query.button("Save"))
@@ -44,7 +44,7 @@ defmodule DujuduWeb.E2E.BrowseIngredientsTest do
     session
     |> login_user()
     |> visit("/")
-    |> click(Query.link("Ingredients"))
+    |> click(Query.link("Search"))
     |> await_live_connected()
     |> assert_has_link("lima bean")
     |> assert_has_link("gochujang")
