@@ -2,6 +2,8 @@
 
 A wikidata-backed browser for food & ingredients.
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/juffel/dujudu)
+
 ## Querying Wikidata
 
 Extensive tutorial on wikidata SPARQL API https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial
