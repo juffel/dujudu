@@ -5,5 +5,6 @@ defmodule DujuduWeb.E2E.HomeTest do
     session
     |> visit("/")
     |> assert_has(Query.text("Browse food ingredients"))
+    |> assert_has(Query.text("Frowse food ingredients"))
   end
 end
