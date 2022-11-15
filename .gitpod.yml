@@ -1,4 +1,5 @@
-image: gitpod/workspace-elixir
+image:
+  file: Dockerfile.gitpod
 
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
