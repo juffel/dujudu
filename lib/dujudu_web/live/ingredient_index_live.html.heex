@@ -6,12 +6,9 @@
 <.form :let={f} for={@meta} method="get" phx-submit="search" phx-trigger-submit="false" class="search">
   <.filter_fields :let={i} form={f} fields={[title_or_wid: [label: "Search", type: "text"]]}>
     <.input
-      id={i.id}
-      name={i.name}
+      field={i.field}
       label={i.label}
       type={i.type}
-      value={@current_search}
-      field={{i.form, i.field}}
       phx-debounce={500}
       phx-change={"search"}
       {i.rest}
