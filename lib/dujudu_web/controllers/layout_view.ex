@@ -1,5 +1,7 @@
 defmodule DujuduWeb.LayoutView do
-  use DujuduWeb, :view
+  use DujuduWeb, :html
+
+  embed_templates "layout/*"
 
   # Phoenix LiveDashboard is available only in development by default,
   # so we instruct Elixir to not warn if the dashboard route is missing.

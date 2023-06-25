@@ -1,3 +1,3 @@
 defmodule DujuduWeb.AccountView do
-  use DujuduWeb, :view
+  use DujuduWeb, :html
 end

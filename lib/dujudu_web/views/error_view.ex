@@ -1,5 +1,5 @@
 defmodule DujuduWeb.ErrorView do
-  use DujuduWeb, :view
+  use DujuduWeb, :html
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

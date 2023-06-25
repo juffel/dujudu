@@ -27,11 +27,9 @@ defmodule DujuduWeb do
     end
   end
 
-  def view do
+  def html do
     quote do
-      use Phoenix.View,
-        root: "lib/dujudu_web/templates",
-        namespace: DujuduWeb
+      use Phoenix.Component
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -89,10 +87,7 @@ defmodule DujuduWeb do
       use Phoenix.HTML
 
       # Import LiveView and .heex helpers (live_render, live_patch, <.form>, etc)
-      import Phoenix.Component
-
-      # Import basic rendering functionality (render, render_layout, etc)
-      import Phoenix.View
+      import Phoenix.LiveView.Helpers
 
       import DujuduWeb.CoreComponents
       import DujuduWeb.ErrorHelpers
