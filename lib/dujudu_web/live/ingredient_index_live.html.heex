@@ -3,10 +3,19 @@
 </div>
 
 <hr class="light-dotted">
-<.form let={f} for={@meta} method="get" phx-submit="search" phx-trigger-submit="false" class="search">
-  <.filter_fields let={e} form={f} fields={[title_or_wid: [label: "Search", type: :text_input]]} input_opts={["phx-change": "search", "phx-debounce": 500, value: @current_search]}>
-    <%= e.label %>
-    <%= e.input %>
+<.form :let={f} for={@meta} method="get" phx-submit="search" phx-trigger-submit="false" class="search">
+  <.filter_fields :let={i} form={f} fields={[title_or_wid: [label: "Search", type: "text"]]}>
+    <.input
+      id={i.id}
+      name={i.name}
+      label={i.label}
+      type={i.type}
+      value={@current_search}
+      field={{i.form, i.field}}
+      phx-debounce={500}
+      phx-change={"search"}
+      {i.rest}
+    />
   </.filter_fields>
 </.form>
 
@@ -17,12 +26,18 @@
       <% extra_classes = if is_nil(image_url), do: " no-image", else: "" %>
       <div class={Enum.join(["ingredient-cell", extra_classes], "")}>
         <%= if is_nil(image_url = image_url_for(ingredient)) do %>
-          <%= live_redirect img_tag(blank_image_url(@socket)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+            <%= img_tag(blank_image_url(@socket)) %>
+          </.link>
         <% else %>
-          <%= live_redirect img_tag(resize_wikidata_image(image_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+            <%= img_tag(resize_wikidata_image(image_url, 480)) %>
+          </.link>
         <% end %>
         <div class="ingredient-label">
-          <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+            <%= ingredient.title %>
+          </.link>
         </div>
       </div>
     </div>
@@ -34,6 +49,6 @@
   <Flop.Phoenix.pagination
     meta={@meta}
     opts={[page_links: {:ellipsis, 4}, previous_link_content: "<-", next_link_content: "->"]}
-    path_helper={{Routes, :live_path, [@socket, DujuduWeb.IngredientIndexLive]}}
+    path={{Routes, :live_path, [@socket, DujuduWeb.IngredientIndexLive]}}
   />
 </div>

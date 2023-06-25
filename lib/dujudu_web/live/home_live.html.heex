@@ -10,25 +10,39 @@
           <% extra_classes = if is_nil(image_url), do: " no-image", else: "" %>
           <div class={Enum.join(["ingredient-cell", extra_classes], "")}>
             <%= if is_nil(image_url = image_url_for(ingredient)) do %>
-              <%= live_redirect img_tag(blank_image_url(@socket)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+              <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+                <%= img_tag(blank_image_url(@socket)) %>
+              </.link>
             <% else %>
-              <%= live_redirect img_tag(resize_wikidata_image(image_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+              <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+                <%= img_tag(resize_wikidata_image(image_url, 480)) %>
+              </.link>
             <% end %>
             <div class="ingredient-label">
-              <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+              <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+                <%= ingredient.title %>
+              </.link>
             </div>
           </div>
         </div>
       <% end %>
       <div class="pure-u-1-2 pure-u-md-1-3">
         <div class="ingredient-cell cell-action">
-          <%= live_redirect img_tag(blank_image_url(@socket)), to: Routes.live_path(@socket, DujuduWeb.HomeLive) %>
+          <.link navigate={Routes.live_path(@socket, DujuduWeb.HomeLive)}>
+            <%= img_tag(blank_image_url(@socket)) %>
+          </.link>
           <div class="cell-action-label">
-            <%= live_redirect "More", to: Routes.live_path(@socket, DujuduWeb.HomeLive) %>
+            <.link navigate={Routes.live_path(@socket, DujuduWeb.HomeLive)}>
+              <%= gettext("More") %>
+            </.link>
             <br>
-            <%= live_redirect "random", to: Routes.live_path(@socket, DujuduWeb.HomeLive) %>
+            <.link navigate={Routes.live_path(@socket, DujuduWeb.HomeLive)}>
+              <%= gettext("random") %>
+            </.link>
             <br>
-            <%= live_redirect "food", to: Routes.live_path(@socket, DujuduWeb.HomeLive) %>
+            <.link navigate={Routes.live_path(@socket, DujuduWeb.HomeLive)}>
+              <%= gettext("food") %>
+            </.link>
           </div>
         </div>
       </div>

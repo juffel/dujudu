@@ -1,7 +1,7 @@
 defmodule DujuduWeb.Auth.LiveAuth do
   require Logger
 
-  import Phoenix.LiveView
+  import Phoenix.Component
 
   @claims %{typ: "access"}
 
