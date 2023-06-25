@@ -54,7 +54,7 @@ defmodule Dujudu.MixProject do
       {:hackney, "~> 1.6"},
       {:guardian, "~> 2.0"},
       {:argon2_elixir, "~> 3.0"},
-      {:flop, "~> 0.16.1"},
+      {:flop, "~> 0.17.0"},
       {:flop_phoenix, "~> 0.14.2"},
       # {:flop_phoenix, "~> 0.15.2"},
       {:jaxon, "~> 2.0"},
