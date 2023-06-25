@@ -33,12 +33,13 @@ defmodule Dujudu.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.6"},
+      {:phoenix, "~> 1.6.16"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      # {:phoenix_live_view, "~> 0.18.18"},
       {:phoenix_live_view, "~> 0.17.12"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.6"},
@@ -54,7 +55,8 @@ defmodule Dujudu.MixProject do
       {:guardian, "~> 2.0"},
       {:argon2_elixir, "~> 3.0"},
       {:flop, "~> 0.16.1"},
-      {:flop_phoenix, "~> 0.14.1"},
+      {:flop_phoenix, "~> 0.14.2"},
+      # {:flop_phoenix, "~> 0.15.2"},
       {:jaxon, "~> 2.0"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:wallaby, "~> 0.29.0", runtime: false, only: :test},
