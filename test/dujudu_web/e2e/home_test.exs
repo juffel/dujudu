@@ -4,6 +4,6 @@ defmodule DujuduWeb.E2E.HomeTest do
   feature "dummy", %{session: session} do
     session
     |> visit("/")
-    |> assert_has(Query.text("Browse food ingredients"))
+    |> assert_has(Query.text("Food Food Food"))
   end
 end
