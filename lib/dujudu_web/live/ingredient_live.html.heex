@@ -22,7 +22,9 @@
       This is a kind of
       <%= for {ingredient, index} <- Enum.with_index(@supers) do %>
         <%= if index > 0, do: "/", else: "" %>
-        <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+        <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+          <%= ingredient.title %>
+        </.link>
       <% end %>
     </div>
   <% end %>
@@ -52,12 +54,18 @@
         <% extra_classes = if is_nil(image_url), do: " no-image", else: "" %>
         <div class={Enum.join(["ingredient-cell", extra_classes], "")}>
           <%= if is_nil(image_url = image_url_for(ingredient)) do %>
-            <%= live_redirect img_tag(blank_image_url(@socket)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+            <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+              <%= img_tag(blank_image_url(@socket)) %>
+            </.link>
           <% else %>
-            <%= live_redirect img_tag(resize_wikidata_image(image_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+            <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+            <%= img_tag(resize_wikidata_image(image_url, 480)) %>
+            </.link>
           <% end %>
           <div class="ingredient-label">
-            <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+            <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+              <%= ingredient.title %>
+            </.link>
           </div>
         </div>
       </div>
@@ -65,9 +73,13 @@
     <%= if @instances_count > 5 do %>
       <div class="pure-u-1-2 pure-u-md-1-3">
         <div class="ingredient-cell cell-action">
-          <%= live_redirect img_tag(blank_image_url(@socket)), to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %>
+          <.link navigate={Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient)}>
+            <%= img_tag(blank_image_url(@socket))%>
+          </.link>
           <div class="cell-action-label">
-            <%= live_redirect "Show all #{@instances_count} varieties", to: Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient) %>
+            <.link navigate={Routes.live_path(@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient)}>
+              <%= "Show all #{@instances_count} varieties" %>
+            </.link>
           </div>
         </div>
       </div>

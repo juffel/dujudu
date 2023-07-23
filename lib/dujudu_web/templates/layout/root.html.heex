@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
-    <%= live_title_tag assigns[:page_title] || "Dujudu", suffix: " · Phoenix Framework" %>
+    <.live_title suffix=" · Phoenix Framework">
+      <%= assigns[:page_title] || "Dujudu" %>
+    </.live_title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@2.1.0/build/grids-responsive-min.css">
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
@@ -18,11 +20,21 @@
       </a>
       <div id="menu">
         <div class="pure-menu">
-          <%= live_redirect "Dujudu!", to: Routes.live_path(@conn, DujuduWeb.HomeLive), class: "pure-menu-heading" %>
+          <.link navigate={Routes.live_path(@conn, DujuduWeb.HomeLive)} class="pure-menu-heading"}>
+            Dujudu!
+          </.link>
           <ul class="pure-menu-list">
-            <li class="pure-menu-item"><%= live_redirect "Search", to: Routes.live_path(@conn, DujuduWeb.IngredientIndexLive) %></li>
+            <li class="pure-menu-item">
+              <.link navigate={Routes.live_path(@conn, DujuduWeb.IngredientIndexLive)}>
+                <%= gettext("Search") %>
+              </.link>
+            </li>
             <%= if not is_nil(assigns[:current_account]) do %>
-              <li class="pure-menu-item"><%= live_redirect "Bookmarks", to: Routes.live_path(@conn, DujuduWeb.FavLive) %></li>
+              <li class="pure-menu-item">
+                <.link navigate={Routes.live_path(@conn, DujuduWeb.FavLive)}>
+                  <%= gettext("Bookmarks") %>
+                </.link>
+              </li>
             <% end %>
             <hr>
             <%= if is_nil(assigns[:current_account]) do %>

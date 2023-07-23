@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: [1.13.4]
-        otp: [24.1]
+        elixir: [1.14.5]
+        otp: [25.0.4]
     steps:
       - uses: actions/checkout@v2
       - uses: erlef/setup-beam@v1
@@ -39,8 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: [1.13.4]
-        otp: [24.1]
+        elixir: [1.14.5]
+        otp: [25.0.4]
     needs: cache-deps
     steps:
       - uses: actions/checkout@v2
@@ -63,8 +63,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: [1.13.4]
-        otp: [24.1]
+        elixir: [1.14.5]
+        otp: [25.0.4]
     needs: cache-deps
 
     services:

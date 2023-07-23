@@ -3,7 +3,9 @@
     <%= if is_nil(@ingredient) do %>
       Instances of
     <% else %>
-      <%= live_redirect @ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, @ingredient) %>
+      <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, @ingredient)}>
+        <%= @ingredient.title %>
+      </.link>
       varieties
     <% end %>
   </h1>
@@ -16,12 +18,18 @@
       <% extra_classes = if is_nil(image_url), do: " no-image", else: "" %>
       <div class={Enum.join(["ingredient-cell", extra_classes], "")}>
         <%= if is_nil(image_url = image_url_for(ingredient)) do %>
-          <%= live_redirect img_tag(blank_image_url(@socket)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+            <%= img_tag(blank_image_url(@socket)) %>
+          </.link>
         <% else %>
-          <%= live_redirect img_tag(resize_wikidata_image(image_url, 480)), to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+            <%= img_tag(resize_wikidata_image(image_url, 480)) %>
+          </.link>
         <% end %>
         <div class="ingredient-label">
-          <%= live_redirect ingredient.title, to: Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient) %>
+          <.link navigate={Routes.live_path(@socket, DujuduWeb.IngredientLive, ingredient)}>
+            <%= ingredient.title %>
+          </.link>
         </div>
       </div>
     </div>
@@ -33,6 +41,6 @@
   <Flop.Phoenix.pagination
     meta={@meta}
     opts={[page_links: {:ellipsis, 4}, previous_link_content: "<-", next_link_content: "->"]}
-    path_helper={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient.id]}}
+    path={{Routes, :live_path, [@socket, DujuduWeb.SimilarIngredientIndexLive, @ingredient.id]}}
   />
 </div>

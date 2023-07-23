@@ -4,6 +4,7 @@ defmodule DujuduWeb.Live.AllowEctoSandbox do
   According to https://github.com/elixir-wallaby/wallaby#liveview
   """
   import Phoenix.LiveView
+  import Phoenix.Component
 
   def on_mount(:default, _params, _session, socket) do
     allow_ecto_sandbox(socket)
